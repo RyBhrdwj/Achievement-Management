@@ -26,6 +26,7 @@ const Footer = () => {
     position: showFooter ? 'fixed' : 'absolute',
     bottom: '0',
     width: '100%',
+    height:'15%',
     zIndex: 999,
     boxShadow: '0 -4px 8px rgba(0, 0, 0, 0.1)',
     transition: 'opacity 0.5s ease-in-out',

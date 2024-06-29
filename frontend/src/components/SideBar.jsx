@@ -1,98 +1,124 @@
 import React, { useState } from 'react';
-import { FaHome, FaUser, FaCog, FaSignOutAlt } from 'react-icons/fa';
+import { NavLink } from 'react-router-dom';
+import { FaTh, FaCheckSquare, FaUserAlt, FaTasks, FaCommentAlt, FaFileInvoiceDollar } from 'react-icons/fa';
 
 const SideBar = () => {
-  const [hoveredItem, setHoveredItem] = useState(null);
+  const [hovered, setHovered] = useState(null);
 
   const sidebarStyle = {
-    position: 'relative',
-    bottom:"0", // Assuming header height is 80px
+    position: 'fixed', // Keep the sidebar fixed
+    top: '1px',      // Adjust as needed to position it correctly from the top
+    left: '0',         // Align it to the left of the viewport
     width: '250px',
-    backgroundColor: '#0DBDED',
-    height: '100vh',
-    color: 'white',
-    boxShadow: '2px 0 10px rgba(0, 0, 0, 0.2)',
-    overflowY: 'auto',
-    transition: 'all 0.3s ease',
+    backgroundColor: '#fff',
+    borderRadius: '10px',
+    padding: '20px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'start',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
   };
 
-  const headerStyle = {
-    padding: '20px',
+  const logoStyle = {
     fontSize: '24px',
     fontWeight: 'bold',
-    textAlign: 'center',
-    backgroundColor: '#0984a6',
     marginBottom: '20px',
-    borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
+    color: '#4b7bec'
   };
 
-  const listStyle = {
+  const navStyle = {
     listStyleType: 'none',
-    padding: 0,
-    margin: 0,
+    padding: '0',
+    width: '100%'
   };
 
-  const itemStyle = {
-    padding: '15px 20px',
-    transition: 'background-color 0.3s ease, padding-left 0.3s ease, color 0.3s ease',
-    display: 'flex',
-    alignItems: 'center',
-    cursor: 'pointer', // Add a pointer cursor
-  };
-
-  const hoverStyles = {
-    home: { backgroundColor: '#0a39f5', color: 'white' },
-    profile: { backgroundColor: '#0a39f5', color: 'white' },
-    settings: { backgroundColor: '#0a39f5', color: 'white' },
-    logout: { backgroundColor: '#f50a0a', color: 'white' },
+  const navItemStyle = {
+    marginBottom: '20px'
   };
 
   const linkStyle = {
-    color: 'white',
+    display: 'flex',
+    alignItems: 'center',
     textDecoration: 'none',
+    color: '#808080',
     fontSize: '18px',
-    marginLeft: '10px',
-    flex: 1,
-    display: 'block',
+    padding: '10px 15px',
+    borderRadius: '5px',
+    transition: 'background-color 0.3s, color 0.3s'
+  };
+
+  const activeLinkStyle = {
+    backgroundColor: '#e0e8ff',
+    color: '#4b7bec',
+  };
+
+  const iconStyle = {
+    marginRight: '10px'
+  };
+
+  const handleMouseEnter = (index) => {
+    setHovered(index);
+  };
+
+  const handleMouseLeave = () => {
+    setHovered(null);
+  };
+
+  const getLinkStyle = (index) => {
+    return hovered === index ? { ...linkStyle, ...activeLinkStyle } : linkStyle;
   };
 
   return (
     <div style={sidebarStyle}>
-      <div style={headerStyle}>Menu</div>
-      <ul style={listStyle}>
-        <li
-          style={{ ...itemStyle, ...(hoveredItem === 'home' && hoverStyles.home) }}
-          onMouseEnter={() => setHoveredItem('home')}
-          onMouseLeave={() => setHoveredItem(null)}
-        >
-          <FaHome size={20} />
-          <a href="#home" style={linkStyle}>Home</a>
-        </li>
-        <li
-          style={{ ...itemStyle, ...(hoveredItem === 'profile' && hoverStyles.profile) }}
-          onMouseEnter={() => setHoveredItem('profile')}
-          onMouseLeave={() => setHoveredItem(null)}
-        >
-          <FaUser size={20} />
-          <a href="#profile" style={linkStyle}>Profile</a>
-        </li>
-        <li
-          style={{ ...itemStyle, ...(hoveredItem === 'settings' && hoverStyles.settings) }}
-          onMouseEnter={() => setHoveredItem('settings')}
-          onMouseLeave={() => setHoveredItem(null)}
-        >
-          <FaCog size={20} />
-          <a href="#settings" style={linkStyle}>Settings</a>
-        </li>
-        <li
-          style={{ ...itemStyle, marginTop: 'auto', ...(hoveredItem === 'logout' && hoverStyles.logout) }}
-          onMouseEnter={() => setHoveredItem('logout')}
-          onMouseLeave={() => setHoveredItem(null)}
-        >
-          <FaSignOutAlt size={20} />
-          <a href="#logout" style={linkStyle}>Logout</a>
-        </li>
-      </ul>
+      <div style={logoStyle}>LOGO</div>
+      <nav>
+        <ul style={navStyle}>
+          <li style={navItemStyle}>
+            <NavLink to="/dashboard" style={getLinkStyle(0)} activeStyle={activeLinkStyle}
+              onMouseEnter={() => handleMouseEnter(0)}
+              onMouseLeave={handleMouseLeave}>
+              <FaTh style={iconStyle} /> Dashboard
+            </NavLink>
+          </li>
+          <li style={navItemStyle}>
+            <NavLink to="/project" style={getLinkStyle(1)} activeStyle={activeLinkStyle}
+              onMouseEnter={() => handleMouseEnter(1)}
+              onMouseLeave={handleMouseLeave}>
+              <FaCheckSquare style={iconStyle} /> Project
+            </NavLink>
+          </li>
+          <li style={navItemStyle}>
+            <NavLink to="/client" style={getLinkStyle(2)} activeStyle={activeLinkStyle}
+              onMouseEnter={() => handleMouseEnter(2)}
+              onMouseLeave={handleMouseLeave}>
+              <FaUserAlt style={iconStyle} /> My Client
+            </NavLink>
+          </li>
+          <li style={navItemStyle}>
+            <NavLink to="/task" style={getLinkStyle(3)} activeStyle={activeLinkStyle}
+              onMouseEnter={() => handleMouseEnter(3)}
+              onMouseLeave={handleMouseLeave}>
+              <FaTasks style={iconStyle} /> My Task
+            </NavLink>
+          </li>
+          <li style={navItemStyle}>
+            <NavLink to="/message" style={getLinkStyle(4)} activeStyle={activeLinkStyle}
+              onMouseEnter={() => handleMouseEnter(4)}
+              onMouseLeave={handleMouseLeave}>
+              <FaCommentAlt style={iconStyle} /> Message
+            </NavLink>
+          </li>
+          <li style={navItemStyle}>
+            <NavLink to="/billing" style={getLinkStyle(5)} activeStyle={activeLinkStyle}
+              onMouseEnter={() => handleMouseEnter(5)}
+              onMouseLeave={handleMouseLeave}>
+              <FaFileInvoiceDollar style={iconStyle} /> My Billing
+            </NavLink>
+          </li>
+        </ul>
+      </nav>
+      
+      
     </div>
   );
 };
