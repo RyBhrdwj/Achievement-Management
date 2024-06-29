@@ -45,7 +45,10 @@ const Charts = () => {
       {
         type: 'bar',
         data: userData,
+        
         options: {
+          autoPadding: true,
+        aspectRatio: 2/1,
           responsive: true,
           plugins: {
             legend: {
@@ -79,7 +82,13 @@ const Charts = () => {
   }, [userData]);
 
   return (
-    <canvas id="myChart" width="400" height="400"></canvas>
+    <>
+    <div className=''>
+      <h1 className='text-4xl font-bold'>Monthly Statistics.</h1>
+    
+    <canvas id="myChart" width='400' height='400' className='border-2 border-gray-300 p-4 rounded-md shadow-lg m-4'></canvas>
+    </div>
+    </>
   );
 }
 
