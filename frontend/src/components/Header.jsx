@@ -5,15 +5,13 @@ const Header = () => {
   const headerStyle = {
     fontSize:"10px",
     fontWeight: 'bold', // Increase font weight
-    border: '2px solid #68c3d4',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#a6ebf5',
     padding: '10px 20px',
     borderRadius: '10px',
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-    marginLeft: '251px',
+    margin: 10,
   };
 
   const headerLeftStyle = {
@@ -79,7 +77,7 @@ const Header = () => {
   };
 
   return (
-    <header style={headerStyle}>
+    <header style={headerStyle} className='bg-sky-300 shadow-lg'>
       <div style={headerLeftStyle}>
         <h1 style={titleStyle}>Dashboard</h1>
         

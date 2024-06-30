@@ -8,10 +8,13 @@ import Footer from './components/Footer';
 function App() {
   return (
     <>
-      <Header />
+      
      <div className='grid grid-cols-12'>
       <div className='col-span-2'><SideBar /></div>
-      <div className='col-span-10'><Outlet /></div>
+      <div className='col-span-10'>
+      <Header />
+        <Outlet />
+        </div>
       
       
      </div>
