@@ -10,13 +10,22 @@ class achievementRepo extends crudRepo {
     try {
       const achievement = await this.model.findByIdAndUpdate(id, data, {
         new: true,
-        overwrite: true,
         runValidators: true,
       });
 
       return achievement;
     } catch (error) {
-      console.log("crud error : " + error);
+      console.log("repository error : " + error);
+      throw error;
+    }
+  };
+
+  getAchievementsByUserId = async (userId) => {
+    try {
+      const achievements = await this.model.find({ userId: userId });
+      return achievements;
+    } catch (error) {
+      console.log("repository error : " + error);
       throw error;
     }
   };
