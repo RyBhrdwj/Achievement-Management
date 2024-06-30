@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const achievementSchema = new mongoose.Schema({
-  title: {
+  name: {
     type: String,
     required: true,
   },
@@ -10,14 +10,13 @@ const achievementSchema = new mongoose.Schema({
     required: true,
   },
   location: {
-    type:String,
+    type: String,
     required: true,
   },
   link: {
     type: String,
-    required: true,
   },
-  date:{
+  date: {
     type: Date,
     required: true,
   },
@@ -27,7 +26,7 @@ const achievementSchema = new mongoose.Schema({
   },
   result: {
     type: String,
-    enum: ['participation', 'won'],
+    enum: ["participant", "winner", "runner-up"],
     required: true,
   },
   proof: {
@@ -37,8 +36,8 @@ const achievementSchema = new mongoose.Schema({
   isVerified: {
     type: Boolean,
     default: false,
-    required: true
-  }
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Achievement", achievementSchema);
