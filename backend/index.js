@@ -21,7 +21,6 @@ app.get("/", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(process.env);
   mongoose.connect(process.env.MONGO_URI).then(() => {
     console.log("DB Connected!");
   });

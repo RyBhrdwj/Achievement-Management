@@ -10,13 +10,14 @@ const SideBar = () => {
     top: '1px',      // Adjust as needed to position it correctly from the top
     left: '0',         // Align it to the left of the viewport
     width: '250px',
-    backgroundColor: '#fff',
     borderRadius: '10px',
     padding: '20px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'start',
+    height: '97vh',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    margin: 10,
   };
 
   const logoStyle = {
@@ -29,7 +30,10 @@ const SideBar = () => {
   const navStyle = {
     listStyleType: 'none',
     padding: '0',
-    width: '100%'
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center'
   };
 
   const navItemStyle = {
@@ -69,22 +73,22 @@ const SideBar = () => {
   };
 
   return (
-    <div style={sidebarStyle}>
+    <div style={sidebarStyle} className='bg-gray-200'>
       <div style={logoStyle}>LOGO</div>
       <nav>
         <ul style={navStyle}>
           <li style={navItemStyle}>
-            <NavLink to="/dashboard" style={getLinkStyle(0)} activeStyle={activeLinkStyle}
+            <NavLink to="/" style={getLinkStyle(0)} activeStyle={activeLinkStyle}
               onMouseEnter={() => handleMouseEnter(0)}
               onMouseLeave={handleMouseLeave}>
               <FaTh style={iconStyle} /> Dashboard
             </NavLink>
           </li>
           <li style={navItemStyle}>
-            <NavLink to="/project" style={getLinkStyle(1)} activeStyle={activeLinkStyle}
+            <NavLink to="/add" style={getLinkStyle(1)} activeStyle={activeLinkStyle}
               onMouseEnter={() => handleMouseEnter(1)}
               onMouseLeave={handleMouseLeave}>
-              <FaCheckSquare style={iconStyle} /> Project
+              <FaCheckSquare style={iconStyle} /> Add Event
             </NavLink>
           </li>
           <li style={navItemStyle}>

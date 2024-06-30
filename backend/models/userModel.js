@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
   id: {
@@ -22,12 +22,14 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
   },
-  achievements: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Achievement"
-  }],
+  achievements: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Achievement",
+    },
+  ],
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;
