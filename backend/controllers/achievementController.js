@@ -23,7 +23,7 @@ class AchievementController {
       console.log("controller error : " + error);
       res.status(400).json({ message: error.message });
     }
-  };a
+  };
 
   getAchievements = async (req, res) => {
     try {
