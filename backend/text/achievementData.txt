@@ -1,0 +1,17 @@
+const Achievement = require ('./../models/achievementModel');
+
+const newAchievement = new Achievement({
+    title: 'Dora-Dora Hackathon',
+    description: 'First place in hackathon',
+    location: 'Dehradun',
+    link: 'http://hackthonxyz.com',
+    date: new Date(),
+    isTechnical: true,
+    result: 'won',
+    proof: null,
+    isVerified: false,
+})
+
+newAchievement.save()
+    .then(()=> console.log('Achievement saved successfully!))
+    .catch(err=> console.error('error occured while saving Achievement', err));
