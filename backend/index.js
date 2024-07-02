@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 
 app.listen(PORT, () => {
   mongoose.connect(process.env.MONGO_URI).then(() => {
-    console.log("DB Connected!");
+    console.log("Mongo Connected!");
   });
   console.log(`Server is running on port ${PORT}`);
 });
