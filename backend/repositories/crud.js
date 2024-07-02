@@ -13,7 +13,7 @@ class crudRepo {
     }
   };
 
-  readAll = async () => {
+  getAll = async () => {
     try {
       const doc = await this.model.find({});
       return doc;
@@ -23,7 +23,7 @@ class crudRepo {
     }
   };
 
-  readOne = async (id) => {
+  getOne = async (id) => {
     try {
       const doc = await this.model.findById(id);
       return doc;
