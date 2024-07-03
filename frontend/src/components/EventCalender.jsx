@@ -8,7 +8,7 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
 import { events } from '../constants';
 
-const initialValue = dayjs(new Date().toDateString);
+const initialValue = dayjs(new Date().toDateString());
 
 function ServerDay(props) {
   const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
@@ -31,7 +31,7 @@ export default function DateCalendarServerRequest() {
   const requestAbortController = useRef(null);
   const [highlightedDays, setHighlightedDays] = useState(events.map(event => event.date));
   const [value, setValue] = useState(dayjs());
-  console.log(value.$d)
+  
   const fetchHighlightedDays = (date) => {
     const controller = new AbortController();
     setHighlightedDays(events.map(event => event.date));
@@ -54,16 +54,18 @@ export default function DateCalendarServerRequest() {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DateCalendar
-        value={value} onChange={(newValue) => setValue(newValue)}
-        onMonthChange={handleMonthChange}
-        renderLoading={() => <DayCalendarSkeleton />}
-        slots={{
-          day: (dayProps) => <ServerDay {...dayProps} highlightedDays={highlightedDays} />,
-        }}
-        disableFuture
-        className='bg-gray-200 rounded-lg shadow-xl'
-      />
+      <div className="w-full max-w-sm mx-auto p-4 bg-gray-200 rounded-lg shadow-xl">
+        <DateCalendar
+          value={value} 
+          onChange={(newValue) => setValue(newValue)}
+          onMonthChange={handleMonthChange}
+          renderLoading={() => <DayCalendarSkeleton />}
+          slots={{
+            day: (dayProps) => <ServerDay {...dayProps} highlightedDays={highlightedDays} />,
+          }}
+          disableFuture
+        />
+      </div>
     </LocalizationProvider>
   );
 }

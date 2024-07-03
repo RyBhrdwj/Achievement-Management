@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
-import {events} from '../constants.js'
+import { events } from '../constants.js';
 
 const Charts = () => {
-
   const aggregateMonthlyData = (events) => {
     const monthlyCounts = Array(12).fill(0);
     const monthlyEvents = Array(12).fill("").map(() => []);
@@ -45,11 +44,9 @@ const Charts = () => {
       {
         type: 'bar',
         data: userData,
-        
         options: {
-          autoPadding: true,
-        aspectRatio: 2/1,
           responsive: true,
+          maintainAspectRatio: false,
           plugins: {
             legend: {
               position: 'top',
@@ -82,14 +79,13 @@ const Charts = () => {
   }, [userData]);
 
   return (
-    <>
-    <div className=''>
-      <h1 className='text-4xl font-bold'>Monthly Statistics.</h1>
-    
-    <canvas id="myChart" width='400' height='400' className='border-2 border-gray-300 p-4 rounded-md shadow-lg m-4'></canvas>
+    <div className='w-full p-4'>
+      <h1 className='text-2xl md:text-4xl font-bold text-center'>Monthly Statistics</h1>
+      <div className='relative w-full h-64 md:h-96'>
+        <canvas id="myChart" className='border-2 border-gray-300 p-4 rounded-md shadow-lg'></canvas>
+      </div>
     </div>
-    </>
   );
-}
+};
 
 export default Charts;

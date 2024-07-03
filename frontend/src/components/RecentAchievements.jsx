@@ -8,9 +8,9 @@ const EventCard = ({ event }) => {
   const toggleOpen = () => setIsOpen(!isOpen);
 
   return (
-    <div>
+    <div className="mb-4">
       <div className="bg-gray-100 p-4 border-2 border-gray-200 rounded-lg shadow-md grid grid-cols-12 items-center">
-        <div className="col-span-4">
+        <div className="col-span-12 md:col-span-4">
           <h3 className="text-lg font-semibold">{event.eventName}</h3>
           <p
             className={`${
@@ -22,11 +22,13 @@ const EventCard = ({ event }) => {
             {event.result}
           </p>
         </div>
-        <p className="col-span-3">{event.date}</p>
-        <p className="font-thin text-lg col-span-4">{event.location}</p>
+        <p className="col-span-12 md:col-span-3 mt-2 md:mt-0">{event.date}</p>
+        <p className="font-thin text-lg col-span-12 md:col-span-4 mt-2 md:mt-0">
+          {event.location}
+        </p>
         <button
           onClick={toggleOpen}
-          className="p-2 rounded-full hover:bg-gray-200 flex justify-center items-center col-span-1 w-14"
+          className="p-2 rounded-full hover:bg-gray-200 flex justify-center items-center col-span-12 md:col-span-1 w-14 mt-2 md:mt-0"
         >
           <IconContext.Provider value={{ size: "30px" }}>
             {isOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
@@ -74,13 +76,13 @@ const RecentAchievements = () => {
   };
 
   return (
-    <div className="p-4 mb-14">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold py-20">Recent Achievements</h1>
+    <div className="p-4 md:mb-14">
+      <div className="flex justify-between items-center flex-col md:flex-row">
+        <h1 className="text-3xl font-bold py-10 md:py-20">Recent Achievements</h1>
         <select
           value={sortCriteria}
           onChange={handleSortChange}
-          className="outline-none p-2 border-b bg-gray-100 border-gray-600 rounded-md"
+          className="outline-none p-2 border-b bg-gray-100 border-gray-600 rounded-md mt-4 md:mt-0"
         >
           <option value="A-Z">A-Z</option>
           <option value="Z-A">Z-A</option>
@@ -88,7 +90,7 @@ const RecentAchievements = () => {
           <option value="Oldest">Oldest</option>
         </select>
       </div>
-      <div className="flex flex-col gap-4 ">
+      <div className="flex flex-col gap-4">
         {events.map((event, idx) => (
           <EventCard event={event} key={idx} />
         ))}
