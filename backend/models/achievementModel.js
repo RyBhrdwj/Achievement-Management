@@ -2,8 +2,9 @@ const mongoose = require("mongoose");
 
 const achievementSchema = new mongoose.Schema({
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: "User",
+    type: String,
     required: true,
   },
   name: {
@@ -14,24 +15,17 @@ const achievementSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  location: {
+  location: { // location of the event or the link to the event
     type: String,
     required: true,
-  },
-  link: {
-    type: String,
   },
   date: {
     type: Date,
-    required: true,
-  },
-  isTechnical: {
-    type: Boolean,
-    required: true,
+    // required: true,
   },
   result: {
     type: String,
-    enum: ["participant", "winner", "runner-up"],
+    enum: ["participant", "winner", "runner up"],
     required: true,
   },
   proof: {
@@ -40,7 +34,7 @@ const achievementSchema = new mongoose.Schema({
   },
   isVerified: {
     type: Boolean,
-    default: false,
+    default: null, // null -> not checked by mentor, false -> rejected, true -> accepted
     required: true,
   },
 });
