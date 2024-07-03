@@ -38,4 +38,4 @@ class AchievementController {
   };
 }
 
-module.exports = AchievementController;
+module.exports = new AchievementController();

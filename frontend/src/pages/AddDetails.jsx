@@ -16,7 +16,7 @@ const AddDetails = () => {
        <h1 className="text-md font-medium  flex border-l-2 border-gray-400 pl-4">Your details have been sent to the mentor for verification. Your achievement will be reflected on your dashboard once the mentor verifies it.</h1>
         </div>
       ) : (
-        <div className="p-10 bg-gray-100 rounded-lg shadow-lg max-w-3xl mx-auto">
+        <div className="p-10 m-10 bg-gray-100 rounded-lg shadow-lg max-w-3xl mx-auto">
           <h1 className="text-3xl mb-10 font-bold text-center text-gray-800">
             Enter the details of the event
           </h1>

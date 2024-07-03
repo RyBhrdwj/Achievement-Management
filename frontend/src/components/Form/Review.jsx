@@ -21,7 +21,7 @@ const Review = ({ details }) => {
           </tr>
           <tr>
             <th className="text-left p-2 border border-gray-400 w-1/2">Event Type:</th>
-            <td className="p-2 border border-gray-400 w-1/2">{details.type}</td>
+            <td className="p-2 border border-gray-400 w-1/2">{details.type === 'other'? details.otherType : details.type}</td>
           </tr>
           <tr>
             <th className="text-left p-2 border border-gray-400 w-1/2">Mode:</th>
