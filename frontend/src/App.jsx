@@ -12,7 +12,7 @@ function App() {
       <div className='col-span-12 sm:col-span-10'>
       <Header />
         <Outlet />
-        <Footer />
+       {/*<Footer />*/} 
         </div>
      </div>
   );

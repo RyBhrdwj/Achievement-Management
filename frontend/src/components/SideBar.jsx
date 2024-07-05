@@ -1,23 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaTh, FaCheckSquare, FaUserAlt, FaTasks, FaCommentAlt, FaFileInvoiceDollar, FaBars } from 'react-icons/fa';
-import zIndex from '@mui/material/styles/zIndex';
 
 const SideBar = () => {
   const [hovered, setHovered] = useState(null);
-  const [isOpen, setIsOpen] = useState(window.innerWidth > 768);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsOpen(window.innerWidth > 768);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -27,17 +14,19 @@ const SideBar = () => {
     position: 'fixed',
     top: '0',
     left: isOpen ? '0' : '-250px',
-    width: '250px',
+    width: '230px',
     height: '100vh',
-    borderRadius: '10px',
+    backgroundColor: '#ab3e97',
     padding: '20px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'start',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    backgroundColor: '#f8f9fa',
-    transition: 'left 0.3s ease',
-    zIndex: '999'
+    transition: 'left 0.3s ease, width 0.3s ease',
+    zIndex: 1000,
+    borderTopRightRadius: '20px',
+    borderBottomRightRadius: '20px',
+
   };
 
   const toggleButtonStyle = {
@@ -46,49 +35,46 @@ const SideBar = () => {
     left: '20px',
     fontSize: '24px',
     cursor: 'pointer',
-    zIndex: 1000,
+    zIndex: 1001,
   };
 
   const logoStyle = {
     fontSize: '24px',
     fontWeight: 'bold',
-    marginLeft: '10px',
-    marginTop: '25px',
-    marginBottom: '20px',
-    color: '#4b7bec',
+    marginBottom: '30px',
+    color: '#fff',
+    alignSelf: 'center',
+    marginTop:'28px',
+    marginRight:'40px'
   };
 
   const navStyle = {
     listStyleType: 'none',
     padding: '0',
     width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
   };
 
   const navItemStyle = {
-    marginBottom: '15px', // Adjusted for better spacing on smaller screens
+    marginBottom: '20px',
   };
 
   const linkStyle = {
     display: 'flex',
     alignItems: 'center',
     textDecoration: 'none',
-    color: '#808080',
-    fontSize: '16px', // Reduced font size for smaller screens
-    padding: '8px 12px', // Reduced padding for smaller screens
+    color: '#fff',
+    fontSize: '18px',
+    padding: '10px 20px',
     borderRadius: '5px',
     transition: 'background-color 0.3s, color 0.3s',
   };
 
   const activeLinkStyle = {
-    backgroundColor: '#e0e8ff',
-    color: '#4b7bec',
+    backgroundColor: '#34495e',
   };
 
   const iconStyle = {
-    marginRight: '8px', // Adjusted margin for better spacing on smaller screens
+    marginRight: '10px',
   };
 
   const handleMouseEnter = (index) => {
@@ -105,8 +91,8 @@ const SideBar = () => {
 
   return (
     <>
-      {window.innerWidth < 768 && <FaBars style={toggleButtonStyle} onClick={toggleSidebar} />}
-      <div className="lg:w-64 md:w-56 sm:w-48" style={sidebarStyle}>
+      <FaBars style={toggleButtonStyle} onClick={toggleSidebar} />
+      <div style={sidebarStyle}>
         <div style={logoStyle}>LOGO</div>
         <nav>
           <ul style={navStyle}>
@@ -184,3 +170,6 @@ const SideBar = () => {
 };
 
 export default SideBar;
+
+
+
