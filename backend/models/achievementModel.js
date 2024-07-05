@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+// TODO : Make sure there are no duplicate documents for the same userID
+
 const achievementSchema = new mongoose.Schema({
   userId: {
     // type: mongoose.Schema.Types.ObjectId,
@@ -32,9 +34,10 @@ const achievementSchema = new mongoose.Schema({
     type: String,
     default: null,
   },
-  isVerified: {
-    type: Boolean,
-    default: null, // null -> not checked by mentor, false -> rejected, true -> accepted
+  verificationStatus: {
+    type: String,
+    enum: ["pending", "accepted", "rejected"],
+    default: "pending",
     required: true,
   },
 });
