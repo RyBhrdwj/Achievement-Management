@@ -8,7 +8,6 @@ const Footer = () => {
     textAlign: 'center',
     fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     borderRadius: '8px 8px 0 0',
-    position: 'fixed',
     bottom: '0',
     width: '100%',
     zIndex: 999,

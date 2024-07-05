@@ -1,10 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaTh, FaCheckSquare, FaUserAlt, FaTasks, FaCommentAlt, FaFileInvoiceDollar, FaBars } from 'react-icons/fa';
 
 const SideBar = () => {
   const [hovered, setHovered] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(window.innerWidth > 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsOpen(window.innerWidth > 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -91,7 +103,7 @@ const SideBar = () => {
 
   return (
     <>
-      <FaBars style={toggleButtonStyle} onClick={toggleSidebar} />
+      {window.innerWidth < 768 && <FaBars style={toggleButtonStyle} onClick={toggleSidebar} />}
       <div className="lg:w-64 md:w-56 sm:w-48" style={sidebarStyle}>
         <div style={logoStyle}>LOGO</div>
         <nav>

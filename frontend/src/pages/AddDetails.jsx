@@ -9,11 +9,13 @@ const AddDetails = () => {
   return (
     <div>
       {submit ? (
-        <div className="mx-auto max-w-2xl max-h-lg bg-gray-200 flex justify-center p-8 rounded-lg items-center gap-4 shadow">
+        <div className="flex justify-center items-center w-[83vw] h-[80vh]">
+        <div className="mx-auto my-auto max-w-2xl max-h-lg bg-gray-200 flex justify-center p-8 rounded-lg items-center gap-4 shadow">
           <span className=""><IconContext.Provider value={{ color: "green", size: "40px" }}>
         <BsFillSendCheckFill />
         </IconContext.Provider></span>
        <h1 className="text-md font-medium  flex border-l-2 border-gray-400 pl-4">Your details have been sent to the mentor for verification. Your achievement will be reflected on your dashboard once the mentor verifies it.</h1>
+        </div>
         </div>
       ) : (
         <div className="p-10 m-10 bg-gray-100 rounded-lg shadow-lg max-w-3xl mx-auto">

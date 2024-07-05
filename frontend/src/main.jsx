@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
-import { Home, AddDetails } from './pages'
+import { Home, AddDetails, Mentor } from './pages'
 
 const Layout = () => {
   const router = createBrowserRouter(
@@ -11,6 +11,7 @@ const Layout = () => {
       <Route path="/" element={<App />}>
         <Route path='' element={<Home />} />
         <Route path='add' element={<AddDetails />} />
+        <Route path='mentor' element={<Mentor />} />
       </Route>
     )
   )

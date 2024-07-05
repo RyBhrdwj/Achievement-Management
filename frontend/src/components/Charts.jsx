@@ -10,7 +10,7 @@ const Charts = () => {
     events.forEach(event => {
       const month = new Date(event.date).getMonth();
       monthlyCounts[month]++;
-      monthlyEvents[month].push(event.eventName);
+      monthlyEvents[month].push(event.name);
     });
 
     return { monthlyCounts, monthlyEvents };
