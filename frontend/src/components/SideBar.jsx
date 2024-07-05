@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaTh, FaCheckSquare, FaUserAlt, FaTasks, FaCommentAlt, FaFileInvoiceDollar, FaBars } from 'react-icons/fa';
+import zIndex from '@mui/material/styles/zIndex';
 
 const SideBar = () => {
   const [hovered, setHovered] = useState(null);
@@ -36,6 +37,7 @@ const SideBar = () => {
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     backgroundColor: '#f8f9fa',
     transition: 'left 0.3s ease',
+    zIndex: '999'
   };
 
   const toggleButtonStyle = {

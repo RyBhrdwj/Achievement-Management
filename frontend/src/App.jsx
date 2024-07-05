@@ -9,7 +9,7 @@ function App() {
   return (
      <div className='grid grid-cols-12'>
       <div className='sm:col-span-2'><SideBar /></div>
-      <div className='col-span-10'>
+      <div className='col-span-12 sm:col-span-10'>
       <Header />
         <Outlet />
         <Footer />

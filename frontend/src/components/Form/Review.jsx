@@ -29,7 +29,7 @@ const Review = ({ details }) => {
           </tr>
           <tr>
             <th className="text-left p-2 border border-gray-400 w-1/2">Venue(or link):</th>
-            <td className="p-2 border border-gray-400 w-1/2">{details.venue}</td>
+            <td className="p-2 border border-gray-400 w-1/2">{details.location}</td>
           </tr>
           <tr>
             <th className="text-left p-2 border border-gray-400 w-1/2">Result:</th>

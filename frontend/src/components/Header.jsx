@@ -3,9 +3,9 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 
 const Header = () => {
   return (
-    <header className='bg-sky-300 shadow-lg p-4 rounded-lg flex justify-between items-center sm:mx-4 my-2'>
+    <header className='bg-sky-300 shadow-lg p-4 sm:rounded-lg flex justify-between items-center mx-0 sm:mx-4 sm:my-2'>
       <div className='flex items-center'>
-        <h1 className='rext-md am:text-2xl font-bold text-gray-800'>Dashboard</h1>
+        <h1 className='text-md sm:text-2xl font-bold text-gray-800'>Dashboard</h1>
       </div>
       <div className='flex items-center'>
         <NotificationsIcon className='text-gray-600 text-3xl mr-4' />

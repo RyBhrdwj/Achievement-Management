@@ -6,7 +6,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
-import { events } from '../constants';
+import Loader from './Loader';
 
 const initialValue = dayjs(new Date().toDateString());
 
@@ -27,20 +27,31 @@ function ServerDay(props) {
   );
 }
 
-export default function DateCalendarServerRequest() {
+export default function EventCalendar({ events }) {
   const requestAbortController = useRef(null);
-  const [highlightedDays, setHighlightedDays] = useState(events.map(event => event.date));
-  const [value, setValue] = useState(dayjs());
-  
-  const fetchHighlightedDays = (date) => {
-    const controller = new AbortController();
-    setHighlightedDays(events.map(event => event.date));
-    requestAbortController.current = controller;
+  const [highlightedDays, setHighlightedDays] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [value, setValue] = useState(initialValue);
+
+  const fetchHighlightedDays = async (date) => {
+    try {
+      const highlightedDates = events.map(event => event.date);
+      setHighlightedDays(highlightedDates);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching highlighted days:', error);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     fetchHighlightedDays(initialValue);
-    return () => requestAbortController.current?.abort();
+
+    return () => {
+      if (requestAbortController.current) {
+        requestAbortController.current.abort();
+      }
+    };
   }, []);
 
   const handleMonthChange = (date) => {
@@ -49,14 +60,19 @@ export default function DateCalendarServerRequest() {
     }
 
     setHighlightedDays([]);
+    setLoading(true);
     fetchHighlightedDays(date);
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="w-full max-w-sm mx-auto p-4 bg-gray-200 rounded-lg shadow-xl">
         <DateCalendar
-          value={value} 
+          value={value}
           onChange={(newValue) => setValue(newValue)}
           onMonthChange={handleMonthChange}
           renderLoading={() => <DayCalendarSkeleton />}

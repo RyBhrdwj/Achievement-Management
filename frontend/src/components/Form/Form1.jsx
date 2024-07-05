@@ -93,7 +93,7 @@ const Form1 = ({details, setDetails}) => {
           <input
             type="radio"
             name="result"
-            value="won"
+            value="winner"
             className="form-radio text-blue-500 focus:ring-blue-500"
             onChange={(e)=>setDetails({...details, result: e.target.value})}
           />
@@ -103,7 +103,7 @@ const Form1 = ({details, setDetails}) => {
           <input
             type="radio"
             name="result"
-            value="participated"
+            value="participant"
             className="form-radio text-blue-500 focus:ring-blue-500"
             onChange={(e)=>setDetails({...details, result: e.target.value})}
           />
@@ -113,7 +113,7 @@ const Form1 = ({details, setDetails}) => {
           <input
             type="radio"
             name="result"
-            value="runner-up"
+            value="runner up"
             className="form-radio text-blue-500 focus:ring-blue-500"
             onChange={(e)=>setDetails({...details, result: e.target.value})}
           />
@@ -125,13 +125,13 @@ const Form1 = ({details, setDetails}) => {
     </div>
   <fieldset className="flex flex-col space-y-2">
     <label className="text-lg font-medium text-gray-700">
-      Event Venue:
+      Event Venue(Link in case of online mode):
     </label>
     <textarea
-      name="venue"
-      placeholder="Enter the venue of the event"
+      name="location"
+      placeholder="Enter the location of the event"
       className="outline-none border-2 border-gray-300 px-4 py-2 rounded-md focus:border-blue-500 transition duration-150 ease-in-out"
-      onChange={(e)=>setDetails({...details, venue: e.target.value})}
+      onChange={(e)=>setDetails({...details, location: e.target.value})}
     />
   </fieldset></div>
   )

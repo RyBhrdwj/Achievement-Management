@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Form1 from './Form/Form1';
 import Form2 from './Form/Form2';
 import Review from './Form/Review';
+import axios from 'axios'
 
 const steps = ['Add Details', 'Add Proof'];
 
@@ -22,20 +23,20 @@ export default function EventForm({setSubmit}) {
     otherType: '',
     mode: '',
     result: '',
-    venue: '',
+    location: '',
     proof: '',
     proofUrl: ''
   });
 
     const isDisabled = () => {
-      const { name, date, type, mode, result, venue } = details;
+      const { name, date, type, mode, result, location } = details;
       return (
         name === "" ||
         date === "" ||
         type === "" ||
         mode === "" ||
         result === "" ||
-        venue === ""
+        location === ""
       );
     };
 
@@ -80,16 +81,24 @@ export default function EventForm({setSubmit}) {
   const handleSubmit = async () => {
     console.log(details)
     try {
-      const formData = new FormData();
-      formData.append('name',details.name)
-      formData.append('date',details.date)
-      formData.append('type',details.type === 'other' ? details.otherType : details.type)
-      formData.append('venue',details.venue)
-      formData.append('mode',details.mode)
-      formData.append('result',details.result)
-      formData.append('proof', details.proof ? details.proof : null)
-      console.log(formData)
-      const response = await axios.post('http://localhost:3000/api/add-achievement',formData);
+      // const formData = new FormData();
+      // formData.append('userId','03520802722')
+      // formData.append('name',details.name)
+      // formData.append('date',details.date)
+      // formData.append('description',details.type === 'other' ? details.otherType : details.type)
+      // formData.append('location',details.location)
+      // formData.append('mode',details.mode)
+      // formData.append('result',details.result)
+      // formData.append('proof', details.proof ? details.proof : null)
+      // formData.append('verificationStatus','pending')
+      // console.log(formData)
+      const userId = '03520802722'
+      const name = details.name
+      const date = details.date
+      const description = details.type === 'other' ? details.otherType : details.type
+      const location = details.location
+      const result = details.result
+      const response = await axios.post('https://amgmt.onrender.com/api/add-achievement',{userId,name,date,description,location,result});
       console.log(response)
     } catch (error) {
       console.log(error)
