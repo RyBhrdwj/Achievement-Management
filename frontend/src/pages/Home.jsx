@@ -3,6 +3,7 @@ import Charts from "../components/Charts";
 import EventCalender from "../components/EventCalender";
 import RecentAchievements from "../components/RecentAchievements";
 import axios from "axios";
+import Announcement from "../components/Announcement";
 const Home = () => {
   const [events, setEvents] = useState([]);
 
@@ -21,8 +22,9 @@ const Home = () => {
   }, []);
   console.log(events)
   return (
-    <div className="p-2 sm:p-10">
-      <div className="grid grid-cols-1 sm:grid-cols-12 w-full h-full justify-center items-center">
+    <div className="px-2 sm:px-6">
+      <Announcement speed={window.innerWidth > 768 ? 10000 : 20000}/>
+      <div className="grid grid-cols-1 sm:grid-cols-12 w-full h-full justify-center items-center p-4 bg-gray-400 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100 mb-4">
         <div className="col-span-8">
           <Charts events={events} />
         </div>

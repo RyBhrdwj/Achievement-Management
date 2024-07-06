@@ -4,7 +4,7 @@ import { FaTh, FaCheckSquare, FaUserAlt, FaTasks, FaCommentAlt, FaFileInvoiceDol
 
 const SideBar = () => {
   const [hovered, setHovered] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(window.innerWidth > 768);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);

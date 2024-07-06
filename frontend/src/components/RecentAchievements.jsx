@@ -10,7 +10,7 @@ const EventCard = ({ event }) => {
   const toggleOpen = () => setIsOpen(!isOpen);
 
   return (
-    <div className="bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 duration-300">
+    <div className="bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-[1.02] duration-300">
       <div className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-500 to-indigo-500 text-white">
         <div>
           <h3 className="text-xl font-bold">{event.name}</h3>

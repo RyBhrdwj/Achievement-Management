@@ -57,3 +57,25 @@
     background-color: #f4f4f4;
     margin-bottom: 1rem;
   }
+
+
+  .wrapper {
+    position: absolute;
+    display: flex;
+  }
+  
+  section {
+    display: flex;
+    animation: swipe var(--speed) linear infinite backwards;
+  }
+  
+  @keyframes swipe {
+    0% {
+      transform: translate(100%);
+    }
+  
+    100% {
+      transform: translate(-100%);
+    }
+  }
+  
