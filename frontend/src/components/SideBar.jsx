@@ -10,6 +10,12 @@ const SideBar = () => {
     setIsOpen(!isOpen);
   };
 
+  const closeSidebar = () => {
+    if (isOpen) {
+      setIsOpen(false);
+    }
+  };
+
   const sidebarStyle = {
     position: 'fixed',
     top: '0',
@@ -26,7 +32,6 @@ const SideBar = () => {
     zIndex: 1000,
     borderTopRightRadius: '20px',
     borderBottomRightRadius: '20px',
-
   };
 
   const toggleButtonStyle = {
@@ -44,8 +49,8 @@ const SideBar = () => {
     marginBottom: '30px',
     color: '#fff',
     alignSelf: 'center',
-    marginTop:'28px',
-    marginRight:'40px'
+    marginTop: '28px',
+    marginRight: '40px',
   };
 
   const navStyle = {
@@ -103,6 +108,7 @@ const SideBar = () => {
                 activeStyle={activeLinkStyle}
                 onMouseEnter={() => handleMouseEnter(0)}
                 onMouseLeave={handleMouseLeave}
+                onClick={closeSidebar}
               >
                 <FaTh style={iconStyle} /> Dashboard
               </NavLink>
@@ -170,6 +176,8 @@ const SideBar = () => {
 };
 
 export default SideBar;
+
+
 
 
 
