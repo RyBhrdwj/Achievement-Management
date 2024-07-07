@@ -1,17 +1,40 @@
-const Achievement = require ('./../models/achievementModel');
+// achievement dummy data with functions
 
-const newAchievement = new Achievement({
-    title: 'Dora-Dora Hackathon',
+const mongoose = require('mongoose');
+const Achievement = require('./../models/achievementModel');
+
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost:27017/yourDatabase', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('MongoDB connection error:', err));
+
+// Example function to add an achievement for a user
+async function addAchievement(userId, achievementData) {
+  try {
+    const newAchievement = new Achievement({ ...achievementData, user: userId });
+    await newAchievement.save();
+    console.log('Achievement added successfully');
+  } catch (err) {
+    console.error('Error adding achievement:', err);
+  }
+}
+
+// Example usage
+const userId = 'PUT_REGISTERED_USER_ID_HERE'; // Replace with the actual user ID from the registration step
+const achievementData = {
+    name: 'Dora-Dora Hackathon',
     description: 'First place in hackathon',
     location: 'Dehradun',
-    link: 'http://hackthonxyz.com',
+    // link: 'http://hackthonxyz.com',
     date: new Date(),
-    isTechnical: true,
     result: 'won',
     proof: null,
-    isVerified: false,
-})
+    verificationStatus: pending,
+  
+};
 
-newAchievement.save()
-    .then(()=> console.log('Achievement saved successfully!))
-    .catch(err=> console.error('error occured while saving Achievement', err));
+addAchievement(userId, achievementData)
+  .then(() => {
+    console.log('Achievement added for user:', userId);
+  })
+  .catch(err => console.error('Error:', err));
