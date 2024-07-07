@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaTh, FaCheckSquare, FaUserAlt, FaTasks, FaCommentAlt, FaFileInvoiceDollar, FaBars } from 'react-icons/fa';
 
@@ -10,11 +10,18 @@ const SideBar = () => {
     setIsOpen(!isOpen);
   };
 
-  const closeSidebar = () => {
-    if (isOpen) {
-      setIsOpen(false);
-    }
-  };
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setIsOpen(false);
+      } else {
+        setIsOpen(true);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const sidebarStyle = {
     position: 'fixed',
@@ -108,7 +115,7 @@ const SideBar = () => {
                 activeStyle={activeLinkStyle}
                 onMouseEnter={() => handleMouseEnter(0)}
                 onMouseLeave={handleMouseLeave}
-                onClick={closeSidebar}
+                onClick={() => { if (isOpen) toggleSidebar(); }}
               >
                 <FaTh style={iconStyle} /> Dashboard
               </NavLink>
@@ -120,6 +127,7 @@ const SideBar = () => {
                 activeStyle={activeLinkStyle}
                 onMouseEnter={() => handleMouseEnter(1)}
                 onMouseLeave={handleMouseLeave}
+                onClick={() => { if (isOpen) toggleSidebar(); }}
               >
                 <FaCheckSquare style={iconStyle} /> Add Event
               </NavLink>
@@ -176,6 +184,7 @@ const SideBar = () => {
 };
 
 export default SideBar;
+
 
 
 
