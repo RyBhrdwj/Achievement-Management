@@ -1,5 +1,5 @@
 const Notification = require("../models/notificationModel");
-const crudRepo = require("./crudRepo");
+const crudRepo = require("./crud");
 
 class NotificationRepository extends crudRepo {
   constructor() {
