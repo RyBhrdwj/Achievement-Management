@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import {formatDate} from '../utililtyFunctions.js'
+import Loader from '../components/Loader.jsx'
 
 const Card = ({ notification }) => {
   return (
@@ -30,27 +31,9 @@ const Card = ({ notification }) => {
 
 const Notification = () => {
   const [notifications,setNotifications] = useState([])
-  // const notifications = [
-  //   {
-  //     id: 1,
-  //     title: "New Assignment",
-  //     message: "You have a new assignment due next week.",
-  //     time: "2 hours ago",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Meeting Reminder",
-  //     message: "Reminder for your meeting with the mentor tomorrow at 10 AM.",
-  //     time: "1 day ago",
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Feedback Received",
-  //     message: "Your mentor has provided feedback on your recent project.",
-  //     time: "3 days ago",
-  //   },
-  // ];
+  const [loading,setLoading] = useState(false)
   useEffect(()=>{
+    setLoading(true)
     const getNotifications = async () => {
       const userId = '03520802722'
       try {
@@ -62,7 +45,9 @@ const Notification = () => {
       }
     }
     getNotifications()
+    setLoading(false)
   },[])
+
 
   return (
     <div className=" min-h-screen flex flex-col items-center py-10">
@@ -72,11 +57,11 @@ const Notification = () => {
             Notifications
           </h1>
         </div>
-        <div className="p-4">
+        {loading ? <Loader /> : <div className="p-4">
           {notifications.map((notification, idx) => (
             <Card key={idx} notification={notification} />
           ))}
-        </div>
+        </div>}
       </div>
     </div>
   );

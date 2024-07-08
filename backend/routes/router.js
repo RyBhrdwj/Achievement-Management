@@ -7,6 +7,7 @@ const {
 
 const achievementController = require("../controllers/achievementController");
 const notificationController = require("../controllers/notificationController");
+const requestController = require("../controllers/requestController");
 
 // Define the routes
 router.get("/", (req, res) => {
@@ -14,6 +15,7 @@ router.get("/", (req, res) => {
 });
 router.get("/achievements/:userId", achievementController.getAchievements);
 router.get("/notifications/:userId", notificationController.getNotifications);
+router.get("/requests/:mentorId", requestController.getRequests);
 
 router.post(
   "/add-achievement",
@@ -23,6 +25,10 @@ router.post(
 router.post(
   "/add-notification",
   notificationController.addNotification
+)
+router.post(
+  "/add-request",
+  requestController.addRequest
 )
 router.put("/update-achievement/:id", achievementController.updateAchievement);
 
