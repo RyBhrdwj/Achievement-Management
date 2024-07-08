@@ -26,18 +26,19 @@ const Requests = ({ requests }) => {
   return (
     <div className="p-4">
       <h1 className="text-3xl font-bold mb-6 text-center text-blue-700">Requests</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6">
         {requests.map((request, index) => (
           <div
             key={index}
-            className="bg-gradient-to-r from-purple-700 via-pink-500 to-green-800 shadow-md rounded-lg p-6 cursor-pointer transform hover:scale-105 transition-transform duration-300"
+            className="bg-gradient-to-r from-indigo-500 to-purple-500 shadow-md rounded-lg p-6 cursor-pointer transform hover:scale-105 transition-transform duration-300"
             onClick={() => handleOpenRequest(request)}
+            style={{ width: '70%', margin: 'auto' }} // Adjusted width and centered horizontally
           >
             <h2 className="text-xl font-semibold text-white mb-2">{request.title}</h2>
-            <p className="text-white">Aditya Gaur</p>
-            <p className="text-white">Enrollment Number</p>
-            <p className="text-white text-right">Date</p>
-            <p className="text-white text-right">Event Name</p>
+            <p className="text-white"><strong>Mentor:</strong> Aditya Gaur</p>
+            <p className="text-white"><strong>Enrollment Number:</strong> {request.enrollmentNumber}</p>
+            <p className="text-white text-right"><strong>Date:</strong> {request.date}</p>
+            <p className="text-white text-right"><strong>Event Name:</strong> {request.eventName}</p>
           </div>
         ))}
       </div>
@@ -81,6 +82,4 @@ const Requests = ({ requests }) => {
 };
 
 export default Requests;
-
-
 
