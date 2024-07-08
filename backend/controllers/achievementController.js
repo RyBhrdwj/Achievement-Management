@@ -49,6 +49,12 @@ class AchievementController {
     }
   };
 
+  // TODO: Create route, controller to handle "get achievement proof"
+
+  getAchievementProof = async (req, res) => {
+    // controller code here
+  }
+
   updateAchievement = async (req, res) => {
     try {
       const achievement = await this.achievement.updateAchievement(
@@ -83,3 +89,4 @@ class AchievementController {
 }
 
 module.exports = new AchievementController();
+ 
