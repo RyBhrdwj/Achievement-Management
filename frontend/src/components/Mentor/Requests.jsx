@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const Requests = ({ requests }) => {
   const [selectedRequest, setSelectedRequest] = useState(null);
@@ -13,8 +14,9 @@ const Requests = ({ requests }) => {
 
   const handleAcceptRequest = () => {
     console.log('Request Accepted:', selectedRequest);
+    sendNotification();
     // Add your accept logic here
-    setSelectedRequest(null);
+    // setSelectedRequest(null);
   };
 
   const handleRejectRequest = () => {
@@ -22,6 +24,18 @@ const Requests = ({ requests }) => {
     // Add your reject logic here
     setSelectedRequest(null);
   };
+
+  const sendNotification = async () => {
+    const message = "Congratulations, your achievement Code Cubicles hackathon held on 12/03/24 at Bhagwan Parshuram Institute of Technology has been verified by the Mentor"
+    const user = '03520802722'
+    const mentor = '12345'
+    try {
+      const response = await axios.post('https://amgmt.onrender.com/api/add-notification',{user,message,mentor})
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className="p-4">

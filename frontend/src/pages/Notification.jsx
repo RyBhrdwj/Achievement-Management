@@ -1,4 +1,6 @@
-import React from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import {formatDate} from '../utililtyFunctions.js'
 
 const Card = ({ notification }) => {
   return (
@@ -20,33 +22,47 @@ const Card = ({ notification }) => {
           {notification.title}
         </div>
         <div className="text-gray-600">{notification.message}</div>
-        <div className="text-sm text-gray-400 mt-2">{notification.time}</div>
+        <div className="text-sm text-gray-400 mt-2">{formatDate(notification.createdAt)}</div>
       </div>
     </div>
   );
 };
 
 const Notification = () => {
-  const notifications = [
-    {
-      id: 1,
-      title: "New Assignment",
-      message: "You have a new assignment due next week.",
-      time: "2 hours ago",
-    },
-    {
-      id: 2,
-      title: "Meeting Reminder",
-      message: "Reminder for your meeting with the mentor tomorrow at 10 AM.",
-      time: "1 day ago",
-    },
-    {
-      id: 3,
-      title: "Feedback Received",
-      message: "Your mentor has provided feedback on your recent project.",
-      time: "3 days ago",
-    },
-  ];
+  const [notifications,setNotifications] = useState([])
+  // const notifications = [
+  //   {
+  //     id: 1,
+  //     title: "New Assignment",
+  //     message: "You have a new assignment due next week.",
+  //     time: "2 hours ago",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Meeting Reminder",
+  //     message: "Reminder for your meeting with the mentor tomorrow at 10 AM.",
+  //     time: "1 day ago",
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Feedback Received",
+  //     message: "Your mentor has provided feedback on your recent project.",
+  //     time: "3 days ago",
+  //   },
+  // ];
+  useEffect(()=>{
+    const getNotifications = async () => {
+      const userId = '03520802722'
+      try {
+        const response = await axios.get(`https://amgmt.onrender.com/api/notifications/${userId}`)
+        console.log(response)
+        setNotifications(response.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getNotifications()
+  },[])
 
   return (
     <div className=" min-h-screen flex flex-col items-center py-10">

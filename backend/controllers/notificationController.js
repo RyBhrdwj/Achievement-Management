@@ -17,7 +17,7 @@ class NotificationController {
 
   addNotification = async (req, res) => {
     try {
-      const data = req.body;
+      const {data} = req.body;
       const newNotification = await this.notification.addNotification(data);
       res.status(201).json(newNotification);
     } catch (err) {
