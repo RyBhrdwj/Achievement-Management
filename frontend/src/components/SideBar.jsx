@@ -48,6 +48,7 @@ const SideBar = () => {
     fontSize: '24px',
     cursor: 'pointer',
     zIndex: 1001,
+    display: window.innerWidth <= 768 ? 'block' : 'none',
   };
 
   const logoStyle = {
@@ -115,7 +116,7 @@ const SideBar = () => {
                 activeStyle={activeLinkStyle}
                 onMouseEnter={() => handleMouseEnter(0)}
                 onMouseLeave={handleMouseLeave}
-                onClick={() => { if (isOpen) toggleSidebar(); }}
+                onClick={() => { if (window.innerWidth <= 768 && isOpen) toggleSidebar(); }}
               >
                 <FaTh style={iconStyle} /> Dashboard
               </NavLink>
@@ -127,7 +128,7 @@ const SideBar = () => {
                 activeStyle={activeLinkStyle}
                 onMouseEnter={() => handleMouseEnter(1)}
                 onMouseLeave={handleMouseLeave}
-                onClick={() => { if (isOpen) toggleSidebar(); }}
+                onClick={() => { if (window.innerWidth <= 768 && isOpen) toggleSidebar(); }}
               >
                 <FaCheckSquare style={iconStyle} /> Add Event
               </NavLink>
@@ -184,6 +185,7 @@ const SideBar = () => {
 };
 
 export default SideBar;
+
 
 
 
