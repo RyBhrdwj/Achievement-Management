@@ -1,11 +1,6 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-  id: {
-    type: mongoose.Schema.Types.ObjectId,
-    default: new mongoose.Types.ObjectId(),
-    primaryKey: true,
-  },
   displayname: {
     type: String,
     required: true,
@@ -14,7 +9,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     unique: true,
     length: 11,
-    required: true,
   },
   // drop down menu se select
   branch_section: {
@@ -27,14 +21,6 @@ const userSchema = new mongoose.Schema({
     required: true,
     match: /^[a-zA-Z0-9._%+-]+@bpitindia\.edu\.in$/,
   },
-  team_name: {
-    type: String,
-    required: true,
-  },
-  member_role: {
-    type: String,
-    required: true,
-  },
   // as user is registered first, then do we even need below code??
 
   // achievements: [
@@ -43,9 +29,9 @@ const userSchema = new mongoose.Schema({
   //     ref: "Achievement",
   //   },
   // ],
-  faculty: {
-    type: Boolean,
-    required: true,
+  mentor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Mentor"
   }
 });
 

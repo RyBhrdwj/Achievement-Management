@@ -88,3 +88,59 @@ export const events = [
     isVerified: null,
   }
   ];
+
+
+export const requests = [
+  {
+    studentName: "Nikhil Kumar",
+    class: "CSE A",
+    name: "City Marathon",
+    date: "2024-01-12",
+    type: "other",
+    otherType: "marathon",
+    mode: "offline",
+    result: "participated",
+    venue: "New York",
+    proof: "https://example.com/images/marathon.jpg",
+    isVerified: null,
+  },
+  {
+    studentName: "Nikhil Kumar",
+    class: "CSE A",
+    name: "Hackathon 2024",
+    date: "2024-02-18",
+    type: "hackathon",
+    otherType: "",
+    mode: "offline",
+    result: "won",
+    venue: "San Francisco",
+    proof: "https://example.com/images/hackathon.jpg",
+    isVerified: null,
+  },
+  {
+    studentName: "Nikhil Kumar",
+    class: "CSE A",
+    name: "Art Exhibition",
+    date: "2024-03-22",
+    type: "other",
+    otherType: "exhibition",
+    mode: "offline",
+    result: "participated",
+    venue: "Paris",
+    proof: "https://example.com/images/art_exhibition.jpg",
+    isVerified: null,
+  },
+  {
+    studentName: "Nikhil Kumar",
+    class: "CSE A",
+    name: "Film Festival",
+    date: "2024-07-25",
+    type: "other",
+    otherType: "festival",
+    mode: "offline",
+    result: "participated",
+    venue: "Cannes",
+    proof: "https://example.com/images/film_festival.jpg",
+    isVerified: null,
+  }
+]
