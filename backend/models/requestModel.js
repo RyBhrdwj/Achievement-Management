@@ -1,22 +1,26 @@
 const mongoose = require("mongoose");
 
 const requestSchema = new mongoose.Schema({
-    user: {
-        type: String,
-        required: true
-    },
-    mentor: {
-        type: String,
-        required: true
-    },
-    achievement: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Achievement"
-    }
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
+  mentor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Mentor",
+    required: true 
+  },
+  achievement: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Achievement",
+    required: true
+  }
 }, {
-    timestamps: true
+  timestamps: true
 });
 
 const Request = mongoose.model("Request", requestSchema);
 
 module.exports = Request;
+

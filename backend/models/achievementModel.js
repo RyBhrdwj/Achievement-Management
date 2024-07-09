@@ -4,9 +4,9 @@ const mongoose = require("mongoose");
 
 const achievementSchema = new mongoose.Schema({
   userId: {
-    // type: mongoose.Schema.Types.ObjectId,
-    // ref: "User",
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    // type: String,
     required: true,
   },
   name: {
@@ -24,6 +24,11 @@ const achievementSchema = new mongoose.Schema({
   date: {
     type: Date,
     // required: true,
+  },
+  mode:{
+    tyep: String,
+    enum: ["online", "offline"],
+    required: true,
   },
   result: {
     type: String,

@@ -21,14 +21,6 @@ const userSchema = new mongoose.Schema({
     required: true,
     match: /^[a-zA-Z0-9._%+-]+@bpitindia\.edu\.in$/,
   },
-  // as user is registered first, then do we even need below code??
-
-  // achievements: [
-  //   {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "Achievement",
-  //   },
-  // ],
   mentor: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Mentor"
