@@ -26,7 +26,7 @@ const achievementSchema = new mongoose.Schema({
     // required: true,
   },
   mode:{
-    tyep: String,
+    type: String,
     enum: ["online", "offline"],
     required: true,
   },
