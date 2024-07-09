@@ -49,7 +49,7 @@ const Requests = ({ requests }) => {
     const user = '03520802722'
     const mentor = '12345'
     try {
-      const response = await axios.post('http://localhost:3000/api/add-notification',{user,message,mentor})
+      const response = await axios.post('https://amgmt.onrender.com/api/add-notification', { user, message, mentor })
       console.log(response)
     } catch (error) {
       console.log(error)
@@ -57,13 +57,13 @@ const Requests = ({ requests }) => {
   }
 
   return (
-    <div className="p-4">
+    <div className="p-4  ">
       <h1 className="text-3xl font-bold mb-6 text-center text-blue-700">Requests</h1>
       <div className="grid grid-cols-1 gap-6">
         {requests.map((request, index) => (
           <div
             key={index}
-            className="bg-gradient-to-r from-indigo-500 to-purple-500 shadow-md rounded-lg p-6 cursor-pointer transform hover:scale-105 transition-transform duration-300"
+            className="bg-gradient-to-r from-indigo-500 to-purple-500 shadow-md rounded-lg p-6 cursor-pointer transform hover:scale-110 transition-transform duration-300"
             onClick={() => handleOpenRequest(request)}
             style={{ width: '70%', margin: 'auto' }} // Adjusted width and centered horizontally
           >
@@ -115,4 +115,8 @@ const Requests = ({ requests }) => {
 };
 
 export default Requests;
+
+
+
+
 
