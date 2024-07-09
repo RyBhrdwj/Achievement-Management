@@ -4,17 +4,17 @@ const requestSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: true
+    // required: true
   },
   mentor: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Mentor",
-    required: true 
+    // required: true 
   },
   achievement: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Achievement",
-    required: true
+    // required: true
   }
 }, {
   timestamps: true
