@@ -99,7 +99,11 @@ export default function EventForm({setSubmit}) {
       const location = details.location
       const result = details.result
       const response = await axios.post('https://amgmt.onrender.com/api/add-achievement',{userId,name,date,description,location,result});
-      console.log(response)
+      console.log(response.data)
+      const achievement = response.data._id
+      const mentor = '12345'
+      const request = await axios.post('https://amgmt.onrender.com/api/add-request',{user:userId,achievement,mentor})
+      console.log(request)
     } catch (error) {
       console.log(error)
     }

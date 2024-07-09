@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import {formatDate} from '../../utililtyFunctions'
 
 const Requests = ({ requests }) => {
   const [selectedRequest, setSelectedRequest] = useState(null);
@@ -14,7 +15,11 @@ const Requests = ({ requests }) => {
 
   const handleAcceptRequest = () => {
     console.log('Request Accepted:', selectedRequest);
-    sendNotification();
+    const message = `Congratulations, your achievement ${selectedRequest.achievement?.name} ${selectedRequest.achievement?.description} held on ${formatDate(selectedRequest.achievement?.date)} at ${selectedRequest.achievement?.location} has been verified by the Mentor`
+    sendNotification(message);
+    const id = selectedRequest._id;
+    const status = 'accepted';
+    updateAchievement({id,status})
     // Add your accept logic here
     // setSelectedRequest(null);
   };
@@ -22,15 +27,29 @@ const Requests = ({ requests }) => {
   const handleRejectRequest = () => {
     console.log('Request Rejected:', selectedRequest);
     // Add your reject logic here
-    setSelectedRequest(null);
+    const rejectionMessage = `Unfortunately, your achievement ${selectedRequest.achievement?.name} ${selectedRequest.achievement?.description} held on ${formatDate(selectedRequest.achievement?.date)} at ${selectedRequest.achievement?.location} has not been verified by the Mentor. Please review the requirements and try again.`
+    sendNotification(rejectionMessage);
+    const id = selectedRequest._id;
+    const status = 'rejected';
+    updateAchievement({id,status})
+    // setSelectedRequest(null);
   };
 
-  const sendNotification = async () => {
-    const message = "Congratulations, your achievement Code Cubicles hackathon held on 12/03/24 at Bhagwan Parshuram Institute of Technology has been verified by the Mentor"
+  const updateAchievement = async ({id,status}) => {
+    try {
+      const response = await axios.patch(`https://amgmt.onrender.com/api/verify-achievement/${id}/${status}`)
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const sendNotification = async (message) => {
+    console.log(message)
     const user = '03520802722'
     const mentor = '12345'
     try {
-      const response = await axios.post('https://amgmt.onrender.com/api/add-notification',{user,message,mentor})
+      const response = await axios.post('http://localhost:3000/api/add-notification',{user,message,mentor})
       console.log(response)
     } catch (error) {
       console.log(error)
@@ -48,11 +67,11 @@ const Requests = ({ requests }) => {
             onClick={() => handleOpenRequest(request)}
             style={{ width: '70%', margin: 'auto' }} // Adjusted width and centered horizontally
           >
-            <h2 className="text-xl font-semibold text-white mb-2">{request.title}</h2>
-            <p className="text-white"><strong>Mentor:</strong> Aditya Gaur</p>
+            <h2 className="text-xl font-semibold text-white mb-2">{request.achievement?.name}</h2>
+            <p className="text-white"><strong>Student:</strong> Aditya Gaur</p>
             <p className="text-white"><strong>Enrollment Number:</strong> {request.enrollmentNumber}</p>
-            <p className="text-white text-right"><strong>Date:</strong> {request.date}</p>
-            <p className="text-white text-right"><strong>Event Name:</strong> {request.eventName}</p>
+            <p className="text-white text-right"><strong>Date:</strong> {formatDate(request.achievement?.date)}</p>
+            <p className="text-white text-right"><strong>Event type:</strong> {request.achievement?.description}</p>
           </div>
         ))}
       </div>
