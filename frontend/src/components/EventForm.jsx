@@ -92,7 +92,7 @@ export default function EventForm({setSubmit}) {
       // formData.append('proof', details.proof ? details.proof : null)
       // formData.append('verificationStatus','pending')
       // console.log(formData)
-      const userId = '03520802722'
+      const userId = '60c72b2f9b1d8b001f8e4c23'
       const name = details.name
       const date = details.date
       const description = details.type === 'other' ? details.otherType : details.type

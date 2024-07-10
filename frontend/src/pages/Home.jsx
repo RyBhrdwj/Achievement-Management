@@ -11,7 +11,7 @@ const Home = () => {
     const getAchievements = async () => {
       try {
         const response = await axios.get(
-          "https://amgmt.onrender.com/api/achievements/03520802722"
+          "https://amgmt.onrender.com/api/achievements/60c72b2f9b1d8b001f8e4c23"
         );
         setEvents(response.data);
       } catch (error) {

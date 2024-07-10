@@ -37,7 +37,7 @@ const Requests = ({ requests }) => {
 
   const updateAchievement = async ({id,status}) => {
     try {
-      const response = await axios.patch(`https://amgmt.onrender.com/api/verify-achievement/${id}/${status}`)
+      const response = await axios.patch(`http://localhost:3000/api/verify-achievement/${id}/${status}`)
       console.log(response)
     } catch (error) {
       console.log(error)
@@ -46,7 +46,7 @@ const Requests = ({ requests }) => {
 
   const sendNotification = async (message) => {
     console.log(message)
-    const user = '03520802722'
+    const user = '60c72b2f9b1d8b001f8e4c23'
     const mentor = '12345'
     try {
       const response = await axios.post('https://amgmt.onrender.com/api/add-notification', { user, message, mentor })

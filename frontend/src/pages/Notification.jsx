@@ -32,21 +32,25 @@ const Card = ({ notification }) => {
 const Notification = () => {
   const [notifications,setNotifications] = useState([])
   const [loading,setLoading] = useState(false)
-  useEffect(()=>{
-    setLoading(true)
+  useEffect(() => {
     const getNotifications = async () => {
-      const userId = '03520802722'
+      setLoading(true);
+      const userId = '60c72b2f9b1d8b001f8e4c23';
       try {
-        const response = await axios.get(`https://amgmt.onrender.com/api/notifications/${userId}`)
-        console.log(response)
-        setNotifications(response.data)
+        const response = await axios.get(`https://amgmt.onrender.com/api/notifications/${userId}`);
+        console.log(response);
+        const sortedNotifications = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setNotifications(sortedNotifications);
       } catch (error) {
-        console.log(error)
+        console.log(error);
+      } finally {
+        setLoading(false);
       }
-    }
-    getNotifications()
-    setLoading(false)
-  },[])
+    };
+    getNotifications();
+  }, []);
+  
+  
 
 
   return (
