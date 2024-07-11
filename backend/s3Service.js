@@ -10,10 +10,10 @@ const s3Client = new S3Client({
 });
 
 const bucketName = 'bucket-private12'; 
-const generateUploadURL = async (mentorName, studentName, fileName) => {
+const generateUploadURL = async (mentorId, studentId, fileName) => {
   const command = new PutObjectCommand({
     Bucket: bucketName,
-    Key: `${mentorName}/${studentName}/${fileName}`,
+    Key: `${mentorId}/${studentId}/${fileName}`,
     ContentType: 'image/png', // Adjust this according to your file type
   });
 
@@ -26,10 +26,10 @@ const generateUploadURL = async (mentorName, studentName, fileName) => {
   }
 };
 
-const generateDownloadURL = async (mentorName, studentName, fileName) => {
+const generateDownloadURL = async (mentorId, studentId, fileName) => {
   const command = new GetObjectCommand({
     Bucket: bucketName,
-    Key: `${mentorName}/${studentName}/${fileName}`
+    Key: `${mentorId}/${studentId}/${fileName}`
   });
 
   try {
