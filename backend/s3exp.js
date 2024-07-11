@@ -10,12 +10,12 @@ const upload = multer({dest: 'uploads/'});
 // app.use(express.json());
 
 router.post('/upload', upload.single('image'), async (req, res) => {
-  const { mentorName, studentName } = req.body;
+  const { mentorId, studentId } = req.body;
   const fileContent = fs.readFileSync(req.file.path);
   const fileName = req.file.originalname;
 
   try {
-    const uploadURL = await generateUploadURL(mentorName, studentName, fileName);
+    const uploadURL = await generateUploadURL(mentorId, studentId, fileName);
     // res.send({ success: true, url });
     
     // upload files to s3 using pre-signed url
@@ -33,10 +33,10 @@ router.post('/upload', upload.single('image'), async (req, res) => {
 });
 
 router.get('/image', async (req, res) => {
-  const { mentorName, studentName, fileName } = req.query;
+  const { mentorId, studentId, fileName } = req.query;
 
   try {
-    const downloadURL = await generateDownloadURL(mentorName, studentName, fileName);
+    const downloadURL = await generateDownloadURL(mentorId, studentId, fileName);
     // res.send({ success: true, url });
     // url aane ke baad idhar hi download
     console.log(downloadURL)
