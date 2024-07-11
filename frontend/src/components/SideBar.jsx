@@ -23,73 +23,6 @@ const SideBar = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const sidebarStyle = {
-    position: 'fixed',
-    top: '0',
-    left: isOpen ? '0' : '-250px',
-    width: '230px',
-    height: '100vh',
-    backgroundColor: '#ab3e97',
-    padding: '20px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'start',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    transition: 'left 0.3s ease, width 0.3s ease',
-    zIndex: 1000,
-    borderTopRightRadius: '20px',
-    borderBottomRightRadius: '20px',
-  };
-
-  const toggleButtonStyle = {
-    position: 'fixed',
-    top: '20px',
-    left: '20px',
-    fontSize: '24px',
-    cursor: 'pointer',
-    zIndex: 1001,
-    display: window.innerWidth <= 768 ? 'block' : 'none',
-  };
-
-  const logoStyle = {
-    fontSize: '24px',
-    fontWeight: 'bold',
-    marginBottom: '30px',
-    color: '#fff',
-    alignSelf: 'center',
-    marginTop: '28px',
-    marginRight: '40px',
-  };
-
-  const navStyle = {
-    listStyleType: 'none',
-    padding: '0',
-    width: '100%',
-  };
-
-  const navItemStyle = {
-    marginBottom: '20px',
-  };
-
-  const linkStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    textDecoration: 'none',
-    color: '#fff',
-    fontSize: '18px',
-    padding: '10px 20px',
-    borderRadius: '5px',
-    transition: 'background-color 0.3s, color 0.3s',
-  };
-
-  const activeLinkStyle = {
-    backgroundColor: '#34495e',
-  };
-
-  const iconStyle = {
-    marginRight: '10px',
-  };
-
   const handleMouseEnter = (index) => {
     setHovered(index);
   };
@@ -98,83 +31,86 @@ const SideBar = () => {
     setHovered(null);
   };
 
-  const getLinkStyle = (index) => {
-    return hovered === index ? { ...linkStyle, ...activeLinkStyle } : linkStyle;
+  const getLinkClassNames = (index) => {
+    return hovered === index
+      ? "flex items-center text-lg p-3 rounded-md transition duration-300 ease-in-out bg-purple-700 text-white"
+      : "flex items-center text-lg p-3 rounded-md transition duration-300 ease-in-out text-gray-200 hover:bg-purple-500 hover:text-white";
   };
 
   return (
     <>
-      <FaBars style={toggleButtonStyle} onClick={toggleSidebar} />
-      <div style={sidebarStyle}>
-        <div style={logoStyle}>LOGO</div>
+      <FaBars
+        className="fixed top-5 left-5 text-2xl cursor-pointer z-50 block md:hidden"
+        onClick={toggleSidebar}
+      />
+      <div
+        className={`fixed top-0 left-0 w-60 h-full bg-purple-500 p-3 flex flex-col items-start shadow-lg transition-transform duration-300 ease-in-out transform ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        } md:translate-x-0 z-40`}
+      >
+        <div className="text-white z-50 text-2xl font-bold mb-8 self-center">LOGO</div>
         <nav>
-          <ul style={navStyle}>
-            <li style={navItemStyle}>
+          <ul className="list-none p-0 w-full">
+            <li className="mb-4">
               <NavLink
                 to="/"
-                style={getLinkStyle(0)}
-                activeStyle={activeLinkStyle}
+                className={getLinkClassNames(0)}
                 onMouseEnter={() => handleMouseEnter(0)}
                 onMouseLeave={handleMouseLeave}
                 onClick={() => { if (window.innerWidth <= 768 && isOpen) toggleSidebar(); }}
               >
-                <FaTh style={iconStyle} /> Dashboard
+                <FaTh className="mr-3 " /> Dashboard
               </NavLink>
             </li>
-            <li style={navItemStyle}>
+            <li className="mb-4">
               <NavLink
                 to="/add"
-                style={getLinkStyle(1)}
-                activeStyle={activeLinkStyle}
+                className={getLinkClassNames(1)}
                 onMouseEnter={() => handleMouseEnter(1)}
                 onMouseLeave={handleMouseLeave}
                 onClick={() => { if (window.innerWidth <= 768 && isOpen) toggleSidebar(); }}
               >
-                <FaCheckSquare style={iconStyle} /> Add Event
+                <FaCheckSquare className="mr-3" /> Add Event
               </NavLink>
             </li>
-            <li style={navItemStyle}>
+            <li className="mb-4">
               <NavLink
                 to="/client"
-                style={getLinkStyle(2)}
-                activeStyle={activeLinkStyle}
+                className={getLinkClassNames(2)}
                 onMouseEnter={() => handleMouseEnter(2)}
                 onMouseLeave={handleMouseLeave}
               >
-                <FaUserAlt style={iconStyle} /> My Client
+                <FaUserAlt className="mr-3" /> My Client
               </NavLink>
             </li>
-            <li style={navItemStyle}>
+            <li className="mb-4">
               <NavLink
                 to="/task"
-                style={getLinkStyle(3)}
-                activeStyle={activeLinkStyle}
+                className={getLinkClassNames(3)}
                 onMouseEnter={() => handleMouseEnter(3)}
                 onMouseLeave={handleMouseLeave}
               >
-                <FaTasks style={iconStyle} /> My Task
+                <FaTasks className="mr-3" /> My Task
               </NavLink>
             </li>
-            <li style={navItemStyle}>
+            <li className="mb-4">
               <NavLink
                 to="/message"
-                style={getLinkStyle(4)}
-                activeStyle={activeLinkStyle}
+                className={getLinkClassNames(4)}
                 onMouseEnter={() => handleMouseEnter(4)}
                 onMouseLeave={handleMouseLeave}
               >
-                <FaCommentAlt style={iconStyle} /> Message
+                <FaCommentAlt className="mr-3" /> Message
               </NavLink>
             </li>
-            <li style={navItemStyle}>
+            <li className="mb-4">
               <NavLink
                 to="/billing"
-                style={getLinkStyle(5)}
-                activeStyle={activeLinkStyle}
+                className={getLinkClassNames(5)}
                 onMouseEnter={() => handleMouseEnter(5)}
                 onMouseLeave={handleMouseLeave}
               >
-                <FaFileInvoiceDollar style={iconStyle} /> My Billing
+                <FaFileInvoiceDollar className="mr-3" /> My Billing
               </NavLink>
             </li>
           </ul>
@@ -185,10 +121,3 @@ const SideBar = () => {
 };
 
 export default SideBar;
-
-
-
-
-
-
-
