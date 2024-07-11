@@ -1,32 +1,24 @@
 const mongoose = require("mongoose");
 
 const mentorSchema = new mongoose.Schema({
-  mentor_name: {
+  mentorId : {
     type: String,
     required: true
   },
-  phone_no: {
+  name: {
     type: String,
     required: true
   },
-  class: {
+  phone: {
     type: String,
     required: true
   },
   studentUserIds: [
     {
-      type: String,
-      // replace name by id
-      default: ["aditya gaur", "nikhil kumar"]
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
     }
   ],
-  // change in future
-//   studentUserIds: [
-//     {
-//       type: mongoose.Schema.Types.ObjectId,
-//       ref: "User"
-//     }
-//   ],
   email: {
     type: String,
     required: true,
