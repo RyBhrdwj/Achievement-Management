@@ -4,12 +4,12 @@ const fs = require('fs');
 const axios = require('axios');
 const { generateUploadURL, generateDownloadURL } = require('./s3Service'); 
 
-const app = express();
+const router = express.Router();
 const upload = multer({dest: 'uploads/'});
 
-app.use(express.json());
+// app.use(express.json());
 
-app.post('/upload', upload.single('image'), async (req, res) => {
+router.post('/upload', upload.single('image'), async (req, res) => {
   const { mentorName, studentName } = req.body;
   const fileContent = fs.readFileSync(req.file.path);
   const fileName = req.file.originalname;
@@ -32,7 +32,7 @@ app.post('/upload', upload.single('image'), async (req, res) => {
   }
 });
 
-app.get('/image', async (req, res) => {
+router.get('/image', async (req, res) => {
   const { mentorName, studentName, fileName } = req.query;
 
   try {
@@ -51,6 +51,4 @@ app.get('/image', async (req, res) => {
   }
 });
 
-app.listen(4000, () => {
-  console.log('Server started on http://localhost:4000');
-});
+module.exports = router;

@@ -8,6 +8,7 @@ const {
 const achievementController = require("../controllers/achievementController");
 const notificationController = require("../controllers/notificationController");
 const requestController = require("../controllers/requestController");
+const s3Router = require('../s3exp'); // Import the S3 routes
 
 // Define the routes
 router.get("/", (req, res) => {
@@ -42,5 +43,7 @@ router.delete(
   "/delete-achievement/:id",
   achievementController.deleteAchievement
 );
+
+router.use('/s3', s3Router);
 
 module.exports = router;
