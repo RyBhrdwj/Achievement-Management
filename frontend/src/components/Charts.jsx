@@ -86,9 +86,9 @@ const Charts = ({ events }) => {
     };
   }, [userData, monthlyEvents]);
 
-  if (!userData) {
-    return <Loader />; // Placeholder for when data is being fetched
-  }
+  // if (!userData) {
+  //   return <Loader />; // Placeholder for when data is being fetched
+  // }
 
   return (
     <div className='w-full p-2 sm:p-4'>

@@ -79,36 +79,44 @@ export default function EventForm({setSubmit}) {
   };
 
   const handleSubmit = async () => {
-    console.log(details)
     try {
-      // const formData = new FormData();
-      // formData.append('userId','03520802722')
-      // formData.append('name',details.name)
-      // formData.append('date',details.date)
-      // formData.append('description',details.type === 'other' ? details.otherType : details.type)
-      // formData.append('location',details.location)
-      // formData.append('mode',details.mode)
-      // formData.append('result',details.result)
-      // formData.append('proof', details.proof ? details.proof : null)
-      // formData.append('verificationStatus','pending')
-      // console.log(formData)
-      const userId = '60c72b2f9b1d8b001f8e4c23'
-      const name = details.name
-      const date = details.date
-      const description = details.type === 'other' ? details.otherType : details.type
-      const location = details.location
-      const result = details.result
-      const response = await axios.post('https://amgmt.onrender.com/api/add-achievement',{userId,name,date,description,location,result});
-      console.log(response.data)
-      const achievement = response.data._id
-      const mentor = '12345'
-      const request = await axios.post('https://amgmt.onrender.com/api/add-request',{user:userId,achievement,mentor})
-      console.log(request)
+      const userId = '60c72b2f9b1d8b001f8e4c23';
+      const name = details.name;
+      const date = details.date;
+      const description = details.type === 'other' ? details.otherType : details.type;
+      const location = details.location;
+      const mode = details.mode;
+      const result = details.result;
+  
+      const response = await axios.post('https://amgmt.onrender.com/api/add-achievement', {
+        userId,
+        name,
+        date,
+        description,
+        mode,
+        location,
+        result
+      });
+  
+      console.log(response.data);
+  
+      const achievement = response.data._id;
+      const mentor = '12345';
+  
+      const request = await axios.post('https://amgmt.onrender.com/api/add-request', {
+        user: userId,
+        achievement,
+        mentor
+      });
+  
+      console.log(request);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-    setSubmit(true)
+  
+    setSubmit(true);
   };
+  
 
   return (
     <Box sx={{ width: '100%' }} className="p-4">

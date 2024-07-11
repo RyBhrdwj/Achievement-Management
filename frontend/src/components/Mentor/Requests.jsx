@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import { NoDataFound } from '../../assets';
 
 const Requests = ({ requests }) => {
   const [selectedRequest, setSelectedRequest] = useState(null);
@@ -57,7 +57,7 @@ const Requests = ({ requests }) => {
       <h1 className="text-3xl font-bold mb-6 text-center text-blue-700">Requests</h1>
       {requests.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-64 bg-white ounded-lg p-6">
-          <img src="https://img.freepik.com/free-vector/hand-drawn-no-data-concept_52683-127823.jpg" 
+          <img src={NoDataFound}
           alt="No Requests" className="w-44 h-44 mb-4" />
           <h2 className="text-xl font-semibold text-gray-700 mb-2">No Requests Found</h2>
           <p className="text-gray-600">There are currently no requests for verification.</p>

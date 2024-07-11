@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { IconContext } from "react-icons/lib";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
-import axios from "axios";
+import { NoDataFound } from '../assets';
 import { formatDate } from "../utililtyFunctions";
 import Loader from "./Loader";
 
@@ -50,7 +50,7 @@ const EventCard = ({ event }) => {
                 <td className="p-2 border border-gray-300">{event.mode}</td>
               </tr>
               <tr>
-                <th className="text-left p-2 border border-gray-300 bg-gray-200">Venue(or link):</th>
+                <th className="text-left p-2 border border-gray-300 bg-gray-200">Venue (or link):</th>
                 <td className="p-2 border border-gray-300">{event.location}</td>
               </tr>
               <tr>
@@ -65,11 +65,11 @@ const EventCard = ({ event }) => {
   );
 };
 
-const RecentAchievements = ({ events, setEvents }) => {
+const RecentAchievements = ({ events = [], setEvents }) => {
   const [sortCriteria, setSortCriteria] = useState("A-Z");
 
   useEffect(() => {
-    sortEvents(sortCriteria);
+    if (events) sortEvents(sortCriteria);
   }, [sortCriteria, events]);
 
   const handleSortChange = (e) => {
@@ -115,8 +115,13 @@ const RecentAchievements = ({ events, setEvents }) => {
         </select>
       </div>
       <div className="flex flex-col gap-6">
+        {!events.length && <Loader />}
         {events.length === 0 ? (
-          <Loader />
+          <div className="flex flex-col items-center justify-center h-64 bg-white rounded-lg p-6">
+            <img src={NoDataFound} alt="No Requests" className="w-44 h-44 mb-4" />
+            <h2 className="text-xl font-semibold text-gray-700 mb-2">No Requests Found</h2>
+            <p className="text-gray-600">There are currently no requests for verification.</p>
+          </div>
         ) : (
           events.map((event, idx) => <EventCard event={event} key={idx} />)
         )}
