@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
+  // To be removed later
+  userId : {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  },
   displayname: {
     type: String,
     required: true,
