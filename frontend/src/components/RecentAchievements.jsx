@@ -67,6 +67,15 @@ const EventCard = ({ event }) => {
 
 const RecentAchievements = ({ events, setEvents }) => {
   const [sortCriteria, setSortCriteria] = useState("A-Z");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    // Simulate fetching data
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, [events]);
 
   useEffect(() => {
     sortEvents(sortCriteria);
@@ -100,7 +109,7 @@ const RecentAchievements = ({ events, setEvents }) => {
   };
 
   return (
-    <div className="p-6 bg-gradient-to-r from-purple-300 to-blue-300 rounded-lg shadow-md">
+    <div className={`p-6 rounded-lg shadow-md  ${events.length != 0 ?  'bg-gradient-to-r from-purple-300 to-blue-300':'bg-white' }`}>
       <div className="flex justify-between items-center flex-col md:flex-row mb-6">
         <h1 className="text-4xl font-bold text-gray-800 py-6">Recent Achievements</h1>
         <select
@@ -115,8 +124,14 @@ const RecentAchievements = ({ events, setEvents }) => {
         </select>
       </div>
       <div className="flex flex-col gap-6">
-        {events.length === 0 ? (
+        {loading ? (
           <Loader />
+        ) : events.length === 0 ? (
+          <div className="flex flex-col items-center justify-center bg-white p-6 rounded-lg">
+            <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-2506.jpg" alt="No Achievements" className="w-1/2 h-auto mb-4" />
+            <p className="text-2xl font-bold text-gray-700">No Achievements Yet</p>
+            <p className="text-gray-500">Start participating in events to see achievements here.</p>
+          </div>
         ) : (
           events.map((event, idx) => <EventCard event={event} key={idx} />)
         )}
@@ -126,3 +141,6 @@ const RecentAchievements = ({ events, setEvents }) => {
 };
 
 export default RecentAchievements;
+
+
+
