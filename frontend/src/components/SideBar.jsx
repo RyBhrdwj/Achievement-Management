@@ -75,27 +75,7 @@ const SideBar = () => {
             </li>
             <li className="mb-4">
               <NavLink
-                to="/client"
-                className={getLinkClassNames(2)}
-                onMouseEnter={() => handleMouseEnter(2)}
-                onMouseLeave={handleMouseLeave}
-              >
-                <FaUserAlt className="mr-3" /> My Client
-              </NavLink>
-            </li>
-            <li className="mb-4">
-              <NavLink
-                to="/task"
-                className={getLinkClassNames(3)}
-                onMouseEnter={() => handleMouseEnter(3)}
-                onMouseLeave={handleMouseLeave}
-              >
-                <FaTasks className="mr-3" /> My Task
-              </NavLink>
-            </li>
-            <li className="mb-4">
-              <NavLink
-                to="/message"
+                to="/notifications"
                 className={getLinkClassNames(4)}
                 onMouseEnter={() => handleMouseEnter(4)}
                 onMouseLeave={handleMouseLeave}
@@ -103,16 +83,7 @@ const SideBar = () => {
                 <FaCommentAlt className="mr-3" /> Message
               </NavLink>
             </li>
-            <li className="mb-4">
-              <NavLink
-                to="/billing"
-                className={getLinkClassNames(5)}
-                onMouseEnter={() => handleMouseEnter(5)}
-                onMouseLeave={handleMouseLeave}
-              >
-                <FaFileInvoiceDollar className="mr-3" /> My Billing
-              </NavLink>
-            </li>
+            
           </ul>
         </nav>
       </div>

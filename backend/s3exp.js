@@ -4,18 +4,18 @@ const fs = require('fs');
 const axios = require('axios');
 const { generateUploadURL, generateDownloadURL } = require('./s3Service'); 
 
-const app = express();
+const router = express.Router();
 const upload = multer({dest: 'uploads/'});
 
-app.use(express.json());
+// app.use(express.json());
 
-app.post('/upload', upload.single('image'), async (req, res) => {
-  const { mentorName, studentName } = req.body;
+router.post('/upload', upload.single('image'), async (req, res) => {
+  const { mentorId, studentId } = req.body;
   const fileContent = fs.readFileSync(req.file.path);
   const fileName = req.file.originalname;
 
   try {
-    const uploadURL = await generateUploadURL(mentorName, studentName, fileName);
+    const uploadURL = await generateUploadURL(mentorId, studentId, fileName);
     // res.send({ success: true, url });
     
     // upload files to s3 using pre-signed url
@@ -32,11 +32,11 @@ app.post('/upload', upload.single('image'), async (req, res) => {
   }
 });
 
-app.get('/image', async (req, res) => {
-  const { mentorName, studentName, fileName } = req.query;
+router.get('/image', async (req, res) => {
+  const { mentorId, studentId, fileName } = req.query;
 
   try {
-    const downloadURL = await generateDownloadURL(mentorName, studentName, fileName);
+    const downloadURL = await generateDownloadURL(mentorId, studentId, fileName);
     // res.send({ success: true, url });
     // url aane ke baad idhar hi download
     console.log(downloadURL)
@@ -51,6 +51,4 @@ app.get('/image', async (req, res) => {
   }
 });
 
-app.listen(4000, () => {
-  console.log('Server started on http://localhost:4000');
-});
+module.exports = router;

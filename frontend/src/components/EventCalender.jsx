@@ -30,17 +30,17 @@ function ServerDay(props) {
 export default function EventCalendar({ events }) {
   const requestAbortController = useRef(null);
   const [highlightedDays, setHighlightedDays] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [value, setValue] = useState(initialValue);
 
   const fetchHighlightedDays = async (date) => {
     try {
       const highlightedDates = events.map(event => event.date);
       setHighlightedDays(highlightedDates);
-      setLoading(false);
+      // setLoading(false);
     } catch (error) {
       console.error('Error fetching highlighted days:', error);
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
@@ -60,13 +60,13 @@ export default function EventCalendar({ events }) {
     }
 
     setHighlightedDays([]);
-    setLoading(true);
+    // setLoading(true);
     fetchHighlightedDays(date);
   };
 
-  if (loading) {
-    return <Loader />;
-  }
+  // if (loading) {
+  //   return <Loader />;
+  // }
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
