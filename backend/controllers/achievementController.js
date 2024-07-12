@@ -1,8 +1,10 @@
 const achievementRepo = require("../repositories/achievementRepository");
+const mentorRepo = require("../repositories/mentorRepository");
 
 class AchievementController {
   constructor() {
     this.achievement = new achievementRepo();
+    this.mentor = new mentorRepo();
   }
 
   addAchievement = async (req, res) => {
@@ -37,6 +39,31 @@ class AchievementController {
     }
   };
 
+  getAchievementsByMentorAndStatus = async (req, res) => {
+    try {
+      const { mentorId, status } = req.params;
+
+      const mentor = await this.mentor.getMentorById(mentorId);
+      const validStatuses = ["pending", "accepted", "rejected"];
+      
+      if (!validStatuses.includes(status)) {
+        throw new Error("Invalid status");
+      }
+
+      const achievements =
+        await this.achievement.getAchievementsByUserIdsAndStatus(
+          mentor.studentUserIds,
+          status
+        );
+
+      res.status(200).json(achievements);
+    } catch (error) {
+      console.log("controller error : " + error);
+
+      res.status(400).json({ message: error.message });
+    }
+  };
+
   getOneAchievement = async (req, res) => {
     try {
       const achievement = await this.achievement.getOne(req.params.id);
@@ -53,7 +80,7 @@ class AchievementController {
 
   getAchievementProof = async (req, res) => {
     // controller code here
-  }
+  };
 
   updateAchievement = async (req, res) => {
     try {
@@ -68,7 +95,7 @@ class AchievementController {
 
       res.status(400).json({ message: error.message });
     }
-  }
+  };
 
   verifyAchievement = async (req, res) => {
     try {
@@ -89,4 +116,3 @@ class AchievementController {
 }
 
 module.exports = new AchievementController();
- 

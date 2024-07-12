@@ -23,6 +23,7 @@ class achievementRepo extends crudRepo {
   getAchievementsByUserId = async (userId) => {
     try {
       const achievements = await this.model.find({ userId: userId });
+      
       return achievements;
     } catch (error) {
       console.log("repository error : " + error);
@@ -33,6 +34,7 @@ class achievementRepo extends crudRepo {
   getAchievementsByUserIds = async (userIds) => {
     try {
       const achievements = await this.model.find({ userId: { $in: userIds } });
+
       return achievements;
     } catch (error) {
       console.log("repository error : " + error);
@@ -46,7 +48,7 @@ class achievementRepo extends crudRepo {
         userId: { $in: userIds },
         verificationStatus: status,
       });
-      
+
       return achievements;
     } catch (error) {
       console.log("repository error : " + error);
