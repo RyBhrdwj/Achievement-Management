@@ -1,3 +1,5 @@
+require('dotenv').config(); // Load environment variables from .env file
+
 const { S3Client, PutObjectCommand, GetObjectCommand } = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
@@ -9,7 +11,11 @@ const s3Client = new S3Client({
   }
 });
 
+console.log('AWS_ACCESS_KEY_ID:', process.env.AWS_ACCESS_KEY_ID);
+console.log('AWS_SECRET_ACCESS_KEY:', process.env.AWS_SECRET_ACCESS_KEY);
+
 const bucketName = 'bucket-private12'; 
+
 const generateUploadURL = async (mentorId, studentId, fileName) => {
   const command = new PutObjectCommand({
     Bucket: bucketName,

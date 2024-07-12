@@ -7,14 +7,14 @@ class RequestRepository extends crudRepo {
     }
     getRequestsbyMentorId = async (mentorId) => {
       try {
-        const requests = await this.model.find({ mentor: mentorId })
-          .populate({
-            path: 'achievement',
-            populate: {
-              path: 'userId',
-              model: 'User' // Replace 'User' with the actual model name for users
-            }
-          });
+        const requests = await this.model.find({ mentor: mentorId }).populate('achievement')
+          // .populate({
+          //   path: 'achievement',
+          //   populate: {
+          //     path: 'userId',
+          //     model: 'User' 
+          //   }
+          // });
         return requests;
       } catch (err) {
         throw new Error(err.message);

@@ -7,10 +7,14 @@ const Mentor = () => {
   const [requests,setRequests] = useState([])
   useEffect(()=>{
     const getRequests = async () => {
-      const mentorId = '12345'
-      const response = await axios.get(`https://amgmt.onrender.com/api/requests/${mentorId}`)
-      console.log(response.data)
-      setRequests(response.data)
+      try {
+        const mentorId = '12345'
+        const response = await axios.get(`http://localhost:3000/api/requests/${mentorId}`)
+        console.log(response.data)
+        setRequests(response.data)
+      } catch (error) {
+        console.log(error)
+      }
     }
     getRequests()
   },[])

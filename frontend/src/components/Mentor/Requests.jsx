@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { NoDataFound } from '../../assets';
+import { formatDate } from '../../utililtyFunctions';
 
 const Requests = ({ requests }) => {
   const [selectedRequest, setSelectedRequest] = useState(null);
@@ -37,6 +38,8 @@ const Requests = ({ requests }) => {
       console.log(response);
     } catch (error) {
       console.log(error);
+    } finally {
+      handleCloseRequest()
     }
   };
 
