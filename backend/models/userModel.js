@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-  displayname: {
+  name: {
     type: String,
     required: true,
   },
-  enroll_number: {
+  enrollmentNumber: {
     type: String,
     unique: true,
     length: 11,
@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     match: /^[a-zA-Z0-9._%+-]+@bpitindia\.edu\.in$/,
   },
-  mentor: {
+  mentorId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Mentor"
   }
