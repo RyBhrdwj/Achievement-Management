@@ -29,6 +29,16 @@ class achievementRepo extends crudRepo {
       throw error;
     }
   };
+
+  getAchievementsByUserIds = async (userIds) => {
+    try {
+      const achievements = await this.model.find({ userId: { $in: userIds } });
+      return achievements;
+    } catch (error) {
+      console.log("repository error : " + error);
+      throw error;
+    }
+  };
 }
 
 module.exports = achievementRepo;
