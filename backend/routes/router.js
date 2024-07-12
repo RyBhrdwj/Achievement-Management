@@ -9,14 +9,23 @@ const achievementController = require("../controllers/achievementController");
 const notificationController = require("../controllers/notificationController");
 const requestController = require("../controllers/requestController");
 const s3Router = require('../s3exp'); // Import the S3 routes
+const mentorController = require("../controllers/mentorController");
 
 // Define the routes
 router.get("/", (req, res) => {
   res.send("base api route");
 });
 router.get("/achievements/:userId", achievementController.getAchievements);
+router.get("/achievements/:mentorId/:status", achievementController.getAchievementsByMentorAndStatus);
 router.get("/notifications/:userId", notificationController.getNotifications);
 router.get("/requests/:mentorId", requestController.getRequests);
+
+router.post('/mentor', mentorController.addMentor);
+router.get('/mentor/:id', mentorController.getMentorById);
+router.get('/mentor/:id/student', mentorController.getStudentsByMentorId);
+router.post('/mentor/:id/student', mentorController.addStudentToMentor);
+router.delete('/mentor/:id/student', mentorController.removeStudentFromMentor);
+router.get('/mentor/:id/achievements/:status', achievementController.getAchievementsByMentorAndStatus);
 
 router.post(
   "/add-achievement",

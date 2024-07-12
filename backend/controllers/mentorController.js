@@ -1,4 +1,4 @@
-const mentorRepo = require("../repositories/mentorRepo");
+const mentorRepo = require("../repositories/mentorRepository");
 
 // TODO: Add validation to the request body in methods that require it
 class mentorController {

@@ -41,9 +41,9 @@ class AchievementController {
 
   getAchievementsByMentorAndStatus = async (req, res) => {
     try {
-      const { mentorId, status } = req.params;
+      const { id, status } = req.params;
 
-      const mentor = await this.mentor.getMentorById(mentorId);
+      const mentor = await this.mentor.getMentorById(id);
       const validStatuses = ["pending", "accepted", "rejected"];
       
       if (!validStatuses.includes(status)) {
