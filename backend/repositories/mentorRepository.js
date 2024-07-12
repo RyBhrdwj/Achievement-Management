@@ -1,4 +1,3 @@
-const { get } = require("mongoose");
 const Mentor = require("../models/mentorModel");
 const crudRepo = require("./crud");
 
