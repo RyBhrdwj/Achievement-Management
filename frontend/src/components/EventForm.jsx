@@ -1,21 +1,14 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-
+import { Container, Button, ProgressBar, Alert, Form } from 'react-bootstrap';
 import Form1 from './Form/Form1';
 import Form2 from './Form/Form2';
 import Review from './Form/Review';
-import axios from 'axios'
+import axios from 'axios';
 
 const steps = ['Add Details', 'Add Proof'];
 
-export default function EventForm({setSubmit}) {
+export default function EventForm({ setSubmit }) {
   const [activeStep, setActiveStep] = useState(0);
-  const [skipped, setSkipped] = useState(new Set());
   const [details, setDetails] = useState({
     name: '',
     date: '',
@@ -28,8 +21,16 @@ export default function EventForm({setSubmit}) {
     proofUrl: ''
   });
 
-    const isDisabled = () => {
-      const { name, date, type, mode, result, location } = details;
+  const isDisabled = () => {
+    const { name, date, type, mode, result, location } = details;
+    if (mode === 'offline') {
+      return (
+        name === "" ||
+        date === "" ||
+        type === "" ||
+        result === ""
+      );
+    } else {
       return (
         name === "" ||
         date === "" ||
@@ -38,141 +39,94 @@ export default function EventForm({setSubmit}) {
         result === "" ||
         location === ""
       );
-    };
-
-  const isStepOptional = (step) => {
-    return step === 1;
-  };
-
-  const isStepSkipped = (step) => {
-    return skipped.has(step);
-  };
-
-  
-
-  const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
     }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
   };
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
-  };
+  const handleNext = () => setActiveStep(prev => prev + 1);
+  const handleBack = () => setActiveStep(prev => prev - 1);
 
   const handleSubmit = async () => {
     try {
       const userId = '60c72b2f9b1d8b001f8e4c23';
-      const name = details.name;
-      const date = details.date;
-      const description = details.type === 'other' ? details.otherType : details.type;
-      const location = details.location;
-      const mode = details.mode;
-      const result = details.result;
-  
+      const { name, date, type, otherType, mode, result, location } = details;
+      const description = type === 'other' ? otherType : type;
+
       const response = await axios.post('https://amgmt.onrender.com/api/add-achievement', {
-        userId,
-        name,
-        date,
-        description,
-        mode,
-        location,
-        result
+        userId, name, date, description, mode, location, result
       });
-  
-      console.log(response.data);
-  
+
       const achievement = response.data._id;
       const mentor = '12345';
-  
-      const request = await axios.post('https://amgmt.onrender.com/api/add-request', {
-        user: userId,
-        achievement,
-        mentor
+
+      await axios.post('https://amgmt.onrender.com/api/add-request', {
+        user: userId, achievement, mentor
       });
-  
-      console.log(request);
+
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
-  
+
     setSubmit(true);
   };
-  
+
+  const renderStepContent = (step) => {
+    switch (step) {
+      case 0:
+        return <Form1 details={details} setDetails={setDetails} />;
+      case 1:
+        return <Form2 details={details} setDetails={setDetails} />;
+      default:
+        return <Review details={details} />;
+    }
+  };
+
+  const handleModeChange = (mode) => {
+    setDetails(prevDetails => ({
+      ...prevDetails,
+      mode,
+      location: mode !== 'online' ? '' : prevDetails.location  // Clear location if mode is not online
+    }));
+  };
 
   return (
-    <Box sx={{ width: '100%' }} className="p-4">
-      <Stepper activeStep={activeStep}>
-        {steps.map((label, index) => {
-          const stepProps = {};
-          const labelProps = {};
-          if (isStepOptional(index)) {
-            labelProps.optional = (
-              <Typography variant="caption">Optional</Typography>
-            );
-          }
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
+    <Container className="mt-5">
+      <ProgressBar now={(activeStep / steps.length) * 100} className="mb-4" />
+
       {activeStep === steps.length ? (
-        <React.Fragment>
+        <div>
+          <Alert variant="success">All steps completed!</Alert>
           <Review details={details} />
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-            <Box sx={{ flex: '1 1 auto' }} />
+          <div className="d-flex justify-content-end mt-3">
             <Button onClick={handleSubmit}>Submit</Button>
-          </Box>
-        </React.Fragment>
+          </div>
+        </div>
       ) : (
-        <React.Fragment>           
-          {activeStep === 0 && (<Form1 details={details} setDetails={setDetails} />)}
-        {activeStep === 1 && (<Form2 details={details} setDetails={setDetails} />)}
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-            <Button
-              color="inherit"
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              sx={{ mr: 1 }}
-            >
+        <div>
+          <div className="mb-4">
+            <h2>{steps[activeStep]}</h2>
+            <p>Step {activeStep + 1} of {steps.length}</p>
+          </div>
+          {renderStepContent(activeStep)}
+          
+    
+
+          <div className="d-flex justify-content-between mt-4">
+            <Button variant="secondary" disabled={activeStep === 0} onClick={handleBack}>
               Back
             </Button>
-            <Box sx={{ flex: '1 1 auto' }} />
-            {isStepOptional(activeStep) && (
-              <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-                Skip
-              </Button>
-            )}
-
-            <Button onClick={handleNext} disabled={isDisabled()}>
+            <Button
+              onClick={handleNext}
+              disabled={isDisabled()}
+              variant={activeStep === steps.length - 1 ? 'success' : 'primary'}
+            >
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
             </Button>
-          </Box>
-        </React.Fragment>
+          </div>
+        </div>
       )}
-    </Box>
+    </Container>
   );
 }
+
+
+

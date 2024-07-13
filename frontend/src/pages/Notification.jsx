@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import {formatDate} from '../utililtyFunctions.js'
-import Loader from '../components/Loader.jsx'
+import { formatDate } from '../utililtyFunctions.js';
+import Loader from '../components/Loader.jsx';
 
 const Card = ({ notification }) => {
   return (
@@ -30,15 +30,15 @@ const Card = ({ notification }) => {
 };
 
 const Notification = () => {
-  const [notifications,setNotifications] = useState([])
-  const [loading,setLoading] = useState(false)
+  const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const getNotifications = async () => {
       setLoading(true);
       const userId = '60c72b2f9b1d8b001f8e4c23';
       try {
         const response = await axios.get(`https://amgmt.onrender.com/api/notifications/${userId}`);
-        console.log(response);
         const sortedNotifications = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         setNotifications(sortedNotifications);
       } catch (error) {
@@ -49,26 +49,35 @@ const Notification = () => {
     };
     getNotifications();
   }, []);
-  
-  
-
 
   return (
-    <div className=" min-h-screen flex flex-col items-center py-10">
+    <div className="min-h-screen flex flex-col items-center py-10">
       <div className="w-full max-w-5xl bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="bg-gradient-to-r from-blue-500 to-teal-400 p-4">
           <h1 className="text-white text-2xl font-semibold text-center">
             Notifications
           </h1>
         </div>
-        {loading ? <Loader /> : <div className="p-4">
-          {notifications.map((notification, idx) => (
-            <Card key={idx} notification={notification} />
-          ))}
-        </div>}
+        {loading ? (
+          <Loader />
+        ) : (
+          <div className="p-4">
+            {notifications.length > 0 ? (
+              notifications.map((notification, idx) => (
+                <Card key={idx} notification={notification} />
+              ))
+            ) : (
+              <div className="flex flex-col items-center justify-center py-20">
+                <img src="https://img.freepik.com/free-vector/hand-drawn-no-data-illustration_23-2150696458.jpg?size=626&ext=jpg&ga=GA1.1.151194107.1711096925&semt=ais_user" alt="No notifications" className="w-60 h-60 m-4" />
+                <p className="text-gray-600 text-2xl">You have no notifications !!</p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
 export default Notification;
+
