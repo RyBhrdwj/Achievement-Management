@@ -35,7 +35,7 @@ const Notification = () => {
   useEffect(() => {
     const getNotifications = async () => {
       setLoading(true);
-      const userId = '60c72b2f9b1d8b001f8e4c23';
+      const userId = '6692353576002fc8b2ab2b37';
       try {
         const response = await axios.get(`https://amgmt.onrender.com/api/notifications/${userId}`);
         console.log(response);

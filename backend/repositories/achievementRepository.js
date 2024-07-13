@@ -22,7 +22,7 @@ class achievementRepo extends crudRepo {
 
   getAchievementsByUserId = async (userId) => {
     try {
-      const achievements = await this.model.find({ userId: userId });
+      const achievements = await this.model.find({ userId: userId }).populate('userId');
       
       return achievements;
     } catch (error) {

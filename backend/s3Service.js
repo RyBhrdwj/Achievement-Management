@@ -6,9 +6,10 @@ const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 const s3Client = new S3Client({
   region: 'eu-north-1', 
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID, 
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-  }
+    accessKeyId: 'AKIAU6GD326RYKLOIZP7', 
+    secretAccessKey: '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'
+  },
+  logger: console
 });
 
 console.log('AWS_ACCESS_KEY_ID:', process.env.AWS_ACCESS_KEY_ID);
@@ -21,6 +22,7 @@ const generateUploadURL = async (mentorId, studentId, fileName) => {
     Bucket: bucketName,
     Key: `${mentorId}/${studentId}/${fileName}`,
     ContentType: 'image/png', // Adjust this according to your file type
+    ACL: 'public-read'
   });
 
   try {

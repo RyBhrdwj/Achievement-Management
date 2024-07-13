@@ -7,14 +7,7 @@ class RequestRepository extends crudRepo {
     }
     getRequestsbyMentorId = async (mentorId) => {
       try {
-        const requests = await this.model.find({ mentor: mentorId }).populate('achievement')
-          // .populate({
-          //   path: 'achievement',
-          //   populate: {
-          //     path: 'userId',
-          //     model: 'User' 
-          //   }
-          // });
+        const requests = await this.model.find({ mentor: mentorId }).populate('achievement').populate('user').populate('mentor')
         return requests;
       } catch (err) {
         throw new Error(err.message);

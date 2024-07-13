@@ -80,7 +80,7 @@ export default function EventForm({setSubmit}) {
 
   const handleSubmit = async () => {
     try {
-      const userId = '60c72b2f9b1d8b001f8e4c23';
+      const userId = '6692353576002fc8b2ab2b37';
       const name = details.name;
       const date = details.date;
       const description = details.type === 'other' ? details.otherType : details.type;
@@ -101,7 +101,7 @@ export default function EventForm({setSubmit}) {
       console.log(response.data);
   
       const achievement = response.data._id;
-      const mentor = '12345';
+      const mentor = '6692351e76002fc8b2ab2b35';
   
       const request = await axios.post('https://amgmt.onrender.com/api/add-request', {
         user: userId,

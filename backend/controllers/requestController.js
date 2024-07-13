@@ -25,6 +25,16 @@ class RequestController {
       res.status(400).json({ message: err.message });
     }
   }
+
+  deleteRequest = async (req, res) => {
+    try {
+      const request = await this.request.destroy(req.params.id);
+      res.status(200).json(request);
+    } catch (error) {
+      console.log("controller error : " + error);
+      res.status(400).json({ message: error.message });
+    }
+  };
 }
 
 module.exports = new RequestController();

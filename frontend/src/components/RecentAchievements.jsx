@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { IconContext } from "react-icons/lib";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
-import { NoDataFound } from '../assets';
 import { formatDate } from "../utililtyFunctions";
 import Loader from "./Loader";
 
@@ -20,6 +19,8 @@ const EventCard = ({ event }) => {
           <p className="text-sm">{formatDate(event.date)}</p>
           <p className="text-sm">{event.location}</p>
         </div>
+        <div className="flex gap-4 justify-center items-center">
+        <h3>Status: {event.verificationStatus}</h3>
         <button
           onClick={toggleOpen}
           className="p-2 rounded-full bg-white text-blue-600 hover:text-white hover:bg-blue-600 transition-colors"
@@ -28,6 +29,7 @@ const EventCard = ({ event }) => {
             {isOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
           </IconContext.Provider>
         </button>
+        </div>
       </div>
       {isOpen && (
         <div className="p-4 bg-gray-50">

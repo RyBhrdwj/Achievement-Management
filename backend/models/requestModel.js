@@ -7,10 +7,10 @@ const requestSchema = new mongoose.Schema({
     // required: true
   },
   mentor: {
-    // type: mongoose.Schema.Types.ObjectId,
-    // ref: "Mentor",
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Mentor",
     // required: true 
-    type: String
+    // type: String
   },
   achievement: {
     type: mongoose.Schema.Types.ObjectId,
