@@ -47,19 +47,39 @@ export default function EventForm({ setSubmit }) {
 
   const handleSubmit = async () => {
     try {
+<<<<<<< HEAD
       const userId = '60c72b2f9b1d8b001f8e4c23';
       const { name, date, type, otherType, mode, result, location } = details;
       const description = type === 'other' ? otherType : type;
 
+=======
+      const userId = '6692353576002fc8b2ab2b37';
+      const name = details.name;
+      const date = details.date;
+      const description = details.type === 'other' ? details.otherType : details.type;
+      const location = details.location;
+      const mode = details.mode;
+      const result = details.result;
+  
+>>>>>>> d0a223136d25b6c3ff50755db2acfcca67e51076
       const response = await axios.post('https://amgmt.onrender.com/api/add-achievement', {
         userId, name, date, description, mode, location, result
       });
 
       const achievement = response.data._id;
+<<<<<<< HEAD
       const mentor = '12345';
 
       await axios.post('https://amgmt.onrender.com/api/add-request', {
         user: userId, achievement, mentor
+=======
+      const mentor = '6692351e76002fc8b2ab2b35';
+  
+      const request = await axios.post('https://amgmt.onrender.com/api/add-request', {
+        user: userId,
+        achievement,
+        mentor
+>>>>>>> d0a223136d25b6c3ff50755db2acfcca67e51076
       });
 
     } catch (error) {

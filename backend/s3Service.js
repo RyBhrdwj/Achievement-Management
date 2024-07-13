@@ -7,12 +7,11 @@ const s3Client = new S3Client({
   region: 'eu-north-1', 
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID, 
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-  }
+    secretAccessKey:  process.env.AWS_SECRET_ACCESS_KEY
+  },
+  logger: console
 });
 
-console.log('AWS_ACCESS_KEY_ID:', process.env.AWS_ACCESS_KEY_ID);
-console.log('AWS_SECRET_ACCESS_KEY:', process.env.AWS_SECRET_ACCESS_KEY);
 
 const bucketName = 'bucket-private12'; 
 
@@ -21,6 +20,7 @@ const generateUploadURL = async (mentorId, studentId, fileName) => {
     Bucket: bucketName,
     Key: `${mentorId}/${studentId}/${fileName}`,
     ContentType: 'image/png', // Adjust this according to your file type
+    ACL: 'public-read'
   });
 
   try {

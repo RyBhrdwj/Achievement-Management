@@ -10,6 +10,7 @@ const notificationController = require("../controllers/notificationController");
 const requestController = require("../controllers/requestController");
 const s3Router = require('../s3exp'); // Import the S3 routes
 const mentorController = require("../controllers/mentorController");
+const userController = require('../controllers/userController')
 
 // Define the routes
 router.get("/", (req, res) => {
@@ -52,6 +53,14 @@ router.delete(
   "/delete-achievement/:id",
   achievementController.deleteAchievement
 );
+
+router.post('/user/create',userController.addStudent);
+router.get('/user/:id',userController.getStudentById);
+
+router.delete(
+  "/delete-request/:id",
+  requestController.deleteRequest
+)
 
 router.use('/s3', s3Router);
 

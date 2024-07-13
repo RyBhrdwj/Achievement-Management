@@ -3,7 +3,7 @@ import axios from 'axios';
 import { NoDataFound } from '../../assets';
 import { formatDate } from '../../utililtyFunctions';
 
-const Requests = ({ requests }) => {
+const Requests = ({ requests,getRequests }) => {
   const [selectedRequest, setSelectedRequest] = useState(null);
 
   const handleOpenRequest = (request) => {
@@ -18,22 +18,25 @@ const Requests = ({ requests }) => {
     console.log('Request Accepted:', selectedRequest);
     const message = `Congratulations, your achievement ${selectedRequest.achievement?.name} ${selectedRequest.achievement?.description} held on ${formatDate(selectedRequest.achievement?.date)} at ${selectedRequest.achievement?.location} has been verified by the Mentor`;
     sendNotification(message);
-    const id = selectedRequest._id;
+    const id = selectedRequest.achievement?._id;
     const status = 'accepted';
     updateAchievement({ id, status });
+    deleteRequest(selectedRequest._id)
   };
 
   const handleRejectRequest = () => {
     console.log('Request Rejected:', selectedRequest);
     const rejectionMessage = `Unfortunately, your achievement ${selectedRequest.achievement?.name} ${selectedRequest.achievement?.description} held on ${formatDate(selectedRequest.achievement?.date)} at ${selectedRequest.achievement?.location} has not been verified by the Mentor. Please review the requirements and try again.`;
     sendNotification(rejectionMessage);
-    const id = selectedRequest._id;
+    const id = selectedRequest.achievement?._id;
     const status = 'rejected';
     updateAchievement({ id, status });
+    deleteRequest(selectedRequest._id)
   };
 
   const updateAchievement = async ({ id, status }) => {
     try {
+      console.log(id,status)
       const response = await axios.patch(`https://amgmt.onrender.com/api/verify-achievement/${id}/${status}`);
       console.log(response);
     } catch (error) {
@@ -45,8 +48,8 @@ const Requests = ({ requests }) => {
 
   const sendNotification = async (message) => {
     console.log(message)
-    const user = '60c72b2f9b1d8b001f8e4c23'
-    const mentor = '12345'
+    const user = selectedRequest.user?._id;
+    const mentor = selectedRequest.mentor?._id;
     try {
       const response = await axios.post('https://amgmt.onrender.com/api/add-notification', { user, message, mentor });
       console.log(response);
@@ -54,6 +57,16 @@ const Requests = ({ requests }) => {
       console.log(error);
     }
   };
+
+  const deleteRequest = async(requestId) => {
+    try {
+      const response = await axios.delete(`https://amgmt.onrender.com/api/delete-request/${requestId}`)
+      console.log(response)
+      getRequests();
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className="p-4">
@@ -75,8 +88,8 @@ const Requests = ({ requests }) => {
               style={{ width: '70%', margin: 'auto' }} // Adjusted width and centered horizontally
             >
               <h2 className="text-xl font-semibold text-white mb-2">{request.achievement?.name}</h2>
-              <p className="text-white"><strong>Student:</strong> Aditya Gaur</p>
-              <p className="text-white"><strong>Enrollment Number:</strong> {request.enrollmentNumber}</p>
+              <p className="text-white"><strong>Student:</strong> {request.user?.name}</p>
+              <p className="text-white"><strong>Enrollment Number:</strong> {request.user?.enrollmentNumber}</p>
               <p className="text-white text-right"><strong>Date:</strong> {formatDate(request.achievement?.date)}</p>
               <p className="text-white text-right"><strong>Event type:</strong> {request.achievement?.description}</p>
             </div>
@@ -86,37 +99,52 @@ const Requests = ({ requests }) => {
 
       {selectedRequest && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50">
-          <div className="bg-white p-8 rounded-lg shadow-lg max-w-2xl w-full transform scale-105 transition-transform duration-300">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">{selectedRequest.achievement?.name}</h2>
-            <p className="text-gray-600 mb-6">{selectedRequest.description}</p>
-            <div className="mb-6">
-              <p className="text-gray-800 mb-2"><strong>Mentor:</strong> Aditya Gaur</p>
-              <p className="text-gray-800 mb-2"><strong>Enrollment Number:</strong> {selectedRequest.enrollmentNumber}</p>
-              <p className="text-gray-800 mb-2"><strong>Date:</strong> {formatDate(selectedRequest.achievement?.date)}</p>
-              <p className="text-gray-800 mb-2"><strong>Event Name:</strong> {selectedRequest.achievement?.name}</p>
-            </div>
-            <div className="flex justify-end space-x-4">
-              <button
-                className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors duration-300"
-                onClick={handleAcceptRequest}
-              >
-                Accept
-              </button>
-              <button
-                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors duration-300"
-                onClick={handleRejectRequest}
-              >
-                Reject
-              </button>
-              <button
-                className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors duration-300"
-                onClick={handleCloseRequest}
-              >
-                Close
-              </button>
-            </div>
+        <div className="bg-white p-8 rounded-lg shadow-lg max-w-2xl w-full transform scale-105 transition-transform duration-300">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
+            {selectedRequest.achievement?.name}
+          </h2>
+          <div className="mb-6 border-b pb-6">
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">Student Information</h3>
+            <p className="text-gray-800 mb-2"><strong>Name:</strong> {selectedRequest.user?.name}</p>
+            <p className="text-gray-800 mb-2"><strong>Enrollment Number:</strong> {selectedRequest.user?.enrollmentNumber}</p>
+            <p className="text-gray-800 mb-2"><strong>Branch and Section:</strong> {selectedRequest.user?.branch_section}</p>
+          </div>
+          <div className="mb-6">
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">Achievement Information</h3>
+            <p className="text-gray-600 mb-4 capitalize font-bold">{selectedRequest.achievement?.description}</p>
+            <p className="text-gray-800 mb-2"><strong>Date:</strong> {formatDate(selectedRequest.achievement?.date)}</p>
+            <p className="text-gray-800 mb-2"><strong>Event Name:</strong> {selectedRequest.achievement?.name}</p>
+            <p className="text-gray-800 mb-2"><strong>Result:</strong> {selectedRequest.achievement?.result}</p>
+            <p className="text-gray-800 mb-2"><strong>Mode:</strong> {selectedRequest.achievement?.mode}</p>
+            <p className="text-gray-800 mb-2"><strong>Location:</strong> <a href={selectedRequest.achievement?.location} className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">{selectedRequest.achievement?.location}</a></p>
+            {selectedRequest.achievement?.proof && (
+              <p className="text-gray-800 mb-2"><strong>Proof:</strong> <a href={selectedRequest.achievement?.proof} className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">{selectedRequest.achievement?.proof}</a></p>
+            )}
+          </div>
+          <div className="flex justify-end space-x-4">
+            <button
+              className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors duration-300"
+              onClick={handleAcceptRequest}
+            >
+              Accept
+            </button>
+            <button
+              className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors duration-300"
+              onClick={handleRejectRequest}
+            >
+              Reject
+            </button>
+            <button
+              className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors duration-300"
+              onClick={handleCloseRequest}
+            >
+              Close
+            </button>
           </div>
         </div>
+      </div>
+      
+      
       )}
     </div>
   );

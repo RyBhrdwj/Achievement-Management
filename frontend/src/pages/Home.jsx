@@ -13,8 +13,9 @@ const Home = () => {
   useEffect(() => {
     const getAchievements = async () => {
       try {
+        const userId = "6692353576002fc8b2ab2b37"
         const response = await axios.get(
-          "https://amgmt.onrender.com/api/achievements/60c72b2f9b1d8b001f8e4c23"
+          `https://amgmt.onrender.com/api/achievements/${userId}`
         );
         setEvents(response.data);
       } catch (error) {
