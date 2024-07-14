@@ -22,7 +22,18 @@ class achievementRepo extends crudRepo {
 
   getAchievementsByUserId = async (userId) => {
     try {
-      const achievements = await this.model.find({ userId: userId }).populate('userId');
+      const achievements = await this.model.find({ userId: userId }).populate("userId");
+      
+      return achievements;
+    } catch (error) {
+      console.log("repository error : " + error);
+      throw error;
+    }
+  };
+
+  getAchievementsByUserIdInCSV = async (userId) => {
+    try {
+      const achievements = await this.model.find({ userId: userId }).select("-userId -_id -__v");
       
       return achievements;
     } catch (error) {
@@ -47,7 +58,7 @@ class achievementRepo extends crudRepo {
       const achievements = await this.model.find({
         userId: { $in: userIds },
         verificationStatus: status,
-      });
+      }).populate("userId");
 
       return achievements;
     } catch (error) {

@@ -3,6 +3,7 @@ import { IconContext } from "react-icons/lib";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { formatDate } from "../utililtyFunctions";
 import Loader from "./Loader";
+import DownloadButton from "./DownloadButton";
 
 const EventCard = ({ event }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -114,6 +115,8 @@ const RecentAchievements = ({ events = [], setEvents }) => {
     <div className={`p-6 rounded-lg shadow-md  ${events.length != 0 ?  'bg-gradient-to-r from-purple-300 to-blue-300':'bg-white' }`}>
       <div className="flex justify-between items-center flex-col md:flex-row mb-6">
         <h1 className="text-4xl font-bold text-gray-800 py-6">Recent Achievements</h1>
+        <div className="flex justify-center items-center gap-4">
+        <DownloadButton mentor={false} />
         <select
           value={sortCriteria}
           onChange={handleSortChange}
@@ -124,6 +127,7 @@ const RecentAchievements = ({ events = [], setEvents }) => {
           <option value="Newest">Newest</option>
           <option value="Oldest">Oldest</option>
         </select>
+        </div>
       </div>
       <div className="flex flex-col gap-6">
         {loading ? (

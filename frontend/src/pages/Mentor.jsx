@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import Requests from '../components/Mentor/Requests'
 import axios from 'axios'
+import DownloadButton from '../components/DownloadButton'
 
 
 const Mentor = () => {
@@ -21,6 +22,7 @@ const Mentor = () => {
   }
   return (
     <div>
+      <DownloadButton mentor={true}/>
       <Requests requests={requests} getRequests={getRequests} />
     </div>
   )

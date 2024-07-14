@@ -17,6 +17,7 @@ class mentorRepository extends crudRepo {
   };
 
   getMentorById = async (mentorId) => {
+    console.log(mentorId)
     try {
       const mentor = await this.model.findById(mentorId);
 

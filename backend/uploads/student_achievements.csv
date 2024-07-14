@@ -1,0 +1,7 @@
+Student Information
+_id,name,enrollmentNumber,branch_section,email,mentorId,__v
+6692353576002fc8b2ab2b37,Nikhil Kumar,03520802722,CSE A,nikhil35csea22@bpitindia.edu.in,6692351e76002fc8b2ab2b35,
+
+Achievements
+_id,name,description,location,date,mode,result,proof,verificationStatus,__v
+66923fec4e77fced3eb4379c,Flipkart Grid,hackathon,www.flipkart.com/flipkartGrid,Tue Jun 11 2024 05:30:00 GMT+0530 (India Standard Time),online,winner,,accepted,
