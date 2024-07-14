@@ -149,6 +149,7 @@ const Form1 = ({ details, setDetails }) => {
           placeholder="Enter the location of the event"
           className="outline-none border-2 border-gray-300 px-4 py-2 rounded-md focus:border-blue-500 transition duration-150 ease-in-out"
           onChange={(e) => setDetails({ ...details, location: e.target.value })}
+          disabled={details.mode !== 'online'}
         />
       </fieldset>
     </div>
@@ -156,3 +157,4 @@ const Form1 = ({ details, setDetails }) => {
 };
 
 export default Form1;
+

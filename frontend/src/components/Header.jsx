@@ -14,7 +14,7 @@ const Header = () => {
         </Link>
         <div className='flex items-center bg-white p-4 rounded-full shadow'>
           <img
-            src=""
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgyb9CNs-MYH7mqsI7pPYZ2tCwql4ldvw7OA&s"
             alt="Profile"
             className='w-10 h-10 rounded-full mr-4'
           />

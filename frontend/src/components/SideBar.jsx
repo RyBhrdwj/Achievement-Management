@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import { FaTh, FaCheckSquare, FaUserAlt, FaTasks, FaCommentAlt, FaFileInvoiceDollar, FaBars } from 'react-icons/fa';
+import { NavLink, useLocation } from 'react-router-dom';
+import { FaTh, FaCheckSquare, FaCommentAlt, FaBars } from 'react-icons/fa';
 
 const SideBar = () => {
   const [hovered, setHovered] = useState(null);
   const [isOpen, setIsOpen] = useState(window.innerWidth > 768);
+  const [clickedIndex, setClickedIndex] = useState(null);
+  const location = useLocation();
 
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
+  useEffect(() => {
+    // Set the clicked index based on the current path
+    const pathToIndex = {
+      '/': 0,
+      '/add': 1,
+      '/notifications': 2,
+    };
+    setClickedIndex(pathToIndex[location.pathname]);
+  }, [location]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -23,6 +31,10 @@ const SideBar = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
   const handleMouseEnter = (index) => {
     setHovered(index);
   };
@@ -31,7 +43,15 @@ const SideBar = () => {
     setHovered(null);
   };
 
+  const handleClick = (index) => {
+    setClickedIndex(index);
+    if (window.innerWidth <= 768 && isOpen) toggleSidebar();
+  };
+
   const getLinkClassNames = (index) => {
+    if (clickedIndex === index) {
+      return "flex items-center text-lg p-3 rounded-md transition duration-300 ease-in-out bg-purple-900 text-white ";
+    }
     return hovered === index
       ? "flex items-center text-lg p-3 rounded-md transition duration-300 ease-in-out bg-purple-700 text-white"
       : "flex items-center text-lg p-3 rounded-md transition duration-300 ease-in-out text-gray-200 hover:bg-purple-500 hover:text-white";
@@ -48,7 +68,7 @@ const SideBar = () => {
           isOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0 z-40`}
       >
-        <div className="text-white z-50 text-2xl font-bold mb-8 self-center">LOGO</div>
+        <div className="text-white z-50 text-2xl font-bold mb-8 ml-4">Sidebar</div>
         <nav>
           <ul className="list-none p-0 w-full">
             <li className="mb-4">
@@ -57,9 +77,9 @@ const SideBar = () => {
                 className={getLinkClassNames(0)}
                 onMouseEnter={() => handleMouseEnter(0)}
                 onMouseLeave={handleMouseLeave}
-                onClick={() => { if (window.innerWidth <= 768 && isOpen) toggleSidebar(); }}
+                onClick={() => handleClick(0)}
               >
-                <FaTh className="mr-3 " /> Dashboard
+                <FaTh className="mr-3" /> Dashboard
               </NavLink>
             </li>
             <li className="mb-4">
@@ -68,7 +88,7 @@ const SideBar = () => {
                 className={getLinkClassNames(1)}
                 onMouseEnter={() => handleMouseEnter(1)}
                 onMouseLeave={handleMouseLeave}
-                onClick={() => { if (window.innerWidth <= 768 && isOpen) toggleSidebar(); }}
+                onClick={() => handleClick(1)}
               >
                 <FaCheckSquare className="mr-3" /> Add Event
               </NavLink>
@@ -76,14 +96,14 @@ const SideBar = () => {
             <li className="mb-4">
               <NavLink
                 to="/notifications"
-                className={getLinkClassNames(4)}
-                onMouseEnter={() => handleMouseEnter(4)}
+                className={getLinkClassNames(2)}
+                onMouseEnter={() => handleMouseEnter(2)}
                 onMouseLeave={handleMouseLeave}
+                onClick={() => handleClick(2)}
               >
                 <FaCommentAlt className="mr-3" /> Message
               </NavLink>
             </li>
-            
           </ul>
         </nav>
       </div>
@@ -92,3 +112,5 @@ const SideBar = () => {
 };
 
 export default SideBar;
+
+
