@@ -33,23 +33,23 @@ const Announcement = ({ speed }) => {
   }
 
   return (
-    <div className="relative overflow-hidden w-full p-4 my-5 h-14 flex items-center transition-all duration-500 ease-in-out">
+    <div className="relative overflow-hidden w-full p-3 my-5 h-15 flex items-center bg-gradient-to-r from-green-300 to-green-500 rounded-lg shadow-lg transition-all duration-500 ease-in-out">
       <div className="flex overflow-hidden w-full">
         <section
           style={{
             animation: `marquee ${speed * 2}ms linear infinite`,
-            fontSize: '1.5rem', // Small font size
-            lineHeight: '1rem', // Adjusted line height
-            background: 'linear-gradient(to right, #FFD700, #FFC700, #FFB700, #FF9900)',
-            WebkitBackgroundClip: 'text',
-            color: 'Green',
+            fontSize: '1rem',
+            lineHeight: '1.6rem',
+            color: '#fff',
+            whiteSpace: 'nowrap',
           }}
-          className="whitespace-nowrap font-bold tracking-wide"
+          className="font-semibold tracking-wide"
         >
           <p>
-            <span className="text-white bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600">
+            <span className="bg-yellow-500 px-1  rounded-md mr-2">
               Announcement:
-            </span> (Student Name) of (Student Class) (Student Year) Year won the (event type) (event name) held at (event venue) on (event date)
+            </span>
+            <span className="text-black"> (Student Name) of (Student Class) (Student Year) Year won the (event type) (event name) held at (event venue) on (event date)</span>
           </p>
         </section>
       </div>
@@ -68,6 +68,7 @@ const Announcement = ({ speed }) => {
 };
 
 export default Announcement;
+
 
 
 
