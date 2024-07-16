@@ -50,7 +50,7 @@ const SideBar = () => {
 
   const getLinkClassNames = (index) => {
     if (clickedIndex === index) {
-      return "flex items-center text-lg p-3 rounded-md transition duration-300 ease-in-out bg-purple-900 text-white ";
+      return "flex items-center text-lg p-3 w-56 rounded-md transition duration-300 ease-in-out bg-purple-900 text-white ";
     }
     return hovered === index
       ? "flex items-center text-lg p-3 rounded-md transition duration-300 ease-in-out bg-purple-700 text-white"
@@ -64,11 +64,11 @@ const SideBar = () => {
         onClick={toggleSidebar}
       />
       <div
-        className={`fixed top-0 left-0 w-60 h-full bg-purple-500 p-3 flex flex-col items-start shadow-lg transition-transform duration-300 ease-in-out transform ${
+        className={`fixed top-30 m-4 rounded-lg left-0 w-60 h-full bg-purple-500 flex flex-col items-center shadow-lg transition-transform duration-300 ease-in-out transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0 z-40`}
       >
-        <div className="text-white z-50 text-2xl font-bold mb-8 ml-4">Sidebar</div>
+        <div className="text-white text-2xl font-bold mb-8 ml-4">Sidebar</div>
         <nav>
           <ul className="list-none p-0 w-full">
             <li className="mb-4">

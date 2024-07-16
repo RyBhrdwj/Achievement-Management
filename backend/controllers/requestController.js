@@ -1,4 +1,10 @@
 const RequestRepository = require("../repositories/requestRepository");
+const redis = require("redis")
+
+const redisClient = redis.createClient({
+  url: process.env.REDIS_URL // Update with your Redis server URL if different
+});
+redisClient.connect().catch(console.error);
 
 class RequestController {
   constructor() {
@@ -8,8 +14,19 @@ class RequestController {
   getRequests = async (req, res) => {
     try {
       const mentorId = req.params.mentorId;
+
+    // Check cache first
+    const cacheKey = `requests:${mentorId}`;
+    const cachedRequests = await redisClient.get(cacheKey);
+
+    if (cachedRequests ) {
+      return res.status(200).json(JSON.parse(cachedRequests ));
+    }
     //   console.log(mentor)
       const requests = await this.request.getRequestsbyMentorId(mentorId);
+      await redisClient.set(cacheKey, JSON.stringify(requests), {
+        EX: 3600, // Cache expiration time in seconds
+      });
       res.status(200).json(requests);
     } catch (err) {
       res.status(500).json({ message: err.message });

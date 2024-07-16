@@ -6,8 +6,8 @@ const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 const s3Client = new S3Client({
   region: 'eu-north-1', 
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID, 
-    secretAccessKey:  process.env.AWS_SECRET_ACCESS_KEY
+    accessKeyId: 'AKIAU6GD326RYKLOIZP7', 
+    secretAccessKey: '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'
   },
   logger: console
 });
@@ -20,7 +20,6 @@ const generateUploadURL = async (mentorId, studentId, fileName) => {
     Bucket: bucketName,
     Key: `${mentorId}/${studentId}/${fileName}`,
     ContentType: 'image/png', // Adjust this according to your file type
-    ACL: 'public-read'
   });
 
   try {
@@ -40,6 +39,7 @@ const generateDownloadURL = async (mentorId, studentId, fileName) => {
 
   try {
     const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+    console.log("URL",url)
     return url;
   } catch (error) {
     console.error(`Error generating download URL: ${error.message}`);

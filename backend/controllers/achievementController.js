@@ -1,18 +1,26 @@
 const achievementRepo = require("../repositories/achievementRepository");
 const mentorRepo = require("../repositories/mentorRepository");
-const { Parser } = require("json2csv");
 const fs = require("fs");
 const path = require("path");
+const redis = require("redis")
+
+const redisClient = redis.createClient({
+  url: process.env.REDIS_URL // Update with your Redis server URL if different
+});
+redisClient.connect().catch(console.error);
+
+
 
 class AchievementController {
   constructor() {
     this.achievement = new achievementRepo();
     this.mentor = new mentorRepo();
   }
-
+  
   addAchievement = async (req, res) => {
     try {
       const achievement = await this.achievement.create(req.body);
+      await redisClient.del(`achievements:${req.body.userId}`);
       res.status(201).json(achievement);
     } catch (error) {
       console.log("controller error : " + error);
@@ -23,6 +31,7 @@ class AchievementController {
   deleteAchievement = async (req, res) => {
     try {
       const achievement = await this.achievement.destroy(req.params.id);
+      await redisClient.del(`achievements:${achievement.userId}`);
       res.status(200).json(achievement);
     } catch (error) {
       console.log("controller error : " + error);
@@ -31,10 +40,22 @@ class AchievementController {
   };
 
   getAchievements = async (req, res) => {
+    const userId = req.params.userId;
+
+    // Check cache first
+    const cacheKey = `achievements:${userId}`;
+    const cachedAchievements = await redisClient.get(cacheKey);
+
+    if (cachedAchievements) {
+      return res.status(200).json(JSON.parse(cachedAchievements));
+    }
     try {
       const achievements = await this.achievement.getAchievementsByUserId(
-        req.params.userId
+        userId
       );
+      await redisClient.set(cacheKey, JSON.stringify(achievements), {
+        EX: 3600, // Cache expiration time in seconds
+      });
       res.status(200).json(achievements);
     } catch (error) {
       console.log("controller error : " + error);
@@ -45,13 +66,12 @@ class AchievementController {
   getAchievementsInCSV = async (req, res) => {
     try {
       const achievements = await this.achievement.getAchievementsByUserIdInCSV(req.params.userId);
-  
       // Handle the case where no achievements are found or mentor is not found
       if (!achievements || achievements.length === 0) {
         throw new Error('Mentor not found or no achievements for the user');
       }
       // Extract headers
-      const headers = Object.keys(Object.values(achievements[0])[2]);
+      const headers = Object?.keys(Object?.values(achievements[0])[2]);
       // Convert data to CSV format
       let csv = headers.join(',') + '\n';
       achievements.forEach(achievement => {
@@ -81,8 +101,8 @@ class AchievementController {
   };
 
   getAchievementsByMentorAndStatus = async (req, res) => {
+    const { mentorId, status } = req.params;
     try {
-      const { mentorId, status } = req.params;
       const mentor = await this.mentor.getMentorById(mentorId);
       const validStatuses = ["pending", "accepted", "rejected"];
 
