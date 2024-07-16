@@ -1,10 +1,43 @@
 const Achievement = require("../models/achievementModel");
 const crudRepo = require("./crud");
+const redisClient = require('../redis/redisClient');
 
-class achievementRepo extends crudRepo {
+class AchievementRepository extends crudRepo {
   constructor() {
     super(Achievement);
   }
+
+  async getAchievementsByUserId(userId) {
+    try {
+      const cacheKey = `achievements:user:${userId}`;
+      const cachedAchievements = await redisClient.get(cacheKey);
+
+      if (cachedAchievements) {
+        return JSON.parse(cachedAchievements);
+      }
+
+      const achievements = await this.model.find({ userId }).populate("userId");
+      await redisClient.set(cacheKey, JSON.stringify(achievements), 'EX', 3600); // Cache for 1 hour
+
+      return achievements;
+    } catch (error) {
+      console.error("Repository error:", error);
+      throw error;
+    }
+  }
+
+  async getAchievementsByUserIdInCSV(userId) {
+    try {
+
+      const achievements = await this.model.find({ userId }).select("-userId -_id -__v");
+
+      return achievements;
+    } catch (error) {
+      console.error("Repository error:", error);
+      throw error;
+    }
+  }
+
 
   updateAchievement = async (id, data) => {
     try {
@@ -14,39 +47,6 @@ class achievementRepo extends crudRepo {
       });
 
       return achievement;
-    } catch (error) {
-      console.log("repository error : " + error);
-      throw error;
-    }
-  };
-
-  getAchievementsByUserId = async (userId) => {
-    try {
-      const achievements = await this.model.find({ userId: userId }).populate("userId");
-      
-      return achievements;
-    } catch (error) {
-      console.log("repository error : " + error);
-      throw error;
-    }
-  };
-
-  getAchievementsByUserIdInCSV = async (userId) => {
-    try {
-      const achievements = await this.model.find({ userId: userId }).select("-userId -_id -__v");
-      
-      return achievements;
-    } catch (error) {
-      console.log("repository error : " + error);
-      throw error;
-    }
-  };
-
-  getAchievementsByUserIds = async (userIds) => {
-    try {
-      const achievements = await this.model.find({ userId: { $in: userIds } });
-
-      return achievements;
     } catch (error) {
       console.log("repository error : " + error);
       throw error;
@@ -68,4 +68,4 @@ class achievementRepo extends crudRepo {
   };
 }
 
-module.exports = achievementRepo;
+module.exports = AchievementRepository;

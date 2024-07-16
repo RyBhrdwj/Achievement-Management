@@ -6,12 +6,14 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className='grid grid-cols-12'>
-      <div className='sm:col-span-2'><SideBar /></div>
-      <div className='col-span-12 sm:col-span-10'>
-        <Header />
+    <div>
+      <Header />
+      <div className='grid grid-cols-12 gap-4'>
+     {/* <div className='col-span-2'><SideBar /></div>*/}
+      <div className='col-span-10'>
         <Outlet /> {/* This will render the child routes */}
         {/* <Footer /> */}
+      </div>
       </div>
     </div>
   );

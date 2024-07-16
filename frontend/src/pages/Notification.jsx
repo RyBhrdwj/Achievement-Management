@@ -7,7 +7,7 @@ const Card = ({ notification }) => {
   return (
     <div
       key={notification.id}
-      className="flex items-start p-4 mb-4 bg-white rounded-lg shadow-md border border-gray-200"
+      className="flex items-start p-4 mb-2 mt-2 bg-white rounded-lg shadow-md border border-gray-200 w-full max-w-6xl mx-auto" 
     >
       <div className="flex-shrink-0">
         <svg
@@ -39,7 +39,6 @@ const Notification = () => {
       const userId = '6692353576002fc8b2ab2b37';
       try {
         const response = await axios.get(`https://amgmt.onrender.com/api/notifications/${userId}`);
-        console.log(response)
         const sortedNotifications = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         setNotifications(sortedNotifications);
       } catch (error) {
@@ -52,8 +51,8 @@ const Notification = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center py-10">
-      <div className="w-full max-w-5xl bg-white shadow-lg rounded-lg overflow-hidden">
+    <div className="min-h-screen mt-4  bg-gray-100" style={{marginLeft:'190px'}}>
+      <div className="w-full bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="bg-gradient-to-r from-blue-500 to-teal-400 p-4">
           <h1 className="text-white text-2xl font-semibold text-center">
             Notifications
@@ -81,4 +80,3 @@ const Notification = () => {
 };
 
 export default Notification;
-
