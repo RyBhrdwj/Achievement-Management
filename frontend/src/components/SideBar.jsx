@@ -50,21 +50,21 @@ const SideBar = () => {
 
   const getLinkClassNames = (index) => {
     if (clickedIndex === index) {
-      return "flex items-center text-lg p-3 rounded-md transition duration-300 ease-in-out bg-purple-900 text-white ";
+      return "flex items-center text-lg p-3 rounded-md transition duration-300 ease-in-out bg-indigo-700 text-white";
     }
     return hovered === index
-      ? "flex items-center text-lg p-3 rounded-md transition duration-300 ease-in-out bg-purple-700 text-white"
-      : "flex items-center text-lg p-3 rounded-md transition duration-300 ease-in-out text-gray-200 hover:bg-purple-500 hover:text-white";
+      ? "flex items-center text-lg p-3 rounded-md transition duration-300 ease-in-out bg-indigo-600 text-white"
+      : "flex items-center text-lg p-3 rounded-md transition duration-300 ease-in-out text-gray-200 hover:bg-indigo-500 hover:text-white";
   };
 
   return (
     <>
       <FaBars
-        className="fixed top-5 left-5 text-2xl cursor-pointer z-50 block md:hidden"
+        className="fixed top-5 left-5 text-2xl cursor-pointer z-50 block md:hidden text-white"
         onClick={toggleSidebar}
       />
       <div
-        className={`fixed top-0 left-0 w-60 h-full bg-purple-500 p-3 flex flex-col items-start shadow-lg transition-transform duration-300 ease-in-out transform ${
+        className={`fixed top-0 left-0 w-60 h-full bg-gradient-to-r from-blue-500 to-indigo-500 p-3 flex flex-col items-start shadow-lg transition-transform duration-300 ease-in-out transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0 z-40`}
       >
@@ -112,5 +112,10 @@ const SideBar = () => {
 };
 
 export default SideBar;
+
+
+
+
+
 
 

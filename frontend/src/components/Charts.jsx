@@ -23,7 +23,6 @@ const Charts = ({ events }) => {
       return;
     }
 
-    
     setUserData({
       labels: [
         "January", "February", "March", "April", "May", "June",
@@ -85,10 +84,6 @@ const Charts = ({ events }) => {
       }
     };
   }, [userData, monthlyEvents]);
-
-  // if (!userData) {
-  //   return <Loader />; // Placeholder for when data is being fetched
-  // }
 
   return (
     <div className='w-full p-2 sm:p-4'>

@@ -25,6 +25,10 @@ const achievementSchema = new mongoose.Schema({
     type: Date,
     // required: true,
   },
+  is_Technical:{
+    type:Boolean,
+    required: true,
+  },
   mode:{
     type: String,
     enum: ["online", "offline"],

@@ -70,7 +70,7 @@ export default function EventCalendar({ events }) {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <div className="w-full max-w-sm mx-auto p-4 bg-gray-300  rounded-lg shadow-xl">
+      <div className="w-full max-w-sm mx-auto p-4 bg-gray-300 rounded-lg shadow-xl">
         <DateCalendar
           value={value}
           onChange={(newValue) => setValue(newValue)}
@@ -85,3 +85,4 @@ export default function EventCalendar({ events }) {
     </LocalizationProvider>
   );
 }
+

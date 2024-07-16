@@ -4,15 +4,15 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 
 const Header = () => {
   return (
-    <header className='bg-sky-300 shadow-lg p-4 sm:rounded-lg flex justify-between items-center ml-4 mt-0 '>
+    <header className='bg-gradient-to-r from-blue-500 to-indigo-500 shadow-lg p-4 sm:rounded-lg flex justify-between items-center ml-4 mt-0'>
       <div className='flex items-center'>
-        <h1 className='text-md sm:text-2xl font-bold text-gray-800'></h1>
+        <h1 className='text-md sm:text-2xl font-bold text-white'>Event Management</h1>
       </div>
-      <div className='flex items-center '>
+      <div className='flex items-center'>
         <Link to="/notifications">
-          <NotificationsIcon className='text-white  mr-7 w-40  h-40 cursor-pointer' />
+          <NotificationsIcon className='text-white mr-7 w-10 h-10 cursor-pointer' />
         </Link>
-        <div className='flex items-center bg-white p-4 rounded-full shadow'>
+        <div className='flex items-center bg-white p-2 rounded-full shadow-md'>
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgyb9CNs-MYH7mqsI7pPYZ2tCwql4ldvw7OA&s"
             alt="Profile"
@@ -30,3 +30,6 @@ const Header = () => {
 };
 
 export default Header;
+
+
+

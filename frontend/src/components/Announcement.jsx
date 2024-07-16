@@ -46,7 +46,7 @@ const Announcement = ({ speed }) => {
           className="font-semibold tracking-wide"
         >
           <p>
-            <span className="bg-yellow-500 px-1  rounded-md mr-2">
+            <span className="bg-yellow-500 px-1 rounded-md mr-2">
               Announcement:
             </span>
             <span className="text-black"> (Student Name) of (Student Class) (Student Year) Year won the (event type) (event name) held at (event venue) on (event date)</span>
@@ -62,12 +62,48 @@ const Announcement = ({ speed }) => {
             transform: translateX(-100%);
           }
         }
+
+        .jungle-background {
+          background-image: url('https://path-to-jungle-background-image.jpg');
+          background-size: cover;
+          background-position: center;
+        }
+
+        .jungle-elements {
+          position: absolute;
+          z-index: -1;
+          opacity: 0.3;
+        }
+
+        .left-vines {
+          top: 0;
+          left: 0;
+          height: 100%;
+        }
+
+        .right-vines {
+          top: 0;
+          right: 0;
+          height: 100%;
+        }
       `}</style>
+      <div className="jungle-elements left-vines">
+        <img src="https://path-to-left-vines-image.png" alt="Left Vines" />
+      </div>
+      <div className="jungle-elements right-vines">
+        <img src="https://path-to-right-vines-image.png" alt="Right Vines" />
+      </div>
     </div>
   );
 };
 
 export default Announcement;
+
+
+
+
+
+
 
 
 
