@@ -1,5 +1,8 @@
 const mentorRepo = require("../repositories/mentorRepository");
 const redis = require("redis");
+const dotenv = require("dotenv");
+
+dotenv.config()
 
 const redisClient = redis.createClient({
   url: process.env.REDIS_URL // Update with your Redis server URL if different

@@ -10,14 +10,12 @@ import {
   MenuItem,
   InputLabel,
   Box,
-  Grid,
-  Typography,
-  TextareaAutosize,
+  Grid
+
 } from "@mui/material";
 
 const Form1 = ({ details, setDetails }) => {
   const options = details.type === 'technical' ? [
-    "Select",
     "Hackathon",
     "Workshop",
     "Ideathon",
@@ -25,7 +23,6 @@ const Form1 = ({ details, setDetails }) => {
     "Conference",
     "Other"
   ] : [
-    "Select",
     "Solo singing",
     "Dancing",
     "Sports",
