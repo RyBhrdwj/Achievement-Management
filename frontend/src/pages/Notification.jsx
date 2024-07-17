@@ -51,7 +51,7 @@ const Notification = () => {
   }, []);
 
   return (
-    <div className="min-h-screen mt-4  bg-gray-100" style={{marginLeft:'190px'}}>
+    <div className="min-h-screen my-4  bg-gray-100 mx-auto max-w-5xl" >
       <div className="w-full bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="bg-gradient-to-r from-blue-500 to-teal-400 p-4">
           <h1 className="text-white text-2xl font-semibold text-center">
@@ -61,7 +61,7 @@ const Notification = () => {
         {loading ? (
           <Loader />
         ) : (
-          <div className="p-4">
+          <div className="px-10 py-4">
             {notifications.length > 0 ? (
               notifications.map((notification, idx) => (
                 <Card key={idx} notification={notification} />

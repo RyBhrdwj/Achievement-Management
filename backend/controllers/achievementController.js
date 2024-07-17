@@ -20,7 +20,7 @@ class AchievementController {
   addAchievement = async (req, res) => {
     try {
       const achievement = await this.achievement.create(req.body);
-      await redisClient.del(`achievements:${req.body.userId}`);
+      // await redisClient.del(`achievements:${req.body.userId}`);
       res.status(201).json(achievement);
     } catch (error) {
       console.log("controller error : " + error);
@@ -31,7 +31,7 @@ class AchievementController {
   deleteAchievement = async (req, res) => {
     try {
       const achievement = await this.achievement.destroy(req.params.id);
-      await redisClient.del(`achievements:${achievement.userId}`);
+      // await redisClient.del(`achievements:${achievement.userId}`);
       res.status(200).json(achievement);
     } catch (error) {
       console.log("controller error : " + error);

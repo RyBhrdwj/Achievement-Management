@@ -1,70 +1,116 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Paper,
+  Button,
+  Typography,
+  Box,
+} from "@mui/material";
 
 const Review = ({ details }) => {
-    const [showProof, setShowProof] = useState(false);
-    const handleShowProof = () => {
-        setShowProof(!showProof);
-      };
-    
+  const [showProof, setShowProof] = useState(false);
+  const handleShowProof = () => {
+    setShowProof(!showProof);
+  };
+
   return (
-    <div>
-      <h1 className="text-xl font-thin text-center mb-4">Review Details</h1>
-      <table className="table-auto w-3/4 mx-auto border-collapse border border-gray-400">
-        <tbody>
-          <tr>
-            <th className="text-left p-2 border border-gray-400 w-1/2">Name of the event:</th>
-            <td className="p-2 border border-gray-400 w-1/2">{details.name}</td>
-          </tr>
-          <tr>
-            <th className="text-left p-2 border border-gray-400 w-1/2">Date:</th>
-            <td className="p-2 border border-gray-400 w-1/2">{details.date}</td>
-          </tr>
-          <tr>
-            <th className="text-left p-2 border border-gray-400 w-1/2">Event Type:</th>
-            <td className="p-2 border border-gray-400 w-1/2">{details.type === 'other'? details.otherType : details.type}</td>
-          </tr>
-          <tr>
-            <th className="text-left p-2 border border-gray-400 w-1/2">Mode:</th>
-            <td className="p-2 border border-gray-400 w-1/2">{details.mode}</td>
-          </tr>
-          <tr>
-            <th className="text-left p-2 border border-gray-400 w-1/2">Venue(or link):</th>
-            <td className="p-2 border border-gray-400 w-1/2">{details.location}</td>
-          </tr>
-          <tr>
-            <th className="text-left p-2 border border-gray-400 w-1/2">Result:</th>
-            <td className="p-2 border border-gray-400 w-1/2">{details.result}</td>
-          </tr>
-          <tr>
-            <th className="text-left p-2 border border-gray-400 w-1/2">Proof:</th>
-            <td className="p-2 border border-gray-400 w-1/2">
-              {details.proofUrl ? (
-                <>
-                  <span>Submitted</span>
-                  <button
-                    onClick={handleShowProof}
-                    className="ml-2 text-blue-500 underline"
-                  >
-                    {showProof ? "Hide Proof" : "Show Proof"}
-                  </button>
-                  {showProof && (
-                    <div className="mt-2">
-                      <img
-                        src={details.proofUrl}
-                        alt="Proof"
-                        className="max-w-full h-auto"
-                      />
-                    </div>
-                  )}
-                </>
-              ) : (
-                <span>Not Submitted</span>
-              )}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <Box sx={{ mt: 4 }}>
+      <Typography variant="h5" gutterBottom align="center">
+        Review Details
+      </Typography>
+      <TableContainer component={Paper} sx={{ maxWidth: 800, mx: "auto" }}>
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell component="th" scope="row" sx={{ fontWeight: "bold" }}>
+                Name of the event:
+              </TableCell>
+              <TableCell>{details.name}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row" sx={{ fontWeight: "bold" }}>
+                Date:
+              </TableCell>
+              <TableCell>{details.date}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row" sx={{ fontWeight: "bold" }}>
+                Event Type:
+              </TableCell>
+              <TableCell>
+                {details.type === "other" ? details.otherType : details.type}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row" sx={{ fontWeight: "bold" }}>
+                Mode:
+              </TableCell>
+              <TableCell>{details.mode}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row" sx={{ fontWeight: "bold" }}>
+                Venue(or link):
+              </TableCell>
+              <TableCell>{details.location}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row" sx={{ fontWeight: "bold" }}>
+                Result:
+              </TableCell>
+              <TableCell>{details.result}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row" sx={{ fontWeight: "bold" }}>
+                Proof:
+              </TableCell>
+              <TableCell>
+                {details.proofUrl ? (
+                  <>
+                    <Typography component="span">Submitted</Typography>
+                    <Button
+                      onClick={handleShowProof}
+                      variant="text"
+                      color="primary"
+                      size="small"
+                      sx={{ ml: 2 }}
+                    >
+                      {showProof ? "Hide Proof" : "Show Proof"}
+                    </Button>
+                    {showProof && (
+                      <Box
+                        sx={{
+                          mt: 2,
+                          maxWidth: 300,
+                          maxHeight: 300,
+                          overflow: "hidden",
+                        }}
+                      >
+                        <img
+                          src={details.proofUrl}
+                          alt="Proof"
+                          style={{
+                            width: "100%",
+                            height: "auto",
+                            maxWidth: "100%",
+                            maxHeight: "100%",
+                          }}
+                        />
+                      </Box>
+                    )}
+                  </>
+                ) : (
+                  <Typography component="span">Not Submitted</Typography>
+                )}
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 };
 

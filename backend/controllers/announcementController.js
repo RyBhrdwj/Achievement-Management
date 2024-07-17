@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-const achievementRepo = require("../repositories/achievementRepository");
-=======
 const achievementRepo = require("../repositories/announcementRepository");
 
 const NotableAchievement = require('../models/NotableAchievement');
@@ -27,4 +24,3 @@ const createNotableAchievement = async (req, res) => {
 module.exports = {
   createNotableAchievement,
 };
->>>>>>> refs/remotes/origin/main

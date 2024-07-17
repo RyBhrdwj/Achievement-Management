@@ -37,7 +37,7 @@ const Header = () => {
       <div className='flex items-center'>
         <h1 className='text-md sm:text-2xl font-bold ml-10 text-white'>Event Management</h1>
       </div>
-      <nav className='flex items-center ml-10'>
+      <nav className='flex items-center ml-10 gap-4'>
         <NavLink
           to="/"
           className={getLinkClassNames(0)}

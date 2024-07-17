@@ -5,40 +5,48 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 import Form1 from './Form/Form1';
 import Form2 from './Form/Form2';
 import Review from './Form/Review';
-import axios from 'axios'
+import axios from 'axios';
 
 const steps = ['Add Details', 'Add Proof'];
 
-export default function EventForm({setSubmit}) {
+export default function EventForm({ setSubmit }) {
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
   const [details, setDetails] = useState({
     name: '',
     date: '',
-    type: 'hackathon',
-    otherType: '',
+    type: '',
+    description: '',
+    otherDescription: '',
     mode: '',
     result: '',
     location: '',
     proof: '',
     proofUrl: ''
   });
-  
-    const isDisabled = () => {
-      const { name, date, type, mode, result, location } = details;
-      return (
-        name === "" ||
-        date === "" ||
-        type === "" ||
-        mode === "" ||
-        result === "" ||
-        location === ""
-      );
-    };
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+
+  const isDisabled = () => {
+    const { name, date, type, description, mode, result, location } = details;
+    return (
+      name === "" ||
+      date === "" ||
+      type === "" ||
+      mode === "" ||
+      result === "" ||
+      location === "" ||
+      description === ""
+    );
+  };
 
   const isStepOptional = (step) => {
     return step === 1;
@@ -47,8 +55,6 @@ export default function EventForm({setSubmit}) {
   const isStepSkipped = (step) => {
     return skipped.has(step);
   };
-
-  
 
   const handleNext = () => {
     let newSkipped = skipped;
@@ -87,7 +93,7 @@ export default function EventForm({setSubmit}) {
       const location = details.location;
       const mode = details.mode;
       const result = details.result;
-  
+
       const response = await axios.post('https://amgmt.onrender.com/api/add-achievement', {
         userId,
         name,
@@ -97,26 +103,35 @@ export default function EventForm({setSubmit}) {
         location,
         result
       });
-  
+
       console.log(response.data);
-  
+
       const achievement = response.data._id;
       const mentor = '6692351e76002fc8b2ab2b35';
-  
+
       const request = await axios.post('https://amgmt.onrender.com/api/add-request', {
         user: userId,
         achievement,
         mentor
       });
-  
+
       console.log(request);
+
+      setSnackbarMessage('Submission successful!');
+      setSnackbarSeverity('success');
+      setSubmit(true)
     } catch (error) {
       console.log(error);
+      setSnackbarMessage('Submission failed. Please try again.');
+      setSnackbarSeverity('error');
+    } finally {
+      setSnackbarOpen(true);
     }
-  
-    setSubmit(true);
   };
-  
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
+  };
 
   return (
     <Box sx={{ width: '100%' }} className="p-4">
@@ -148,9 +163,9 @@ export default function EventForm({setSubmit}) {
           </Box>
         </React.Fragment>
       ) : (
-        <React.Fragment>           
+        <React.Fragment>
           {activeStep === 0 && (<Form1 details={details} setDetails={setDetails} />)}
-        {activeStep === 1 && (<Form2 details={details} setDetails={setDetails} />)}
+          {activeStep === 1 && (<Form2 details={details} setDetails={setDetails} />)}
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button
               color="inherit"
@@ -166,13 +181,22 @@ export default function EventForm({setSubmit}) {
                 Skip
               </Button>
             )}
-
             <Button onClick={handleNext} disabled={isDisabled()}>
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
             </Button>
           </Box>
         </React.Fragment>
       )}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical:"top", horizontal:"center" }}
+      >
+        <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }} >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

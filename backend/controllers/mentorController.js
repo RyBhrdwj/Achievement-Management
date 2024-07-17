@@ -76,7 +76,7 @@ class mentorController {
       
       // Invalidate cache for this mentor
       const cacheKey = `mentor:${req.params.id}`;
-      await redisClient.del(cacheKey);
+      // await redisClient.del(cacheKey);
 
       res.status(200).json(mentor);
     } catch (error) {
@@ -92,7 +92,7 @@ class mentorController {
       
       // Invalidate cache for this mentor
       const cacheKey = `mentor:${req.params.id}`;
-      await redisClient.del(cacheKey);
+      // await redisClient.del(cacheKey);
 
       res.status(200).json(mentor);
     } catch (error) {

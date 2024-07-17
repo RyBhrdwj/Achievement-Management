@@ -30,7 +30,7 @@ const Home = () => {
   if (loading) return <Loader />;
 
   return (
-    <div className="px-2 sm:px-6">
+    <div className="px-2 sm:px-6 max-w-9xl mx-auto">
       <Announcement speed={window.innerWidth > 768 ? 10000 : 20000} />
       <div className="grid grid-cols-1 sm:grid-cols-12 w-full h-full justify-center items-center p-4 bg-gray-400 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100 mb-4">
         <div className="col-span-8">
