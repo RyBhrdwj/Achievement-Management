@@ -9,15 +9,15 @@ class AchievementRepository extends crudRepo {
 
   async getAchievementsByUserId(userId) {
     try {
-      const cacheKey = `achievements:user:${userId}`;
-      const cachedAchievements = await redisClient.get(cacheKey);
+      // const cacheKey = `achievements:user:${userId}`;
+      // const cachedAchievements = await redisClient.get(cacheKey);
 
-      if (cachedAchievements) {
-        return JSON.parse(cachedAchievements);
-      }
+      // if (cachedAchievements) {
+      //   return JSON.parse(cachedAchievements);
+      // }
 
       const achievements = await this.model.find({ userId }).populate("userId");
-      await redisClient.set(cacheKey, JSON.stringify(achievements), 'EX', 3600); // Cache for 1 hour
+      // await redisClient.set(cacheKey, JSON.stringify(achievements), 'EX', 3600); // Cache for 1 hour
 
       return achievements;
     } catch (error) {
