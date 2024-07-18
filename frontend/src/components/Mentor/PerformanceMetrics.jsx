@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { CircularProgress } from '@mui/material';
 
 const PerformanceMetrics = ({ mentorId }) => {
   const [students, setStudents] = useState([]);
@@ -23,7 +24,6 @@ const PerformanceMetrics = ({ mentorId }) => {
           })
         );
 
-        // Sort students by eventsAttended in descending order
         studentsWithMetrics.sort((a, b) => b.eventsAttended - a.eventsAttended);
 
         setStudents(studentsWithMetrics);
@@ -39,46 +39,41 @@ const PerformanceMetrics = ({ mentorId }) => {
   }, [mentorId]);
 
   if (loading) {
-    return <p>Loading students...</p>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <CircularProgress />
+        <p className="ml-2 text-lg">Loading students...</p>
+      </div>
+    );
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-red-600 text-lg">{error}</p>
+      </div>
+    );
   }
 
   return (
-    <div className='bg-white rounded shadow p-4 mb-4'>
-      <h2 className='text-xl font-bold mb-4'>Performance Metrics</h2>
-      <div className='overflow-x-auto'>
-        <table className='min-w-full divide-y divide-gray-200'>
-          <thead className='bg-gray-50'>
+    <div className="max-w-6xl mx-auto my-10 p-3 bg-blue-200 shadow-lg rounded-lg">
+      <h2 className="text-3xl font-bold mb-3 text-center">Performance Metrics</h2>
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white">
+          <thead className="bg-gray-800 text-white">
             <tr>
-              <th scope='col' className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                Student Name
-              </th>
-              <th scope='col' className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                Enrollment Number
-              </th>
-              <th scope='col' className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                Events Attended
-              </th>
+              <th className="w-1/3 py-3 px-4 uppercase font-semibold text-sm text-left text-under">Student Name</th>
+              <th className="w-1/3 py-3 px-4 uppercase font-semibold text-sm text-left">Enrollment Number</th>
+              <th className="w-1/3 py-3 px-4 uppercase font-semibold text-sm text-left">Events Attended</th>
             </tr>
           </thead>
-          <tbody className='bg-white divide-y divide-gray-200'>
+          <tbody className="text-gray-700">
             {students.map(student => (
-              <tr key={student._id}>
-                <td className='px-6 py-4 whitespace-nowrap'>
-                  <div className='flex items-center'>
-                    <div className='ml-4'>
-                      <div className='text-sm font-medium text-gray-900'>{student.name}</div>
-                    </div>
-                  </div>
-                </td>
-                <td className='px-6 py-4 whitespace-nowrap'>
-                  <div className='text-sm text-gray-900'>{student.enrollmentNumber}</div>
-                </td>
-                <td className='px-6 py-4 whitespace-nowrap'>
-                  <span className='px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800'>
+              <tr key={student._id} className="bg-gray-100 hover:bg-gray-200">
+                <td className="py-3 px-4">{student.name}</td>
+                <td className="py-3 px-4">{student.enrollmentNumber}</td>
+                <td className="py-3 px-4">
+                  <span className="px-2 py-1 text-xs font-bold text-black bg-orange-400 rounded-full">
                     {student.eventsAttended || 0}
                   </span>
                 </td>
