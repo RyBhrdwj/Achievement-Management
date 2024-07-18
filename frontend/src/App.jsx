@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom'; // Import Outlet
 import Header from './components/Header';
-import SideBar from './components/SideBar';
+import SideBar from './components/Mentor/SideBar';
 import Footer from './components/Footer';
 
 function App() {

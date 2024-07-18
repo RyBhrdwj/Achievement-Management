@@ -50,7 +50,7 @@ class mentorController {
   // Get all students for a specific mentor
   getStudentsByMentorId = async (req, res) => {
     const mentorId = req.params.id;
-    const cacheKey = `students:mentor:${mentorId}`;
+    const cacheKey = `mentor:students:${mentorId}`;
 
     try {
       // Check cache first

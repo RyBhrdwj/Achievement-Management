@@ -7,12 +7,12 @@ const DownloadButton = ({ mentor }) => {
     try {
       if (mentor) {
         response = await axios.get(
-          "https://amgmt.onrender.com/api/achievement/6692351e76002fc8b2ab2b35/accepted/csv"
+          "/achievement/6692351e76002fc8b2ab2b35/accepted/csv"
         );
       }
       else {
         response = await axios.get(
-            "https://amgmt.onrender.com/api/achievement/6692353576002fc8b2ab2b37/csv"
+            "/achievement/6692353576002fc8b2ab2b37/csv"
           );
       }
       console.log(response.data);

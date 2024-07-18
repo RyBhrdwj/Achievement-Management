@@ -15,7 +15,7 @@ const Home = () => {
       try {
         const userId = "6692353576002fc8b2ab2b37"
         const response = await axios.get(
-          `https://amgmt.onrender.com/api/achievements/${userId}`
+          `/achievements/${userId}`
         );
         setEvents(response.data);
       } catch (error) {

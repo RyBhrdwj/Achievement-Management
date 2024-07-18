@@ -37,7 +37,7 @@ const Requests = ({ requests,getRequests }) => {
   const updateAchievement = async ({ id, status }) => {
     try {
       console.log(id,status)
-      const response = await axios.patch(`https://amgmt.onrender.com/api/verify-achievement/${id}/${status}`);
+      const response = await axios.patch(`/verify-achievement/${id}/${status}`);
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -51,7 +51,7 @@ const Requests = ({ requests,getRequests }) => {
     const user = selectedRequest.user?._id;
     const mentor = selectedRequest.mentor?._id;
     try {
-      const response = await axios.post('https://amgmt.onrender.com/api/add-notification', { user, message, mentor });
+      const response = await axios.post('/add-notification', { user, message, mentor });
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -60,7 +60,7 @@ const Requests = ({ requests,getRequests }) => {
 
   const deleteRequest = async(requestId) => {
     try {
-      const response = await axios.delete(`https://amgmt.onrender.com/api/delete-request/${requestId}`)
+      const response = await axios.delete(`/delete-request/${requestId}`)
       console.log(response)
       getRequests();
     } catch (error) {

@@ -82,6 +82,7 @@ const RecentAchievements = ({ events = [], setEvents }) => {
 
   useEffect(() => {
     if (events) sortEvents(sortCriteria);
+    console.log(events)
   }, [sortCriteria, events]);
 
   const handleSortChange = (e) => {

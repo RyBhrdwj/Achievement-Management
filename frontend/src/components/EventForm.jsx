@@ -89,15 +89,16 @@ export default function EventForm({ setSubmit }) {
       const userId = '6692353576002fc8b2ab2b37';
       const name = details.name;
       const date = details.date;
-      const description = details.type === 'other' ? details.otherType : details.type;
+      const description = details.description === 'other' ? details.otherDescription : details.description;
       const location = details.location;
       const mode = details.mode;
       const result = details.result;
 
-      const response = await axios.post('https://amgmt.onrender.com/api/add-achievement', {
+      const response = await axios.post('/add-achievement', {
         userId,
         name,
         date,
+        is_Technical: details.type.toLowerCase() === 'technical',
         description,
         mode,
         location,
@@ -109,7 +110,7 @@ export default function EventForm({ setSubmit }) {
       const achievement = response.data._id;
       const mentor = '6692351e76002fc8b2ab2b35';
 
-      const request = await axios.post('https://amgmt.onrender.com/api/add-request', {
+      const request = await axios.post('/add-request', {
         user: userId,
         achievement,
         mentor

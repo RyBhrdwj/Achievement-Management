@@ -38,7 +38,7 @@ const Notification = () => {
       setLoading(true);
       const userId = '6692353576002fc8b2ab2b37';
       try {
-        const response = await axios.get(`https://amgmt.onrender.com/api/notifications/${userId}`);
+        const response = await axios.get(`/notifications/${userId}`);
         const sortedNotifications = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         setNotifications(sortedNotifications);
       } catch (error) {

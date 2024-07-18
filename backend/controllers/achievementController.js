@@ -92,7 +92,7 @@ class AchievementController {
       }
   
       const filePath = path.join(uploadsDir, "achievements.csv");
-      const fileUrl = `https://amgmt.onrender.com/uploads/achievements.csv`;
+      const fileUrl = `http://localhost:3000/uploads/achievements.csv`;
       // Write the CSV to a file
       fs.writeFileSync(filePath, csv);
   
@@ -188,7 +188,7 @@ class AchievementController {
       }
   
       const filePath = path.join(uploadsDir, "student_achievements.csv");
-      const fileUrl = `https://amgmt.onrender.com/uploads/student_achievements.csv`;
+      const fileUrl = `http://localhost:3000/uploads/student_achievements.csv`;
       // Write the CSV to a file
       fs.writeFileSync(filePath, csv);
   

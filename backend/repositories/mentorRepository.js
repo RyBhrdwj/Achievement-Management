@@ -19,55 +19,55 @@ class mentorRepository extends crudRepo {
 
   getMentorById = async (mentorId) => {
     try {
-      // const cacheKey = `mentor:${mentorId}`;
-
-      // // Check cache first
-      // const cachedMentor = await redisClient.get(cacheKey);
-      // if (cachedMentor) {
-      //   return JSON.parse(cachedMentor);
-      // }
-
+      const cacheKey = `mentor:${mentorId}`;
+  
+      // Check cache first
+      const cachedMentor = await redisClient.get(cacheKey);
+      if (cachedMentor) {
+        return JSON.parse(cachedMentor);
+      }
+  
       // Fetch from database if not in cache
-      const mentor = await this.model.findById(mentorId);
+      const mentor = await this.model.findById(mentorId).populate('studentUserIds');
       if (!mentor) {
         throw new Error("Mentor not found");
       }
-
+  
       // Cache the result
-      // await redisClient.set(cacheKey, JSON.stringify(mentor), 'EX', 3600);
-
+      await redisClient.set(cacheKey, JSON.stringify(mentor), 'EX', 3600);
+  
       return mentor;
     } catch (error) {
       console.log("repository error : " + error);
       throw error;
     }
   };
+  
 
 
   getStudentsByMentorId = async (mentorId) => {
     try {
-      // const cacheKey = `students:mentor:${mentorId}`;
-
-      // // Check cache first
-      // const cachedStudents = await redisClient.get(cacheKey);
-      // if (cachedStudents) {
-      //   return JSON.parse(cachedStudents);
-      // }
-
+      const cacheKey = `mentor:students:${mentorId}`;
+  
+      // Check cache first
+      const cachedStudents = await redisClient.get(cacheKey);
+      if (cachedStudents) {
+        return JSON.parse(cachedStudents);
+      }
+  
       // Fetch from database if not in cache
-      const mentor = await this.getMentorById(mentorId);
-      const students = mentor.studentUserIds;
-
+      const students = await this.model.findById(mentorId).populate('studentUserIds').select('studentUserIds');
+  
       // Cache the result
-      // await redisClient.set(cacheKey, JSON.stringify(students), 'EX', 3600);
-
+      await redisClient.set(cacheKey, JSON.stringify(students), 'EX', 3600);
+  
       return students;
     } catch (error) {
       console.log("repository error : " + error);
       throw error;
     }
   };
-
+  
 
 
   addStudentToMentor = async (mentorId, studentUserId) => {

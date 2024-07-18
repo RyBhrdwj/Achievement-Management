@@ -7,23 +7,21 @@ const userSchema = new mongoose.Schema({
   },
   enrollmentNumber: {
     type: String,
-    unique: true,
-    length: 11,
+    unique: true, // Ensures uniqueness of enrollment numbers
+    maxlength: 11, // Corrected from 'length' to 'maxlength'
   },
-  // drop down menu se select
   branch_section: {
     type: String,
     required: true,
   },
-  // checks if emaile ends with @bpitindia.edu.in
   email: {
     type: String,
     required: true,
-    match: /^[a-zA-Z0-9._%+-]+@bpitindia\.edu\.in$/,
+    match: /^[a-zA-Z0-9._%+-]+@bpitindia\.edu\.in$/, // Validates email format
   },
   mentorId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Mentor"
+    ref: "Mentor",
   }
 });
 
