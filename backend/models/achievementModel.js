@@ -23,7 +23,7 @@ const achievementSchema = new mongoose.Schema({
   },
   date: {
     type: Date,
-    // required: true,
+    required: true,
   },
   is_Technical:{
     type:Boolean,

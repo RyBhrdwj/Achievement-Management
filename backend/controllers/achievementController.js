@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const redis = require("redis")
 const dotenv = require("dotenv");
+const s3 = require("../s3");
 
 dotenv.config()
 
@@ -20,15 +21,52 @@ class AchievementController {
     this.mentor = new mentorRepo();
   }
   
-  addAchievement = async (req, res) => {
-    try {
-      const achievement = await this.achievement.create(req.body);
-      await redisClient.del(`achievements:${req.body.userId}`);
-      res.status(201).json(achievement);
-    } catch (error) {
-      console.log("controller error : " + error);
-      res.status(400).json({ message: error.message });
-    }
+  // addAchievement = async (req, res) => {
+  //   try {
+  //     const achievement = await this.achievement.create(req.body);
+  //     await redisClient.del(`achievements:${req.body.userId}`);
+  //     res.status(201).json(achievement);
+  //   } catch (error) {
+  //     console.log("controller error : " + error);
+  //     res.status(400).json({ message: error.message });
+  //   }
+  // };
+
+  addAchievement = async(req,res)=>{
+    const{mentorId, userId, name, date, description, location, isTechnical, mode, result, verificationStatus} = req.body;
+
+    const newAchievement = new Achievement({
+      userId: userId,
+      name, date, description, location, isTechnical, mode, result, verificationStatus,
+    });
+    try{
+      const savedAchievement = await newAchievement.save();
+      // await redisClient.del(`savedAchievement:${userId}`;
+        //Generate S3 key
+      const key = `${mentorId}/${userId}/${name}/${date}`; 
+
+      const params = {
+        Bucket : process.env.AWS_BUCKET_NAME,
+        Key: key,
+        // Body: file,
+        ContentType: 'image/png',
+      ACL: 'public-read'};
+
+      const data = await s3.upload(params).promise();
+
+      const fileUrl = data.Location;
+
+      savedAchievement.proof = fileUrl;
+      await savedAchievement.save();
+
+      res.status[200].json({
+        message: 'achivement and file uploaded',
+        achievement: savedAchievement
+      });
+
+      } catch(err){
+        res.status(500).json({error: 'Error in uploading file'})
+      }
   };
 
   deleteAchievement = async (req, res) => {

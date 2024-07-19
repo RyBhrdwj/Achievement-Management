@@ -8,10 +8,9 @@ const {
 const achievementController = require("../controllers/achievementController");
 const notificationController = require("../controllers/notificationController");
 const requestController = require("../controllers/requestController");
+const s3Router = require('../s3exp'); // Import the S3 routes
 const mentorController = require("../controllers/mentorController");
 const userController = require('../controllers/userController')
-const s3Router = require('../s3exp'); // Import the S3 routes
-const announcementRouter = require('./announcementRouter');
 
 // Define the routes
 router.get("/", (req, res) => {
@@ -66,7 +65,6 @@ router.delete(
 router.get('/achievement/:userId/csv', achievementController.getAchievementsInCSV)
 router.get('/achievement/:mentorId/:status/csv', achievementController.getAchievementsByMentorAndStatusInCSV)
 
-router.use('/s3', s3Router);
-router.use('/announcements', announcementRouter);
+// router.use('/s3', s3Router);
 
 module.exports = router;
