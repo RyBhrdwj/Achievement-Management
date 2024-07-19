@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
 const dummyStudents = [
-  { id: '1', name: 'Alice Smith', enrollmentNumber: '03520801001', branch_section: 'CSE A', email: 'alice@example.com' },
-  { id: '2', name: 'Bob Johnson', enrollmentNumber: '03520801002', branch_section: 'CSE B', email: 'bob@example.com' },
-  { id: '3', name: 'Nikhil Kumar', enrollmentNumber: '035', branch_section: 'CSE A', email: 'bob@example.com' },
+  { id: '1', name: 'Anna ji', enrollmentNumber: '03520801001', branch_section: 'CSE A', email: 'alice@example.com' },
+  { id: '2', name: 'Bunty', enrollmentNumber: '03520801002', branch_section: 'CSE B', email: 'bob@example.com' },
+  { id: '3', name: 'Noor', enrollmentNumber: '035', branch_section: 'CSE A', email: 'bob@example.com' },
   // Add more dummy students here
 ];
 
@@ -18,39 +18,39 @@ const StudentDetails = () => {
   });
 
   return (
-    <div className='bg-white rounded shadow p-4 mb-4'>
-      <h2 className='text-xl font-bold mb-4'>Student Details</h2>
-      <div className='mb-4'>
-        <label htmlFor='sort-by' className='block text-sm font-medium text-gray-700 mb-2'>
+    <div style={{ backgroundColor: '#C8C8C8', padding: '20px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+      <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '20px', color: '#000000' }}>Student Details</h2>
+      <div style={{ marginBottom: '20px' }}>
+        <label htmlFor='sort-by' style={{ display: 'block', fontSize: '14px', fontWeight: 'medium', color: '#666', marginBottom: '8px' }}>
           Sort by:
         </label>
         <select
           id='sort-by'
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
-          className='p-2 border border-gray-300 rounded'
+          style={{color:'#000000', padding: '10px', border: '1px solid #ccc', borderRadius: '5px', width: '100%', maxWidth: '300px' }}
         >
           <option value='name'>Name</option>
           <option value='enrollmentNumber'>Enrollment Number</option>
           <option value='branch_section'>Branch Section</option>
         </select>
       </div>
-      <table className='min-w-full divide-y divide-gray-200'>
-        <thead className='bg-gray-50'>
+      <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #ddd' }}>
+        <thead style={{ backgroundColor: '#f9f9f9' }}>
           <tr>
-            <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Name</th>
-            <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Enrollment Number</th>
-            <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Branch Section</th>
-            <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Email</th>
+            <th style={{ padding: '12px', textAlign: 'left', fontSize: '12px', fontWeight: 'bold', color: '#000000', borderBottom: '1px solid #ddd' }}>Name</th>
+            <th style={{ padding: '12px', textAlign: 'left', fontSize: '12px', fontWeight: 'bold', color: '#000000', borderBottom: '1px solid #ddd' }}>Enrollment Number</th>
+            <th style={{ padding: '12px', textAlign: 'left', fontSize: '12px', fontWeight: 'bold', color: '#000000', borderBottom: '1px solid #ddd' }}>Branch Section</th>
+            <th style={{ padding: '12px', textAlign: 'left', fontSize: '12px', fontWeight: 'bold', color: '#000000', borderBottom: '1px solid #ddd' }}>Email</th>
           </tr>
         </thead>
-        <tbody className='bg-white divide-y divide-gray-200'>
+        <tbody>
           {sortedStudents.map((student) => (
-            <tr key={student.id}>
-              <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{student.name}</td>
-              <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{student.enrollmentNumber}</td>
-              <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{student.branch_section}</td>
-              <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{student.email}</td>
+            <tr className='bg-white' key={student.id}>
+              <td style={{ padding: '12px', textAlign: 'left', fontSize: '14px', color: '#333', borderBottom: '1px solid #ddd' }}>{student.name}</td>
+              <td style={{ padding: '12px', textAlign: 'left', fontSize: '14px', color: '#333', borderBottom: '1px solid #ddd' }}>{student.enrollmentNumber}</td>
+              <td style={{ padding: '12px', textAlign: 'left', fontSize: '14px', color: '#333', borderBottom: '1px solid #ddd' }}>{student.branch_section}</td>
+              <td style={{ padding: '12px', textAlign: 'left', fontSize: '14px', color: '#333', borderBottom: '1px solid #ddd' }}>{student.email}</td>
             </tr>
           ))}
         </tbody>

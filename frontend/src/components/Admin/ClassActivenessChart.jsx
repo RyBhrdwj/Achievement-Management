@@ -11,9 +11,9 @@ const ClassActivenessChart = () => {
       {
         label: 'Active Students',
         data: [30, 25, 20, 15], // Dummy data
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1,
+        backgroundColor: 'rgba(54, 162, 235, 0.2)', // Soft blue
+        borderColor: 'rgba(54, 162, 235, 1)', // Dark blue
+        borderWidth: 2,
       },
     ],
   };
@@ -24,8 +24,18 @@ const ClassActivenessChart = () => {
     plugins: {
       legend: {
         position: 'top',
+        labels: {
+          color: '#333', // Dark gray for the legend text
+          font: {
+            size: 14,
+            family: 'Arial, sans-serif', // Formal font
+          },
+        },
       },
       tooltip: {
+        backgroundColor: '#333', // Dark background for tooltip
+        titleColor: '#fff', // White title text
+        bodyColor: '#fff', // White body text
         callbacks: {
           label: function (context) {
             return `${context.label}: ${context.raw} students`;
@@ -33,12 +43,38 @@ const ClassActivenessChart = () => {
         },
       },
     },
+    scales: {
+      x: {
+        ticks: {
+          color: '#666', // Light gray for x-axis labels
+          font: {
+            size: 12,
+            family: 'Arial, sans-serif', // Formal font
+          },
+        },
+        grid: {
+          color: '#eee', // Light gray grid lines
+        },
+      },
+      y: {
+        ticks: {
+          color: '#666', // Light gray for y-axis labels
+          font: {
+            size: 12,
+            family: 'Arial, sans-serif', // Formal font
+          },
+        },
+        grid: {
+          color: '#eee', // Light gray grid lines
+        },
+      },
+    },
   };
 
   return (
-    <div className='bg-white rounded shadow p-4 mb-4'>
-      <h2 className='text-xl font-bold mb-4'>Class-wise Activeness</h2>
-      <div className='h-64'>
+    <div style={{ backgroundColor: '#f9f9f9', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', padding: '20px', marginBottom: '20px', width: '100%' }}>
+      <h2 style={{ fontSize: '20px', fontWeight: 'bold', color: '#333', marginBottom: '20px' }}>Class-wise Activeness</h2>
+      <div style={{ height: '350px' }}>
         <Bar data={data} options={options} />
       </div>
     </div>
