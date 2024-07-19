@@ -114,7 +114,7 @@ const Requests = ({ requests, getRequests }) => {
             <div className="mb-4">
               <h3 className="text-lg font-semibold text-gray-800 mb-2">Achievement Information</h3>
               <p><strong>Date:</strong> {formatDate(selectedRequest.achievement?.date)}</p>
-              <p><strong>Event Name:</strong> {selectedRequest.achievement?.name}</p>
+              <p><strong>Event Type:</strong> {selectedRequest.achievement?.is_Technical ? "Technical": "Non Technical"}</p>
               <p><strong>Result:</strong> {selectedRequest.achievement?.result}</p>
               <p><strong>Mode:</strong> {selectedRequest.achievement?.mode}</p>
               <p><strong>Location:</strong> <a href={selectedRequest.achievement?.location} className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">{selectedRequest.achievement?.location}</a></p>
