@@ -65,6 +65,7 @@ router.delete(
 router.get('/achievement/:userId/csv', achievementController.getAchievementsInCSV)
 router.get('/achievement/:mentorId/:status/csv', achievementController.getAchievementsByMentorAndStatusInCSV)
 
+router.use('/announcements', announcementRouter);
 // router.use('/s3', s3Router);
 
 module.exports = router;
