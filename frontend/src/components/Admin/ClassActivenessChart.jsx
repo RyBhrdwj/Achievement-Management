@@ -6,7 +6,7 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 const ClassActivenessChart = () => {
   const data = {
-    labels: ['CSE A', 'CSE B', 'IT A', 'IT B'], // Dummy class names
+    labels: ['CSE A', 'CSE B','CSE C', 'IT A', 'IT B', 'IT C', 'ECE A', 'ECE B', 'AIDS', 'EEE'], // Dummy class names
     datasets: [
       {
         label: 'Active Students',
