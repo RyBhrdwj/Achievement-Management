@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { CircularProgress } from '@mui/material';
+import Loader from '../Loader';
+import { Pagination } from '@mui/material';
 
 const PerformanceMetrics = ({ mentorId }) => {
   const [students, setStudents] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [studentsPerPage] = useState(5);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -25,7 +28,6 @@ const PerformanceMetrics = ({ mentorId }) => {
         );
 
         studentsWithMetrics.sort((a, b) => b.eventsAttended - a.eventsAttended);
-
         setStudents(studentsWithMetrics);
         setLoading(false);
       } catch (error) {
@@ -38,13 +40,17 @@ const PerformanceMetrics = ({ mentorId }) => {
     fetchStudents();
   }, [mentorId]);
 
+  // Pagination logic
+  const indexOfLastStudent = currentPage * studentsPerPage;
+  const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
+  const currentStudents = students.slice(indexOfFirstStudent, indexOfLastStudent);
+
+  const handlePageChange = (event, page) => {
+    setCurrentPage(page);
+  };
+
   if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <CircularProgress />
-        <p className="ml-2 text-lg">Loading students...</p>
-      </div>
-    );
+    return <Loader />;
   }
 
   if (error) {
@@ -56,23 +62,23 @@ const PerformanceMetrics = ({ mentorId }) => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto my-10 p-3 bg-blue-200 shadow-lg rounded-lg">
-      <h2 className="text-3xl font-bold mb-3 text-center">Performance Metrics</h2>
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white">
+    <div className="max-w-6xl mx-auto my-10 p-3 relative bg-blue-200 shadow-lg rounded-lg" style={{ height: '40vh', position: 'relative' }}>
+      <h2 className="text-2xl font-semibold mb-4 text-center">Performance Metrics</h2>
+      <div className="overflow-x-auto mb-6">
+        <table className="min-w-full bg-white text-sm">
           <thead className="bg-gray-800 text-white">
             <tr>
-              <th className="w-1/3 py-3 px-4 uppercase font-semibold text-sm text-left text-under">Student Name</th>
-              <th className="w-1/3 py-3 px-4 uppercase font-semibold text-sm text-left">Enrollment Number</th>
-              <th className="w-1/3 py-3 px-4 uppercase font-semibold text-sm text-left">Events Attended</th>
+              <th className="py-2 px-3 uppercase font-semibold text-xs text-left">Student Name</th>
+              <th className="py-2 px-3 uppercase font-semibold text-xs text-left">Enrollment Number</th>
+              <th className="py-2 px-3 uppercase font-semibold text-xs text-left">Events Attended</th>
             </tr>
           </thead>
           <tbody className="text-gray-700">
-            {students.map(student => (
+            {currentStudents.map(student => (
               <tr key={student._id} className="bg-gray-100 hover:bg-gray-200">
-                <td className="py-3 px-4">{student.name}</td>
-                <td className="py-3 px-4">{student.enrollmentNumber}</td>
-                <td className="py-3 px-4">
+                <td className="py-2 px-3 text-xs">{student.name}</td>
+                <td className="py-2 px-3 text-xs">{student.enrollmentNumber}</td>
+                <td className="py-2 px-3 text-xs">
                   <span className="px-2 py-1 text-xs font-bold text-black bg-orange-400 rounded-full">
                     {student.eventsAttended || 0}
                   </span>
@@ -81,6 +87,16 @@ const PerformanceMetrics = ({ mentorId }) => {
             ))}
           </tbody>
         </table>
+      </div>
+      <div className="flex justify-center mt-2 absolute bottom-2 left-1/2">
+        <Pagination
+          count={Math.ceil(students.length / studentsPerPage)}
+          page={currentPage}
+          onChange={handlePageChange}
+          color="primary"
+          shape="rounded"
+          size="small"
+        />
       </div>
     </div>
   );

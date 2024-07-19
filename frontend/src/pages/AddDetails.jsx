@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BsFillSendCheckFill } from "react-icons/bs";
 import { IconContext } from "react-icons/lib";
-import EventForm from "../components/EventForm";
+import EventForm from "../components/Form/EventForm";
 
 const AddDetails = () => {
   const [submit, setSubmit] = useState(false);

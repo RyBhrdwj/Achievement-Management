@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { IconContext } from "react-icons/lib";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
-import { formatDate } from "../utililtyFunctions";
-import Loader from "./Loader";
-import DownloadButton from "./DownloadButton";
+import { formatDate } from "../../utililtyFunctions";
+import Loader from "../Loader";
+import DownloadButton from "../DownloadButton";
 
 const EventCard = ({ event }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,6 +46,10 @@ const EventCard = ({ event }) => {
               </tr>
               <tr>
                 <th className="text-left p-2 border border-gray-300 bg-gray-200">Event Type:</th>
+                <td className="p-2 border border-gray-300">{event.is_Technical ? "Technical": "Non Technical"}</td>
+              </tr>
+              <tr>
+                <th className="text-left p-2 border border-gray-300 bg-gray-200">Event Description:</th>
                 <td className="p-2 border border-gray-300">{event.description}</td>
               </tr>
               <tr>
@@ -53,7 +57,7 @@ const EventCard = ({ event }) => {
                 <td className="p-2 border border-gray-300">{event.mode}</td>
               </tr>
               <tr>
-                <th className="text-left p-2 border border-gray-300 bg-gray-200">Venue (or link):</th>
+                <th className="text-left p-2 border border-gray-300 bg-gray-200">Organised by:</th>
                 <td className="p-2 border border-gray-300">{event.location}</td>
               </tr>
               <tr>
@@ -113,7 +117,7 @@ const RecentAchievements = ({ events = [], setEvents }) => {
   };
 
   return (
-    <div className={`p-6 rounded-lg shadow-md  ${events.length != 0 ?  'bg-gradient-to-r from-purple-300 to-blue-300':'bg-white' }`}>
+    <div className={`p-6 rounded-lg shadow-md overflow-scroll h-screen my-10  ${events.length != 0 ?  'bg-gradient-to-r from-purple-300 to-blue-300':'bg-white' }`}>
       <div className="flex justify-between items-center flex-col md:flex-row mb-6">
         <h1 className="text-4xl font-bold text-gray-800 py-6">Recent Achievements</h1>
         <div className="flex justify-center items-center gap-4">

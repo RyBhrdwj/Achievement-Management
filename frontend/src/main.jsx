@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import './index.css';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
-import { Home, AddDetails, Mentor } from './pages';
+import { Home, AddDetails, Mentor,AdminPortal } from './pages';
 import Notification from './pages/Notification'; // Import Notification component
 import axios from 'axios';
 
@@ -15,7 +15,8 @@ const router = createBrowserRouter(
       <Route path='' element={<Home />} />
       <Route path='add' element={<AddDetails />} />
       <Route path='mentor' element={<Mentor />} />
-      <Route path='notifications' element={<Notification />} /> {/* Add Notification route */}
+      <Route path='notifications' element={<Notification />} />
+      <Route path='admin' element={<AdminPortal />} />
     </Route>
   )
 );

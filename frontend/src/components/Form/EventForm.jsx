@@ -8,9 +8,9 @@ import Typography from '@mui/material/Typography';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
-import Form1 from './Form/Form1';
-import Form2 from './Form/Form2';
-import Review from './Form/Review';
+import Form1 from './Form1';
+import Form2 from './Form2';
+import Review from './Review';
 import axios from 'axios';
 
 const steps = ['Add Details', 'Add Proof'];

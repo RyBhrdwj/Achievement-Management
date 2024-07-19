@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Charts from "../components/Charts";
-import EventCalender from "../components/EventCalender";
-import RecentAchievements from "../components/RecentAchievements";
+// import Charts from "../components/Charts";
+// import EventCalender from "../components/EventCalender";
+// import RecentAchievements from "../components/RecentAchievements";
 import axios from "axios";
-import Announcement from "../components/Announcement";
+// import Announcement from "../components/Announcement";
 import Loader from "../components/Loader";
+import { Charts,EventCalendar,RecentAchievements,Announcement } from "../components/Home";
 
 const Home = () => {
   const [events, setEvents] = useState([]);
@@ -38,7 +39,7 @@ const Home = () => {
         </div>
         {window.innerWidth > 768 && (
           <div className="col-span-4">
-            <EventCalender events={events} />
+            <EventCalendar events={events} />
           </div>
         )}
       </div>

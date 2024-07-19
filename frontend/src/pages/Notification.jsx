@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { formatDate } from '../utililtyFunctions.js';
 import Loader from '../components/Loader.jsx';
+import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
 
 const Card = ({ notification }) => {
   return (
@@ -10,13 +11,7 @@ const Card = ({ notification }) => {
       className="flex items-start p-4 mb-2 mt-2 bg-white rounded-lg shadow-md border border-gray-200 w-full max-w-6xl mx-auto" 
     >
       <div className="flex-shrink-0">
-        <svg
-          className="h-6 w-6 text-blue-500"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-        >
-          <path d="M10 2a8 8 0 00-8 8v5a2 2 0 002 2h12a2 2 0 002-2v-5a8 8 0 00-8-8zm0 18a2 2 0 01-2-2h4a2 2 0 01-2 2zm1-5H9v-2h2v2zm0-4H9V6h2v5z" />
-        </svg>
+        <NotificationImportantIcon color="primary"  />
       </div>
       <div className="ml-4">
         <div className="text-lg font-medium text-gray-900">

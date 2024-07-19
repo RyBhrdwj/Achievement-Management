@@ -1,11 +1,12 @@
 import React from 'react'
-import Loading from '../assets/loading.gif'
+import { CircularProgress } from '@mui/material';
 
 const Loader = () => {
   return (
-    <div className='flex justify-center items-center'>
-      <img src={Loading} alt='Loading' className='w-12' />
-    </div>
+    <div className="flex justify-center items-center h-screen">
+        <CircularProgress />
+        <p className="ml-2 text-lg">Loading data...</p>
+      </div>
   )
 }
 
