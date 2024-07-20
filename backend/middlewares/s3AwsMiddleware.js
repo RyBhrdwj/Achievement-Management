@@ -1,9 +1,11 @@
-const s3 = require('../s3')
+const s3Client = require('../s3')
 require("dotenv").config();
+const upload = require("./middlewares/multerMiddleware.js")
+const { PutObjectCommand } = require('@aws-sdk/client-s3');
 
 
 
-const uploadTos3 = async (req, res, next) => {
+const uploadToS3 = async (req, res, next) => {
   const { mentorId, userId, name, date } = req.body;
   const file = req.file;
 
@@ -13,24 +15,26 @@ const uploadTos3 = async (req, res, next) => {
   const parsedDate = new Date(date);
   const sanitizedFileName = name.replace(/\s+/g, "-");
   const sanitizedDate = parsedDate.toISOString().split("T")[0]; // Format YYYY-MM-DD
-  const key = `${mentorId}/${userId}/${sanitizedFileName}_${sanitizedDate}`;
-  console.log(key)
+  const key = `${mentorId}/${userId}/${sanitizedFileName}_${sanitizedDate}.png`;
+//   console.log(key)
   const params = {
     Bucket: process.env.AWS_BUCKET_NAME,
     Key: key,
     Body: file.buffer,
-    ContentType: "image/png",
+    ContentType: file.mimetype,
     ACL: "public-read",
   };
   try {
-    const data = await s3.upload(params).promise();
-    console.log(data)
+    const command = new PutObjectCommand(params)
+    const data = await s3Client.send(command);
+    // console.log(data)
     req.fileUrl = data.Location;
+    res.status(200).json({message: 'file success', fileURL});
     next();
   } catch (err) {
-    console.error('S3 Upload Error:', err); 
+    // console.error('S3 Upload Error:', err); 
     res.status(500).json({ error: "Error uploading file to S3 bucket" });
   }
 };
 
-module.exports = uploadTos3;
+module.exports = uploadToS3;

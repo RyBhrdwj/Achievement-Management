@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const redis = require("redis")
 const dotenv = require("dotenv");
-const s3 = require("../s3");
+
 
 dotenv.config()
 
@@ -35,17 +35,19 @@ class AchievementController {
   // to handle achievement creation and file url saving in proof from s3
   addAchievement = async(req,res)=>{
     const{mentorId, userId, name, date, description, location, isTechnical, mode, result, verificationStatus} = req.body;
+    const fileURL = req.fileURL;
 
     const newAchievement = new Achievement({
       userId: userId,
-      name, date, description, location, isTechnical, mode, result, verificationStatus,
+      name, date, description, location, isTechnical, mode, result, verificationStatus, proof: fileURL
     });
     try{
       const savedAchievement = await newAchievement.save();
       // await redisClient.del(`savedAchievement:${userId}`;
 
-      savedAchievement.proof = req.fileUrl;
-      await savedAchievement.save();
+      //-- as already saved the proof --
+      // savedAchievement.proof = req.fileUrl;
+      // await savedAchievement.save();
 
       res.status[200].json({
         message: 'achivement and file uploaded',
