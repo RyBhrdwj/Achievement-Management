@@ -7,10 +7,8 @@ const Header = () => {
   const location = useLocation();
   const [hovered, setHovered] = useState(null);
   const [clickedIndex, setClickedIndex] = useState(null);
-  const [isNotificationOpen, setIsNotificationOpen] = useState(false); // State to manage notification visibility
 
   useEffect(() => {
-    // Set the clicked index based on the current path
     const pathToIndex = {
       '/': 0,
       '/add': 1,
@@ -25,7 +23,7 @@ const Header = () => {
 
   const getLinkClassNames = (index) => {
     if (clickedIndex === index) {
-      return "flex items-center text-lg p-3 rounded-md transition duration-300 ease-in-out bg-blue-900  text-white";
+      return "flex items-center text-lg p-3 rounded-md transition duration-300 ease-in-out bg-blue-900 text-white";
     }
     return hovered === index
       ? "flex items-center text-lg p-3 rounded-md transition duration-300 ease-in-out bg-indigo-600 text-white"
@@ -33,11 +31,11 @@ const Header = () => {
   };
 
   return (
-    <header className='bg-gradient-to-r from-blue-500 to-indigo-500 shadow-lg p-4 flex justify-between items-center'>
-      <div className='flex items-center'>
-        <h1 className='text-md sm:text-2xl font-bold ml-10 text-white'>Event Management</h1>
+    <header className='bg-gradient-to-r from-blue-500 to-indigo-500 shadow-lg p-4 flex flex-col sm:flex-row justify-between items-center'>
+      <div className='flex items-center mb-4 sm:mb-0'>
+        <h1 className='text-md sm:text-2xl font-bold text-white'>Event Management</h1>
       </div>
-      <nav className='flex items-center ml-10 gap-4'>
+      <nav className='flex flex-col sm:flex-row items-center gap-4'>
         <NavLink
           to="/"
           className={getLinkClassNames(0)}
@@ -56,19 +54,15 @@ const Header = () => {
         >
           <FaCheckSquare className="mr-3" /> Add Event
         </NavLink>
-
-        {/* NavLink for Notification */}
         <NavLink
           to="/notifications"
-          className="inline-block mr-6"
+          className="inline-block"
           onMouseEnter={() => handleMouseEnter(2)}
           onMouseLeave={handleMouseLeave}
           onClick={() => handleClick(2)}
         >
           <NotificationsIcon className='text-white w-10 h-10 cursor-pointer' />
         </NavLink>
-
-        {/* Profile section */}
         <div className='flex items-center bg-white p-2 rounded-full shadow-md'>
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgyb9CNs-MYH7mqsI7pPYZ2tCwql4ldvw7OA&s"
