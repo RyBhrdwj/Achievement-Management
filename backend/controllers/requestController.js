@@ -48,6 +48,7 @@ class RequestController {
 
   deleteRequest = async (req, res) => {
     try {
+      console.log(req.params.id)
       const request = await this.request.destroy(req.params.id);
       res.status(200).json(request);
     } catch (error) {

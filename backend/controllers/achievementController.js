@@ -32,87 +32,29 @@ class AchievementController {
   //   }
   // };
 
+  // to handle achievement creation and file url saving in proof from s3
+  addAchievement = async(req,res)=>{
+    const{mentorId, userId, name, date, description, location, isTechnical, mode, result, verificationStatus} = req.body;
 
-  addAchievement = async (req, res) => {
-    const { mentorId, userId, name, date, description, location, is_Technical, mode, result, verificationStatus } = req.body;
-  
-    // Convert and validate date
-    const parsedDate = new Date(date);
-    if (isNaN(parsedDate.getTime())) {
-      return res.status(400).json({ error: 'Invalid date format' });
-    }
-  
-    try {
-      // Create and save new achievement
-      const newAchievement = await this.achievement.create({
-        userId,
-        name,
-        date: parsedDate,
-        description,
-        location,
-        is_Technical,
-        mode,
-        result,
-        verificationStatus,
-      });
+    const newAchievement = new Achievement({
+      userId: userId,
+      name, date, description, location, isTechnical, mode, result, verificationStatus,
+    });
+    try{
       const savedAchievement = await newAchievement.save();
-  
-      // Handle file upload if provided
-      if (req.file) {
-        const fileLocalPath = req.file.path;
-        if (!fs.existsSync(fileLocalPath)) {
-          return res.status(400).json({ error: 'File not found' });
-        }
-  
-        const fileContent = fs.readFileSync(fileLocalPath);
-  
-        // Sanitize file name and date
-        const sanitizedFileName = name.replace(/\s+/g, '-');
-        const sanitizedDate = parsedDate.toISOString().split('T')[0]; // Format YYYY-MM-DD
-        const key = `${mentorId}/${userId}/${sanitizedFileName}/${sanitizedDate}`;
-  
-        // Set ContentType based on the actual file type
-  
-        const params = {
-          Bucket: process.env.AWS_BUCKET_NAME,
-          Key: key,
-          Body: fileContent,
-          ContentType: 'image/png',
-          ACL: 'public-read'
-        };
-  
-        console.log('S3 Upload Parameters:', params);
-  
-        // Upload to S3
-        const data = await s3.upload(params).promise();
-        console.log('S3 Upload Data:', data);
-  
-        const fileUrl = data.Location;
-        console.log('Uploaded File URL:', fileUrl);
-  
-        // Update achievement with file URL
-        savedAchievement.proof = fileUrl;
-        await savedAchievement.save();
-  
-        // Optionally delete the local file
-        fs.unlinkSync(fileLocalPath);
-  
-        res.status(200).json({
-          message: 'Achievement and file uploaded successfully',
-          achievement: savedAchievement
-        });
-  
-      } else {
-        res.status(200).json({
-          message: 'Achievement saved successfully, no file uploaded',
-          achievement: savedAchievement
-        });
+      // await redisClient.del(`savedAchievement:${userId}`;
+
+      savedAchievement.proof = req.fileUrl;
+      await savedAchievement.save();
+
+      res.status[200].json({
+        message: 'achivement and file uploaded',
+        achievement: savedAchievement
+      });
+
+      } catch(err){
+        res.status(500).json({error: 'Error in uploading file'})
       }
-  
-    } catch (err) {
-      console.error('Error in uploading file or saving achievement:', err);
-      res.status(500).json({ error: 'Error in uploading file or saving achievement' });
-    }
   };
 
   deleteAchievement = async (req, res) => {

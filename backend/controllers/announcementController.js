@@ -7,15 +7,14 @@ class AnnouncementController {
 
   createAnnouncement = async (req, res) => {
     try {
-      const { achievement, message } = req.body;
+      const { achievement } = req.body;
       
       if (!achievement) {
         return res.status(400).json({ error: "Achievement ID is required" });
       }
 
       const data = {
-        achievement,
-        message: message || ""
+        achievement
       };
 
       const announcement = await this.announcement.create(data);
@@ -27,7 +26,7 @@ class AnnouncementController {
 
   getAnnouncements = async (req, res) => {
     try {
-      const announcements = await this.announcement.getAll();
+      const announcements = await this.announcement.getAnnouncements();
       res.status(200).json(announcements);
     } catch (error) {
       res.status(500).json({ error: error.message });

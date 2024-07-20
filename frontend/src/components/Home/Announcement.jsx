@@ -1,55 +1,66 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { formatDate } from '../../utililtyFunctions';
 
 const Announcement = ({ speed }) => {
-  const [showAnnouncement, setShowAnnouncement] = useState(false);
+  const [announcements, setAnnouncements] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const checkDate = () => {
-      const storedDate = localStorage.getItem('announcementDate');
-      const currentDate = new Date();
-
-      if (storedDate) {
-        const previousDate = new Date(storedDate);
-        const oneDayInMillis = 24 * 60 * 60 * 1000;
-
-        // Check if a day has passed
-        if (currentDate - previousDate < oneDayInMillis) {
-          setShowAnnouncement(true);
-        } else {
-          localStorage.setItem('announcementDate', currentDate.toISOString());
-          setShowAnnouncement(false);
-        }
-      } else {
-        localStorage.setItem('announcementDate', currentDate.toISOString());
-        setShowAnnouncement(true);
+    const getAnnouncements = async () => {
+      try {
+        const response = await axios.get('/announcements/');
+        setAnnouncements(response.data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
-    checkDate();
+    getAnnouncements();
   }, []);
 
-  if (!showAnnouncement) {
-    return null;
+  if (loading) {
+    return <div>Loading...</div>;
   }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (announcements.length === 0) {
+    return <div>No announcements available</div>;
+  }
+
+  // Define animation speeds for different screen sizes
+  const animationSpeed = speed * 3; // Base speed for desktop
+  const mobileAnimationSpeed = speed * 3; // Slower speed for mobile
 
   return (
     <div className="relative overflow-hidden w-full p-3 my-5 h-15 flex items-center bg-gradient-to-r from-green-300 to-green-500 rounded-lg shadow-lg transition-all duration-500 ease-in-out">
       <div className="flex overflow-hidden w-full">
         <section
           style={{
-            animation: `marquee ${speed * 2}ms linear infinite`,
+            animation: `marquee ${animationSpeed}ms linear infinite`,
             fontSize: '1rem',
             lineHeight: '1.6rem',
             color: '#fff',
             whiteSpace: 'nowrap',
           }}
-          className="font-semibold tracking-wide"
+          className="font-semibold tracking-wide md:animation-marquee-lg sm:animation-marquee-sm"
         >
           <p>
-            <span className="bg-yellow-500 px-1 rounded-md mr-2">
-              Announcement:
-            </span>
-            <span className="text-black"> (Student Name) of (Student Class) (Student Year) Year won the (event type) (event name) held at (event venue) on (event date)</span>
+            {announcements.map((announcement, idx) => (
+              <span key={idx}>
+                <span className="bg-yellow-500 px-1 rounded-md mr-2">Announcement:</span>
+                <span className="text-black">
+                  {announcement.achievement?.userId.name} of {announcement.achievement?.userId.branch_section} won the {announcement.achievement?.name} {announcement.achievement?.description} organised by {announcement.achievement?.location} on {formatDate(announcement.achievement?.date)}.
+                </span>
+                {idx < announcements.length - 1 && '  |  '}
+              </span>
+            ))}
           </p>
         </section>
       </div>
@@ -63,10 +74,16 @@ const Announcement = ({ speed }) => {
           }
         }
 
-        .jungle-background {
-          background-image: url('https://path-to-jungle-background-image.jpg');
-          background-size: cover;
-          background-position: center;
+        @media (min-width: 768px) {
+          .animation-marquee-lg {
+            animation: marquee ${animationSpeed}ms linear infinite;
+          }
+        }
+
+        @media (max-width: 767px) {
+          .animation-marquee-sm {
+            animation: marquee ${mobileAnimationSpeed}ms linear infinite;
+          }
         }
 
         .jungle-elements {
@@ -98,21 +115,3 @@ const Announcement = ({ speed }) => {
 };
 
 export default Announcement;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

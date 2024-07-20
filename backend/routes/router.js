@@ -8,11 +8,14 @@ const {
 const achievementController = require("../controllers/achievementController");
 const notificationController = require("../controllers/notificationController");
 const requestController = require("../controllers/requestController");
-const s3Router = require('../s3exp'); // Import the S3 routes
+// const s3Router = require('../s3exp'); // Import the S3 routes
 const mentorController = require("../controllers/mentorController");
 const userController = require('../controllers/userController')
 const { upload } = require('../middlewares/multerMiddleware')
 const announcementRouter = require('./announcementRouter')
+
+const multer = require('../middlewares/multerMiddleware');
+const uploadToS3 = require('../middlewares/s3AwsMiddleware');
 
 // Define the routes
 router.get("/", (req, res) => {
@@ -31,8 +34,7 @@ router.delete('/mentor/:id/student', mentorController.removeStudentFromMentor);
 router.get('/mentor/:id/achievements/:status', achievementController.getAchievementsByMentorAndStatus);
 
 router.post(
-  "/add-achievement",
-  upload.single('proof'),
+  "/add-achievement",multer.single('file'), uploadToS3,
   validateAchievement,
   achievementController.addAchievement
 );

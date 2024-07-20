@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { formatDate } from '../../utililtyFunctions';
+import { Snackbar, Alert } from '@mui/material';
 
 const Requests = ({ requests, getRequests }) => {
   const [selectedRequest, setSelectedRequest] = useState(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
 
   const handleOpenRequest = (request) => {
     setSelectedRequest(request);
@@ -13,11 +17,28 @@ const Requests = ({ requests, getRequests }) => {
     setSelectedRequest(null);
   };
 
+  const addToAnnouncement = async () => {
+    try {
+      const achievementId = selectedRequest.achievement._id;
+      const response = await axios.post('/announcements', { achievement: achievementId });
+      setSnackbarMessage('Added to announcement successfully');
+      setSnackbarSeverity('success');
+      setSnackbarOpen(true);
+    } catch (error) {
+      setSnackbarMessage('Error adding to announcement');
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
+    }
+  };
+
   const handleAcceptRequest = async () => {
     const message = `Congratulations, your achievement ${selectedRequest.achievement?.name} ${selectedRequest.achievement?.description} held on ${formatDate(selectedRequest.achievement?.date)} at ${selectedRequest.achievement?.location} has been verified by the Mentor`;
     await sendNotification(message);
     await updateAchievement({ id: selectedRequest.achievement?._id, status: 'accepted' });
     await deleteRequest(selectedRequest._id);
+    setSnackbarMessage('Request accepted successfully');
+    setSnackbarSeverity('success');
+    setSnackbarOpen(true);
   };
 
   const handleRejectRequest = async () => {
@@ -25,6 +46,9 @@ const Requests = ({ requests, getRequests }) => {
     await sendNotification(rejectionMessage);
     await updateAchievement({ id: selectedRequest.achievement?._id, status: 'rejected' });
     await deleteRequest(selectedRequest._id);
+    setSnackbarMessage('Request rejected successfully');
+    setSnackbarSeverity('success');
+    setSnackbarOpen(true);
   };
 
   const updateAchievement = async ({ id, status }) => {
@@ -49,11 +73,16 @@ const Requests = ({ requests, getRequests }) => {
 
   const deleteRequest = async (requestId) => {
     try {
-      await axios.delete(`/delete-request/${requestId}`);
+      const response = await axios.delete(`/delete-request/${requestId}`);
+      console.log(response)
       getRequests();
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -129,6 +158,14 @@ const Requests = ({ requests, getRequests }) => {
               >
                 Accept
               </button>
+              {selectedRequest.achievement.result === 'winner' && (
+                <button
+                  onClick={addToAnnouncement}
+                  className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors duration-300"
+                >
+                  Add to Announcement
+                </button>
+              )}
               <button
                 onClick={handleRejectRequest}
                 className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors duration-300"
@@ -145,6 +182,16 @@ const Requests = ({ requests, getRequests }) => {
           </div>
         </div>
       )}
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

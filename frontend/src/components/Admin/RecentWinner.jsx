@@ -1,90 +1,82 @@
-import React from 'react';
-
-const dummyRecentWinner = {
-  student: {
-    name: 'Nikhil Kumar',
-    branch_section: 'CSE A',
-  },
-  achievement: {
-    name: 'hackhazard',
-    description: 'hackathon',
-    location: 'bpit',
-    date: '2024-03-14T00:00:00.000Z',
-  },
-};
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 
 const RecentWinnerDetails = () => {
-  const { student, achievement } = dummyRecentWinner;
+  const [winners, setWinners] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const getAnnouncements = async () => {
+      try {
+        const response = await axios.get('/announcements/');
+        setWinners(response.data);
+      } catch (error) {
+        console.error("Error fetching data", error);
+      }
+    }
+    getAnnouncements();
+  }, []);
+
+  const handleNext = () => {
+    if (currentIndex < winners.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
+  };
+
+  if (winners.length === 0) {
+    return (
+      <div className="bg-gradient-to-r from-yellow-300 to-red-500 rounded-lg shadow-lg p-4 text-white font-sans text-center max-w-md mx-auto">
+        <h2 className="text-black text-xl font-bold mb-2 border-b-2 border-white pb-1">🎉 Recent Winner 🎉</h2>
+        <p className="text-black text-lg font-semibold">No current winners</p>
+      </div>
+    );
+  }
+
+  const winner = winners[currentIndex]?.achievement || {};
 
   return (
-    <div style={{
-      background: 'linear-gradient(135deg, #f6d365 0%, #FF0000 100%)',
-      borderRadius: '15px',
-      boxShadow: '0 10px 20px rgba(0,0,0,0.2)',
-      padding: '20px',
-      color: '#fff',
-      fontFamily: 'Arial, sans-serif',
-      textAlign: 'center',
-      maxWidth: '400px',
-      margin: 'auto'
-    }}>
-      <h2 className='text-black'style={{
-        fontSize: '24px',
-        fontWeight: 'bold',
-        marginBottom: '20px',
-        borderBottom: '2px solid #fff',
-        paddingBottom: '10px'
-      }}>🎉 Recent Winner 🎉</h2>
-      <div style={{ marginBottom: '20px' }}>
-        <p className='text-black'style={{
-          fontSize: '18px',
-          fontWeight: '600',
-          marginBottom: '5px'
-        }}>Student Name:</p>
-        <p style={{
-          fontSize: '20px',
-          fontWeight: '700'
-        }}>{student.name}</p>
+    <div className="bg-gradient-to-r from-yellow-300 to-red-500 rounded-lg shadow-lg p-4 text-white font-sans text-center max-w-md mx-auto">
+      <h2 className="text-black text-xl font-bold mb-2 border-b-2 border-white pb-1">🎉 Recent Winner 🎉</h2>
+      <div className="mb-3">
+        <p className="text-black text-md font-semibold mb-1">Student Name:</p>
+        <p className="text-lg font-bold">{winner.userId?.name}</p>
       </div>
-      <div style={{ marginBottom: '20px' }}>
-        <p className='text-black' style={{
-          fontSize: '18px',
-          fontWeight: '600',
-          marginBottom: '5px'
-        }}>Branch Section:</p>
-        <p style={{
-          fontSize: '20px',
-          fontWeight: '700'
-        }}>{student.branch_section}</p>
+      <div className="mb-3">
+        <p className="text-black text-md font-semibold mb-1">Branch Section:</p>
+        <p className="text-lg font-bold">{winner.userId?.branch_section}</p>
       </div>
       <div>
-        <p className='text-black' style={{
-          fontSize: '18px',
-          fontWeight: '600',
-          marginBottom: '5px'
-        }}>Achievement:</p>
-        <p style={{
-          fontSize: '20px',
-          fontWeight: '700'
-        }}>{achievement.name}</p>
-        <p style={{
-          fontSize: '16px',
-          fontWeight: '500'
-        }}>- - - {achievement.description} - - -</p>
+        <p className="text-black text-md font-semibold mb-1">Achievement:</p>
+        <p className="text-lg font-bold">{winner.name}</p>
+        <p className="text-sm font-medium">- - - {winner.description} - - -</p>
         <br/>
-        <p className='text-black' style={{
-          fontSize: '16px',
-          fontWeight: '500'
-        }}>Date:{new Date(achievement.date).toLocaleDateString()}</p>
-        
-        <p className='text-black' style={{
-          fontSize: '16px',
-          fontWeight: '500'
-        }}>Location: {achievement.location}</p>
+        <p className="text-black text-sm font-medium">Date: {new Date(winner.date).toLocaleDateString()}</p>
+        <p className="text-black text-sm font-medium">Location: {winner.location}</p>
+      </div>
+      <div className="mt-4 flex justify-between max-w-xs mx-auto">
+        <button 
+          onClick={handlePrevious} 
+          disabled={currentIndex === 0} 
+          className={`px-3 py-1 bg-white text-black rounded-lg ${currentIndex === 0 ? 'cursor-not-allowed opacity-50' : 'hover:bg-gray-200'}`}
+        >
+          Previous
+        </button>
+        <button 
+          onClick={handleNext} 
+          disabled={currentIndex === winners.length - 1} 
+          className={`px-3 py-1 bg-white text-black rounded-lg ${currentIndex === winners.length - 1 ? 'cursor-not-allowed opacity-50' : 'hover:bg-gray-200'}`}
+        >
+          Next
+        </button>
       </div>
     </div>
   );
 };
 
 export default RecentWinnerDetails;
-
