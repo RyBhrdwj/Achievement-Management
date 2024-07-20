@@ -14,7 +14,7 @@ const userController = require('../controllers/userController')
 const { upload } = require('../middlewares/multerMiddleware')
 const announcementRouter = require('./announcementRouter')
 
-const multer = require('../middlewares/multerMiddleware');
+// const multer = require('../middlewares/multerMiddleware');
 const uploadToS3 = require('../middlewares/s3AwsMiddleware');
 
 // Define the routes
@@ -34,7 +34,7 @@ router.delete('/mentor/:id/student', mentorController.removeStudentFromMentor);
 router.get('/mentor/:id/achievements/:status', achievementController.getAchievementsByMentorAndStatus);
 
 router.post(
-  "/add-achievement",multer.single('file'), uploadToS3,
+  "/add-achievement",upload.single('file'), uploadToS3,
   validateAchievement,
   achievementController.addAchievement
 );
