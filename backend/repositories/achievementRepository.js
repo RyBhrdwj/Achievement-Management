@@ -7,7 +7,15 @@ class AchievementRepository extends crudRepo {
     super(Achievement);
   }
 
-  async getAchievementsByUserId(userId) {
+  getAllAchievements = async () => {
+    try {
+      return await Achievement.find();
+    } catch (error) {
+      throw new Error('Error fetching achievements: ' + error.message);
+    }
+  };
+
+  getAchievementsByUserId = async (userId) => {
     try {
       const cacheKey = `achievements:user:${userId}`;
       const cachedAchievements = await redisClient.get(cacheKey);
@@ -26,7 +34,7 @@ class AchievementRepository extends crudRepo {
     }
   }
 
-  async getAchievementsByUserIdInCSV(userId) {
+  getAchievementsByUserIdInCSV = async (userId) => {
     try {
 
       const achievements = await this.model.find({ userId }).select("-userId -_id -__v");
@@ -37,7 +45,6 @@ class AchievementRepository extends crudRepo {
       throw error;
     }
   }
-
 
   updateAchievement = async (id, data) => {
     try {

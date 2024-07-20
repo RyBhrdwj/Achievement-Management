@@ -20,20 +20,17 @@ class mentorRepository extends crudRepo {
   getMentorById = async (mentorId) => {
     try {
       const cacheKey = `mentor:${mentorId}`;
-  
-      // Check cache first
+
       const cachedMentor = await redisClient.get(cacheKey);
       if (cachedMentor) {
         return JSON.parse(cachedMentor);
       }
   
-      // Fetch from database if not in cache
       const mentor = await this.model.findById(mentorId).populate('studentUserIds');
       if (!mentor) {
         throw new Error("Mentor not found");
       }
   
-      // Cache the result
       await redisClient.set(cacheKey, JSON.stringify(mentor), 'EX', 3600);
   
       return mentor;
@@ -43,22 +40,37 @@ class mentorRepository extends crudRepo {
     }
   };
   
+  getAllMentors = async () => {
+    try {
+      const cacheKey = 'mentors:all';
+  
+      const cachedMentors = await redisClient.get(cacheKey);
+      if (cachedMentors) {
+        return JSON.parse(cachedMentors);
+      }
 
+      const mentors = await this.model.find().populate('studentUserIds');
+
+      await redisClient.set(cacheKey, JSON.stringify(mentors), 'EX', 3600);
+  
+      return mentors;
+    } catch (error) {
+      console.log("repository error : " + error);
+      throw error;
+    }
+  };
 
   getStudentsByMentorId = async (mentorId) => {
     try {
       const cacheKey = `mentor:students:${mentorId}`;
   
-      // Check cache first
       const cachedStudents = await redisClient.get(cacheKey);
       if (cachedStudents) {
         return JSON.parse(cachedStudents);
       }
-  
-      // Fetch from database if not in cache
+
       const students = await this.model.findById(mentorId).populate('studentUserIds').select('studentUserIds');
-  
-      // Cache the result
+
       await redisClient.set(cacheKey, JSON.stringify(students), 'EX', 3600);
   
       return students;
