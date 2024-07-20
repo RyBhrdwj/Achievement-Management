@@ -62,7 +62,7 @@ const PerformanceMetrics = ({ mentorId }) => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto my-10 p-3 relative bg-blue-200 shadow-lg rounded-lg" style={{ height: '40vh', position: 'relative' }}>
+    <div className="max-w-6xl mx-auto my-10 p-3 relative bg-blue-200 shadow-lg rounded-lg" style={{ height: '35vh', position: 'relative' }}>
       <h2 className="text-2xl font-semibold mb-4 text-center">Performance Metrics</h2>
       <div className="overflow-x-auto mb-6">
         <table className="min-w-full bg-white text-sm">
@@ -73,7 +73,7 @@ const PerformanceMetrics = ({ mentorId }) => {
               <th className="py-2 px-3 uppercase font-semibold text-xs text-left">Events Attended</th>
             </tr>
           </thead>
-          <tbody className="text-gray-700">
+          <tbody className="text-black">
             {currentStudents.map(student => (
               <tr key={student._id} className="bg-gray-100 hover:bg-gray-200">
                 <td className="py-2 px-3 text-xs">{student.name}</td>
@@ -88,7 +88,7 @@ const PerformanceMetrics = ({ mentorId }) => {
           </tbody>
         </table>
       </div>
-      <div className="flex justify-center mt-2 absolute bottom-2 left-1/2">
+      <div className="flex justify-center mt-2  absolute bottom-2 left-1/2">
         <Pagination
           count={Math.ceil(students.length / studentsPerPage)}
           page={currentPage}
