@@ -32,6 +32,7 @@ class AchievementController {
   //   }
   // };
 
+  // to handle achievement creation and file url saving in proof from s3
   addAchievement = async(req,res)=>{
     const{mentorId, userId, name, date, description, location, isTechnical, mode, result, verificationStatus} = req.body;
 
@@ -42,21 +43,8 @@ class AchievementController {
     try{
       const savedAchievement = await newAchievement.save();
       // await redisClient.del(`savedAchievement:${userId}`;
-        //Generate S3 key
-      const key = `${mentorId}/${userId}/${name}/${date}`; 
 
-      const params = {
-        Bucket : process.env.AWS_BUCKET_NAME,
-        Key: key,
-        // Body: file,
-        ContentType: 'image/png',
-      ACL: 'public-read'};
-
-      const data = await s3.upload(params).promise();
-
-      const fileUrl = data.Location;
-
-      savedAchievement.proof = fileUrl;
+      savedAchievement.proof = req.fileUrl;
       await savedAchievement.save();
 
       res.status[200].json({
