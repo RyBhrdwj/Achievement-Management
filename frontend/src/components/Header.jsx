@@ -69,7 +69,7 @@ const Header = () => {
             alt="Profile"
             className='w-10 h-10 rounded-full mr-4'
           />
-          <div className='hidden sm:flex flex-col'>
+          <div className='flex flex-col'>
             <span className='text-sm font-semibold text-gray-800'>Aditya Gaur</span>
             <span className='text-xs text-gray-500'>CSE-A</span>
           </div>
@@ -81,3 +81,4 @@ const Header = () => {
 };
 
 export default Header;
+
