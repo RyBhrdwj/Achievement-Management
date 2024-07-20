@@ -11,6 +11,8 @@ const requestController = require("../controllers/requestController");
 const s3Router = require('../s3exp'); // Import the S3 routes
 const mentorController = require("../controllers/mentorController");
 const userController = require('../controllers/userController')
+const { upload } = require('../middlewares/multerMiddleware')
+const announcementRouter = require('./announcementRouter')
 
 // Define the routes
 router.get("/", (req, res) => {
@@ -30,6 +32,7 @@ router.get('/mentor/:id/achievements/:status', achievementController.getAchievem
 
 router.post(
   "/add-achievement",
+  upload.single('proof'),
   validateAchievement,
   achievementController.addAchievement
 );

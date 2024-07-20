@@ -7,4 +7,5 @@ const s3 = new AWS.S3({
     bucket: process.env.AWS_BUCKET_NAME
 });
 
+
 module.exports = s3;
