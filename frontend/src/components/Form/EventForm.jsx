@@ -107,9 +107,9 @@ export default function EventForm({ setSubmit }) {
 
       console.log(response.data);
 
-      const achievement = response.data._id;
+      const achievement = response.data.achievement._id;
       const mentor = '6692351e76002fc8b2ab2b35';
-
+      console.log(userId, achievement, mentor)
       const request = await axios.post('/add-request', {
         user: userId,
         achievement,

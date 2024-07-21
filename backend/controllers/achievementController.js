@@ -32,30 +32,32 @@ class AchievementController {
   // to handle achievement creation and file url saving in proof from s3
   addAchievement = async (req, res) => {
     const {
-      mentorId,
+      // mentorId,
       userId,
       name,
       date,
+      type,
       description,
       location,
-      isTechnical,
+      is_Technical,
       mode,
       result,
       verificationStatus,
     } = req.body;
-    const fileURL = req.fileURL;
+    // const fileURL = req.fileURL;
 
-    const newAchievement = new Achievement({
+    const newAchievement = await this.achievement.create({
       userId: userId,
       name,
       date,
+      type,
       description,
       location,
-      isTechnical,
+      is_Technical,
       mode,
       result,
       verificationStatus,
-      proof: fileURL,
+      // proof: fileURL,
     });
     try {
       const savedAchievement = await newAchievement.save();
@@ -65,11 +67,12 @@ class AchievementController {
       // savedAchievement.proof = req.fileUrl;
       // await savedAchievement.save();
 
-      res.status[200].json({
+      res.status(200).json({
         message: "achivement and file uploaded",
         achievement: savedAchievement,
       });
     } catch (err) {
+      console.log(err)
       res.status(500).json({ error: "Error in uploading file" });
     }
   };

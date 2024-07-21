@@ -19,17 +19,17 @@ class RequestController {
       const mentorId = req.params.mentorId;
 
     // Check cache first
-    const cacheKey = `requests:${mentorId}`;
-    const cachedRequests = await redisClient.get(cacheKey);
+    // const cacheKey = `requests:${mentorId}`;
+    // const cachedRequests = await redisClient.get(cacheKey);
 
-    if (cachedRequests ) {
-      return res.status(200).json(JSON.parse(cachedRequests ));
-    }
+    // if (cachedRequests ) {
+    //   return res.status(200).json(JSON.parse(cachedRequests ));
+    // }
     //   console.log(mentor)
       const requests = await this.request.getRequestsbyMentorId(mentorId);
-      await redisClient.set(cacheKey, JSON.stringify(requests), {
-        EX: 3600, // Cache expiration time in seconds
-      });
+      // await redisClient.set(cacheKey, JSON.stringify(requests), {
+      //   EX: 3600, // Cache expiration time in seconds
+      // });
       res.status(200).json(requests);
     } catch (err) {
       res.status(500).json({ message: err.message });
@@ -39,6 +39,7 @@ class RequestController {
   addRequest = async (req, res) => {
     try {
       const data = req.body;
+      console.log(data)
       const newRequest = await this.request.addRequest(data);
       res.status(201).json(newRequest);
     } catch (err) {
@@ -48,7 +49,6 @@ class RequestController {
 
   deleteRequest = async (req, res) => {
     try {
-      console.log(req.params.id)
       const request = await this.request.destroy(req.params.id);
       res.status(200).json(request);
     } catch (error) {

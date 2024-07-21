@@ -14,7 +14,7 @@ const userController = require("../controllers/userController");
 // const { upload } = require("../middlewares/multerMiddleware");
 const announcementRouter = require("./announcementRouter");
 
-// const multer = require('../middlewares/multerMiddleware');
+const upload = require('../middlewares/multerMiddleware');
 const uploadToS3 = require("../middlewares/s3AwsMiddleware");
 
 // Define the routes
@@ -32,6 +32,7 @@ router.get("/notifications/:userId", notificationController.getNotifications);
 router.get("/requests/:mentorId", requestController.getRequests);
 
 router.post("/mentor", mentorController.addMentor);
+router.get("/mentors", mentorController.getAllMentors)
 router.get("/mentor/:id", mentorController.getMentorById);
 router.get("/mentor/:id/student", mentorController.getStudentsByMentorId);
 router.post("/mentor/:id/student", mentorController.addStudentToMentor);
@@ -41,13 +42,11 @@ router.get(
   achievementController.getAchievementsByMentorAndStatus
 );
 
-// router.post(
-//   "/add-achievement",
-//   upload.single("file"),
-//   uploadToS3,
-//   validateAchievement,
-//   achievementController.addAchievement
-// );
+router.post(
+  "/add-achievement",
+  validateAchievement,
+  achievementController.addAchievement
+);
 router.post("/add-notification", notificationController.addNotification);
 router.post("/add-request", requestController.addRequest);
 router.put("/update-achievement/:id", achievementController.updateAchievement);
@@ -65,7 +64,7 @@ router.delete(
 
 router.post("/user/create", userController.addStudent);
 router.get("/user/:id", userController.getStudentById);
-
+router.get('/users', userController.getAllStudents)
 router.delete("/delete-request/:id", requestController.deleteRequest);
 
 router.get(

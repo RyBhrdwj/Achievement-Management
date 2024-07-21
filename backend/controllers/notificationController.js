@@ -17,18 +17,18 @@ class NotificationController {
   getNotifications = async (req, res) => {
     try {
       const userId = req.params.userId;
-      const cacheKey = `notifications:${userId}`;
-      const cachedNotifications = await redisClient.get(cacheKey);
+      // const cacheKey = `notifications:${userId}`;
+      // const cachedNotifications = await redisClient.get(cacheKey);
 
-      if (cachedNotifications) {
-        return res.status(200).json(JSON.parse(cachedNotifications));
-      }
+      // if (cachedNotifications) {
+      //   return res.status(200).json(JSON.parse(cachedNotifications));
+      // }
       const notifications = await this.notification.getNotificationsbyUserId(
         userId
       );
-      await redisClient.set(cacheKey, JSON.stringify(notifications), {
-        EX: 3600, // Cache expiration time in seconds
-      });
+      // await redisClient.set(cacheKey, JSON.stringify(notifications), {
+      //   EX: 3600, // Cache expiration time in seconds
+      // });
       res.status(200).json(notifications);
     } catch (err) {
       res.status(500).json({ message: err.message });

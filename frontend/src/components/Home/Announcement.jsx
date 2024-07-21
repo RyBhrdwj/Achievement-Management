@@ -34,16 +34,17 @@ const Announcement = ({ speed }) => {
     return <div>No announcements available</div>;
   }
 
-  // Define animation speeds for different screen sizes
-  const animationSpeed = speed * 3; // Base speed for desktop
-  const mobileAnimationSpeed = speed * 3; // Slower speed for mobile
+  // Define fixed animation duration (in milliseconds)
+  const animationDuration = 15000; // 15 seconds
+  const mobileAnimationDuration = 20000; // 20 seconds for mobile
 
   return (
     <div className="relative overflow-hidden w-full p-3 my-5 h-15 flex items-center bg-gradient-to-r from-green-300 to-green-500 rounded-lg shadow-lg transition-all duration-500 ease-in-out">
       <div className="flex overflow-hidden w-full">
         <section
           style={{
-            animation: `marquee ${animationSpeed}ms linear infinite`,
+            '--animation-duration': `${animationDuration}ms`,
+            animation: `marquee var(--animation-duration) linear infinite`,
             fontSize: '1rem',
             lineHeight: '1.6rem',
             color: '#fff',
@@ -76,13 +77,13 @@ const Announcement = ({ speed }) => {
 
         @media (min-width: 768px) {
           .animation-marquee-lg {
-            animation: marquee ${animationSpeed}ms linear infinite;
+            animation: marquee var(--animation-duration) linear infinite;
           }
         }
 
         @media (max-width: 767px) {
           .animation-marquee-sm {
-            animation: marquee ${mobileAnimationSpeed}ms linear infinite;
+            animation: marquee var(--animation-duration) linear infinite;
           }
         }
 

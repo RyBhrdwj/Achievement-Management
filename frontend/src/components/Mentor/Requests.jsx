@@ -1,13 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { formatDate } from '../../utililtyFunctions';
 import { Snackbar, Alert } from '@mui/material';
 
-const Requests = ({ requests, getRequests }) => {
+const Requests = ({ mentorId }) => {
+  const [requests, setRequests] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+
+  useEffect(() => {
+    const getRequests = async () => {
+      try {
+        const response = await axios.get(`/requests/${mentorId}`);
+        setRequests(response.data);
+      } catch (error) {
+        console.log(error);
+        setError('Failed to load requests.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getRequests();
+  }, [mentorId]);
 
   const handleOpenRequest = (request) => {
     setSelectedRequest(request);
@@ -20,7 +39,7 @@ const Requests = ({ requests, getRequests }) => {
   const addToAnnouncement = async () => {
     try {
       const achievementId = selectedRequest.achievement._id;
-      const response = await axios.post('/announcements', { achievement: achievementId });
+      await axios.post('/announcements', { achievement: achievementId });
       setSnackbarMessage('Added to announcement successfully');
       setSnackbarSeverity('success');
       setSnackbarOpen(true);
@@ -73,9 +92,9 @@ const Requests = ({ requests, getRequests }) => {
 
   const deleteRequest = async (requestId) => {
     try {
-      const response = await axios.delete(`/delete-request/${requestId}`);
-      console.log(response)
-      getRequests();
+      await axios.delete(`/delete-request/${requestId}`);
+      const response = await axios.get(`/requests/${mentorId}`);
+      setRequests(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -88,7 +107,11 @@ const Requests = ({ requests, getRequests }) => {
   return (
     <div className="p-4">
       <h1 className="text-3xl font-bold mb-6 text-center text-blue-700">Requests</h1>
-      {requests.length === 0 ? (
+      {loading ? (
+        <p>Loading requests...</p>
+      ) : error ? (
+        <p>{error}</p>
+      ) : requests.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-64 bg-white rounded-lg p-6">
           <img
             src="https://img.freepik.com/free-vector/hand-drawn-no-data-concept_52683-127823.jpg"
