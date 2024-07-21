@@ -103,8 +103,19 @@ const Header = () => {
       {/* Mobile Menu Overlay */}
       <div 
         ref={sidebarRef}
-        className={`fixed top-0 right-0 h-full bg-gray-800 bg-opacity-80 flex flex-col items-center justify-between z-50 transition-transform transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} w-64 p-4`}
+        className={`fixed top-0 right-0 h-full bg-gray-800 bg-opacity-90 flex flex-col justify-between z-50 transition-transform transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} w-64 p-4`}
       >
+        <div className='flex items-center mb-6'>
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgyb9CNs-MYH7mqsI7pPYZ2tCwql4ldvw7OA&s"
+            alt="Profile"
+            className='w-12 h-12 rounded-full mr-4'
+          />
+          <div className='flex flex-col'>
+            <span className='text-md font-semibold text-white'>Aditya Gaur</span>
+            <span className='text-sm text-gray-300'>CSE-A</span>
+          </div>
+        </div>
         <button 
           className="absolute top-4 right-4 text-white text-2xl" 
           onClick={toggleMenu}
@@ -139,3 +150,4 @@ const Header = () => {
 };
 
 export default Header;
+
