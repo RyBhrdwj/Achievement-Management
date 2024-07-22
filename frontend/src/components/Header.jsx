@@ -103,7 +103,7 @@ const Header = () => {
       {/* Mobile Menu Overlay */}
       <div 
         ref={sidebarRef}
-        className={`fixed top-0 right-0 h-full bg-gray-800 bg-opacity-80 flex flex-col items-center justify-between z-50 transition-transform transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} w-64 p-4`}
+        className={`fixed top-0 right-0 h-full bg-gray-800 bg-opacity-80 flex flex-col justify-between z-50 transition-transform transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} w-64 p-4`}
       >
         <button 
           className="absolute top-4 right-4 text-white text-2xl" 
@@ -111,7 +111,18 @@ const Header = () => {
         >
           <FaTimes />
         </button>
-        <nav className='flex flex-col items-center gap-4 w-full'>
+        <nav className='flex flex-col items-center gap-4'>
+        <div className='flex items-center bg-white p-2 rounded-full shadow-md mt-4'>
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgyb9CNs-MYH7mqsI7pPYZ2tCwql4ldvw7OA&s"
+              alt="Profile"
+              className='w-10 h-10 rounded-full mr-4'
+            />
+            <div className='flex flex-col'>
+              <span className='text-sm font-semibold text-gray-800'>Aditya Gaur</span>
+              <span className='text-xs text-gray-500'>CSE-A</span>
+            </div>
+          </div>
           <NavLink
             to="/"
             className="text-white text-lg py-3 px-4 rounded-md bg-blue-900 w-full text-center"
@@ -132,6 +143,7 @@ const Header = () => {
           >
             <FaCheckSquare className="inline mr-2" /> Add Event
           </NavLink>
+          
         </nav>
       </div>
     </>

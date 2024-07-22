@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const redis = require("redis");
 const dotenv = require("dotenv");
+const { uploadToS3 }= require('../s3-client.js');
 
 dotenv.config();
 
@@ -18,18 +19,28 @@ class AchievementController {
     this.mentor = new mentorRepo();
   }
 
-  // addAchievement = async (req, res) => {
-  //   try {
-  //     const achievement = await this.achievement.create(req.body);
-  //     await redisClient.del(`achievements:${req.body.userId}`);
-  //     res.status(201).json(achievement);
-  //   } catch (error) {
-  //     console.log("controller error : " + error);
-  //     res.status(400).json({ message: error.message });
-  //   }
-  // };
-
   // to handle achievement creation and file url saving in proof from s3
+  addProof = async (req, res) => {
+    const { mentorId, userId, achievementId } = req.body;
+    const file = req.file;
+
+    if (!file) {
+      return res.json(400).json({ error: "error 1" });
+    }
+
+    const key = `${mentorId}/${userId}/${achievementId}.png`;
+    try {
+      const fileURL = await uploadToS3(file.buffer, "bucket-private-site", key);
+      const achievement = await this.achievement.getOne(achievementId);
+      achievement.proof = fileURL;
+      const savedAchievement = await achievement.save()
+      console.log(fileURL);
+      res.status(200).json({ message: "file success", savedAchievement });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  };
+
   addAchievement = async (req, res) => {
     const {
       // mentorId,
@@ -72,7 +83,7 @@ class AchievementController {
         achievement: savedAchievement,
       });
     } catch (err) {
-      console.log(err)
+      console.log(err);
       res.status(500).json({ error: "Error in uploading file" });
     }
   };
@@ -91,20 +102,20 @@ class AchievementController {
   getAchievements = async (req, res) => {
     const userId = req.params.userId;
 
-    // Check cache first
-    const cacheKey = `achievements:${userId}`;
-    const cachedAchievements = await redisClient.get(cacheKey);
+    // // Check cache first
+    // const cacheKey = `achievements:${userId}`;
+    // const cachedAchievements = await redisClient.get(cacheKey);
 
-    if (cachedAchievements) {
-      return res.status(200).json(JSON.parse(cachedAchievements));
-    }
+    // if (cachedAchievements) {
+    //   return res.status(200).json(JSON.parse(cachedAchievements));
+    // }
     try {
       const achievements = await this.achievement.getAchievementsByUserId(
         userId
       );
-      await redisClient.set(cacheKey, JSON.stringify(achievements), {
-        EX: 3600, // Cache expiration time in seconds
-      });
+      // await redisClient.set(cacheKey, JSON.stringify(achievements), {
+      //   EX: 3600, // Cache expiration time in seconds
+      // });
       res.status(200).json(achievements);
     } catch (error) {
       console.log("controller error : " + error);
@@ -113,20 +124,20 @@ class AchievementController {
   };
 
   getAllAchievements = async (req, res) => {
-    const cacheKey = "achievements:all";
+    // const cacheKey = "achievements:all";
 
     try {
-      const cachedAchievements = await redisClient.get(cacheKey);
+      // const cachedAchievements = await redisClient.get(cacheKey);
 
-      if (cachedAchievements) {
-        return res.status(200).json(JSON.parse(cachedAchievements));
-      }
+      // if (cachedAchievements) {
+      //   return res.status(200).json(JSON.parse(cachedAchievements));
+      // }
 
       const achievements = await achievementRepo.getAllAchievements();
 
-      await redisClient.set(cacheKey, JSON.stringify(achievements), {
-        EX: 3600,
-      });
+      // await redisClient.set(cacheKey, JSON.stringify(achievements), {
+      //   EX: 3600,
+      // });
 
       res.status(200).json(achievements);
     } catch (error) {

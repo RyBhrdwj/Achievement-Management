@@ -15,8 +15,9 @@ const userController = require("../controllers/userController");
 const announcementRouter = require("./announcementRouter");
 
 const upload = require('../middlewares/multerMiddleware');
-const uploadToS3 = require("../middlewares/s3AwsMiddleware");
+// const uploadToS3 = require("../middlewares/s3AwsMiddleware");
 
+// const upload = multer({storage: multer.memoryStorage() });
 // Define the routes
 router.get("/", (req, res) => {
   res.send("base api route");
@@ -78,5 +79,7 @@ router.get(
 
 router.use("/announcements", announcementRouter);
 // router.use('/s3', s3Router);
+
+router.post('/upload-file', upload.single('file'), achievementController.addProof);
 
 module.exports = router;

@@ -7,15 +7,17 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-
+import { useNavigate } from 'react-router-dom'
 import Form1 from './Form1';
 import Form2 from './Form2';
 import Review from './Review';
 import axios from 'axios';
 
+import Loader from '../Loader'
+
 const steps = ['Add Details', 'Add Proof'];
 
-export default function EventForm({ setSubmit }) {
+export default function EventForm() {
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
   const [details, setDetails] = useState({
@@ -34,6 +36,8 @@ export default function EventForm({ setSubmit }) {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+  const [loading,setLoading] = useState(false)
+  const navigate = useNavigate()
 
   const isDisabled = () => {
     const { name, date, type, description, mode, result, location } = details;
@@ -85,6 +89,7 @@ export default function EventForm({ setSubmit }) {
   };
 
   const handleSubmit = async () => {
+    setLoading(true)
     try {
       const userId = '6692353576002fc8b2ab2b37';
       const name = details.name;
@@ -104,6 +109,21 @@ export default function EventForm({ setSubmit }) {
         location,
         result
       });
+      const mentorId = '6692351e76002fc8b2ab2b35'
+      console.log(details.proofUrl)
+      if(details.proof) {
+        const formData = new FormData()
+        formData.append('file', details.proof);
+        formData.append('userId', userId);
+        formData.append('mentorId', mentorId);
+        formData.append('achievementId', response.data.achievement._id)
+        try {
+          const proofResponse = await axios.post('/upload-file',formData)
+          console.log(proofResponse)
+        } catch (error) {
+          console.log(error)
+        }
+      }
 
       console.log(response.data);
 
@@ -120,19 +140,29 @@ export default function EventForm({ setSubmit }) {
 
       setSnackbarMessage('Submission successful!');
       setSnackbarSeverity('success');
-      setSubmit(true)
+      setTimeout(() => {
+        navigate('/');
+      }, 5000);
+      
     } catch (error) {
       console.log(error);
       setSnackbarMessage('Submission failed. Please try again.');
       setSnackbarSeverity('error');
     } finally {
       setSnackbarOpen(true);
+      setLoading(false)
     }
   };
 
   const handleCloseSnackbar = () => {
     setSnackbarOpen(false);
   };
+
+  if(loading) {
+    return (
+      <Loader />
+    )
+  }
 
   return (
     <Box sx={{ width: '100%' }} className="p-4">
