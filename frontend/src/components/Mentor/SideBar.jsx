@@ -35,16 +35,19 @@ const SideBar = ({ onStudentSelect }) => {
   }, [searchTerm, students]);
 
   return (
-    <div className="relative md:w-1/4 w-full md:min-w-[320px]">
-      <div className="md:hidden flex   p-3 bg-black shadow-xl ">
-        <h2 className=" font-semibold text-white mr-1 ">Students</h2>
+    <div className="relative w-full md:w-1/4 md:min-w-[230px] ">
+      {/* Mobile Menu Button */}
+      <div className="ml-4">
+       
         <button onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-          <FontAwesomeIcon icon={faBars} className="text-white" />
+          <FontAwesomeIcon icon={faBars} className="text-black" />
         </button>
       </div>
+
+      {/* Sidebar */}
       <div
-        className={`bg-white shadow-2xl rounded-lg p-6 flex flex-col h-full md:sticky top-0 transition-transform duration-300 ease-in-out transform ${
-          isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+        className={`bg-white shadow-2xl rounded-lg p-6 flex flex-col h-full md:sticky top-0 transition-transform duration-300 ease-in-out ${
+          isSidebarOpen ? 'translate-x-0' : 'translate-x-full md:translate-x-0'
         }`}
         style={{
           transform: isSidebarOpen ? 'translateX(0)' : 'translateX(-100%)',
@@ -78,6 +81,8 @@ const SideBar = ({ onStudentSelect }) => {
           </ul>
         </div>
       </div>
+      
+      {/* Custom Scrollbar Styles */}
       <style jsx>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 8px;
@@ -102,5 +107,6 @@ const SideBar = ({ onStudentSelect }) => {
 };
 
 export default SideBar;
+
 
 
