@@ -82,7 +82,7 @@ const MentorDetails = () => {
       </div>
       
       {loading ? (
-        <Loader /> // Show loader when loading
+        <Loader content={'Loading Mentor Details...'} /> // Show loader when loading
       ) : (
         sortedMentors.map((mentor) => (
           <div

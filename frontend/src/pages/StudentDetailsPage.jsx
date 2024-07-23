@@ -26,7 +26,7 @@ const StudentDetailsPage = () => {
     <div className="bg-green-200 p-8 rounded-xl shadow-lg mb-6">
       <h2 className="text-3xl font-bold mb-6 text-gray-900 border-b-4 border-gray-300 pb-2">Student Details</h2>
       {loading ? (
-        <Loader /> // Show loader when loading
+        <Loader content={'Fetching Student Details...'} /> // Show loader when loading
       ) : mentor ? (
         <div>
           <h3 className="text-2xl font-semibold mb-6 text-gray-800">{mentor.name}</h3>

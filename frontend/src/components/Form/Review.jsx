@@ -53,7 +53,7 @@ const Review = ({ details }) => {
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row" sx={{ fontWeight: "bold" }}>
-                Venue(or link):
+                Organised By:
               </TableCell>
               <TableCell>{details.location}</TableCell>
             </TableRow>

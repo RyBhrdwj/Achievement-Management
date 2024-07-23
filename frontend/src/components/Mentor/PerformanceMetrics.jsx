@@ -50,7 +50,7 @@ const PerformanceMetrics = ({ mentorId }) => {
   };
 
   if (loading) {
-    return <Loader />;
+    return <Loader content={'Fetching Students...'} />;
   }
 
   if (error) {

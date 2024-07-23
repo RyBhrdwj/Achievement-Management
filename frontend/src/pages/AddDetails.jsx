@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import { BsFillSendCheckFill } from "react-icons/bs";
-import { IconContext } from "react-icons/lib";
+import React from "react";
 import EventForm from "../components/Form/EventForm";
 
 const AddDetails = () => {

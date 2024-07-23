@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { formatDate } from '../../utililtyFunctions';
+import Loader from '../Loader';
 
 const Announcement = ({ speed }) => {
   const [announcements, setAnnouncements] = useState([]);
@@ -23,7 +24,7 @@ const Announcement = ({ speed }) => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader content={'Loading Announcements...'} />;
   }
 
   if (error) {

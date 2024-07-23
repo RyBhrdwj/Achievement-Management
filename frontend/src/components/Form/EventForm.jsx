@@ -32,7 +32,7 @@ export default function EventForm() {
     proof: '',
     proofUrl: ''
   });
-
+  const [content,setContent] = useState('')
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
@@ -89,6 +89,7 @@ export default function EventForm() {
   };
 
   const handleSubmit = async () => {
+    setContent('Adding achivement...')
     setLoading(true)
     try {
       const userId = '6692353576002fc8b2ab2b37';
@@ -118,6 +119,7 @@ export default function EventForm() {
         formData.append('mentorId', mentorId);
         formData.append('achievementId', response.data.achievement._id)
         try {
+          setContent('Uploading Proof...')
           const proofResponse = await axios.post('/upload-file',formData)
           console.log(proofResponse)
         } catch (error) {
@@ -130,6 +132,7 @@ export default function EventForm() {
       const achievement = response.data.achievement._id;
       const mentor = '6692351e76002fc8b2ab2b35';
       console.log(userId, achievement, mentor)
+      setContent('Sending Request to Mentor....')
       const request = await axios.post('/add-request', {
         user: userId,
         achievement,
@@ -160,7 +163,7 @@ export default function EventForm() {
 
   if(loading) {
     return (
-      <Loader />
+      <Loader content={content} />
     )
   }
 

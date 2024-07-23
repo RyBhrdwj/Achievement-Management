@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Loader from '../Loader';
 
 const StudentOverview = ({ student, setSelectedStudent }) => {
   const [achievements, setAchievements] = useState([]);
@@ -33,7 +34,7 @@ const StudentOverview = ({ student, setSelectedStudent }) => {
   }
 
   if (loading) {
-    return <p className='text-center mt-4'>Loading achievements...</p>;
+    return <Loader content={'Fetching Student Details...'} />;
   }
 
   if (error) {

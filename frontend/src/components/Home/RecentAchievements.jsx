@@ -64,6 +64,10 @@ const EventCard = ({ event }) => {
                 <th className="text-left p-2 border border-gray-300 bg-gray-200">Result:</th>
                 <td className="p-2 border border-gray-300">{event.result}</td>
               </tr>
+              <tr>
+                <th className="text-left p-2 border border-gray-300 bg-gray-200">Proof:</th>
+                <td className="p-2 border border-gray-300">{event.proof ? <img src={event.proof} alt="proof" className="h-40 aspect-auto" />: "Not Submitted"}</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -136,7 +140,7 @@ const RecentAchievements = ({ events = [], setEvents }) => {
       </div>
       <div className="flex flex-col gap-6">
         {loading ? (
-          <Loader />
+          <Loader content={'Fetching Achievements...'} />
         ) : events.length === 0 ? (
           <div className="flex flex-col items-center justify-center bg-white p-6 rounded-lg">
             <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-2506.jpg" alt="No Achievements" className="w-1/2 h-auto mb-4" />

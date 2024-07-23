@@ -54,7 +54,7 @@ const Notification = () => {
           </h1>
         </div>
         {loading ? (
-          <Loader />
+          <Loader content={'Fetching Notifications...'} />
         ) : (
           <div className="px-10 py-4">
             {notifications.length > 0 ? (

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
-import Loader from '../Loader';
 
 const Charts = ({ events }) => {
   const [userData, setUserData] = useState(null); // Initialize userData with null or placeholder

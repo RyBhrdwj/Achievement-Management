@@ -169,9 +169,9 @@ const Requests = ({ mentorId }) => {
               <p><strong>Event Type:</strong> {selectedRequest.achievement?.is_Technical ? "Technical": "Non Technical"}</p>
               <p><strong>Result:</strong> {selectedRequest.achievement?.result}</p>
               <p><strong>Mode:</strong> {selectedRequest.achievement?.mode}</p>
-              <p><strong>Location:</strong> <a href={selectedRequest.achievement?.location} className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">{selectedRequest.achievement?.location}</a></p>
+              <p><strong>Location:</strong>{selectedRequest.achievement?.location}</p>
               {selectedRequest.achievement?.proof && (
-                <p><strong>Proof:</strong> <a href={selectedRequest.achievement?.proof} className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">{selectedRequest.achievement?.proof}</a></p>
+                <p><strong>Proof:</strong> <img src={selectedRequest.achievement.proof} alt='proof' className='h-40 aspect-auto' /></p>
               )}
             </div>
             <div className="flex justify-end space-x-2">

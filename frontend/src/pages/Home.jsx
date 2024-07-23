@@ -28,7 +28,7 @@ const Home = () => {
     getAchievements();
   }, []);
 
-  if (loading) return <Loader />;
+  if (loading) return <Loader content={'Fetching Student Details...'} />;
 
   return (
     <div className="px-2 sm:px-6 max-w-9xl mx-auto">
