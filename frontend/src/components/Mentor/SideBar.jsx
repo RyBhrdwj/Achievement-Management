@@ -35,26 +35,31 @@ const SideBar = ({ onStudentSelect }) => {
   }, [searchTerm, students]);
 
   return (
-    <div className="relative w-full md:w-1/4 md:min-w-[230px] ">
+    <div className="relative w-full h-full md:w-1/4 md:min-w-[230px]">
       {/* Mobile Menu Button */}
-      <div className="ml-4">
-       
-        <button onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+      <div className={`ml-4 md:hidden ${isSidebarOpen ? 'hidden' : ''}`}>
+        <button onClick={() => setIsSidebarOpen(true)} className="flex items-center">
           <FontAwesomeIcon icon={faBars} className="text-black" />
+          {!isSidebarOpen && <span className="ml-2 text-black">Students</span>}
         </button>
       </div>
 
       {/* Sidebar */}
       <div
-        className={`bg-white shadow-2xl rounded-lg p-6 flex flex-col h-full md:sticky top-0 transition-transform duration-300 ease-in-out ${
-          isSidebarOpen ? 'translate-x-0' : 'translate-x-full md:translate-x-0'
-        }`}
+        className={`bg-white shadow-xl rounded-lg p-6 flex flex-col h-full fixed top-0 transition-transform duration-300 ease-in-out ${
+          isSidebarOpen ? 'translate-x-0 w-[50vw]' : '-translate-x-full'
+        } z-50 md:static md:w-full`}
         style={{
-          transform: isSidebarOpen ? 'translateX(0)' : 'translateX(-100%)',
-          transition: 'transform 0.3s ease-in-out'
+          transform: isSidebarOpen ? 'translateX(0%)' : 'translateX(-100%)',
         }}
       >
-        <h2 className="text-2xl font-semibold text-gray-900 mb-4 hidden md:block">Students</h2>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-semibold text-gray-900 hidden md:block">Students</h2>
+          <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="md:hidden flex items-center">
+            <FontAwesomeIcon icon={faBars} className="text-black" />
+            {isSidebarOpen && <span className="ml-2 text-black text-xl">Students</span>}
+          </button>
+        </div>
         <div className="relative mb-4">
           <input
             type="text"
@@ -65,7 +70,7 @@ const SideBar = ({ onStudentSelect }) => {
           />
           <FontAwesomeIcon icon={faSearch} className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-400" />
         </div>
-        <div className="overflow-y-auto h-[calc(100vh-180px)] md:h-auto custom-scrollbar">
+        <div className="overflow-y-auto h-[calc(100vh-180px)] custom-scrollbar">
           <ul className="space-y-3">
             {filteredStudents.map(student => (
               <li key={student._id}>
@@ -107,6 +112,9 @@ const SideBar = ({ onStudentSelect }) => {
 };
 
 export default SideBar;
+
+
+
 
 
 
