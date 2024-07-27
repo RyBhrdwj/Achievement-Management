@@ -39,24 +39,21 @@ const SideBar = ({ onStudentSelect }) => {
       {/* Mobile Menu Button */}
       <div className={`ml-4 md:hidden ${isSidebarOpen ? 'hidden' : ''}`}>
         <button onClick={() => setIsSidebarOpen(true)} className="flex items-center">
-          <FontAwesomeIcon icon={faBars} className="text-black" />
-          {!isSidebarOpen && <span className="ml-2 text-black">Students</span>}
+          <FontAwesomeIcon icon={faBars} className="text-black mt-5" />
+          {!isSidebarOpen && <span className="ml-2 text-black mt-4 text-xl">Students</span>}
         </button>
       </div>
 
       {/* Sidebar */}
       <div
         className={`bg-white shadow-xl rounded-lg p-6 flex flex-col h-full fixed top-0 transition-transform duration-300 ease-in-out ${
-          isSidebarOpen ? 'translate-x-0 w-[50vw]' : '-translate-x-full'
-        } z-50 md:static md:w-full`}
-        style={{
-          transform: isSidebarOpen ? 'translateX(0%)' : 'translateX(-100%)',
-        }}
+          isSidebarOpen ? 'translate-x-0 w-[75vw]' : '-translate-x-full'
+        } z-50 md:static md:w-full md:translate-x-0`}
       >
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-semibold text-gray-900 hidden md:block">Students</h2>
+        <div className="flex justify-between items-center mb-4 md:hidden">
+          <h2 className="text-2xl font-semibold text-gray-900 hidden md:block mt-6">Students</h2>
           <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="md:hidden flex items-center">
-            <FontAwesomeIcon icon={faBars} className="text-black" />
+            <FontAwesomeIcon icon={faBars} className="text-black h-22 w-22 " />
             {isSidebarOpen && <span className="ml-2 text-black text-xl">Students</span>}
           </button>
         </div>
@@ -112,9 +109,5 @@ const SideBar = ({ onStudentSelect }) => {
 };
 
 export default SideBar;
-
-
-
-
 
 
