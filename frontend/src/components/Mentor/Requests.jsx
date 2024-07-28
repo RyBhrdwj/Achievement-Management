@@ -147,7 +147,7 @@ const Requests = ({ mentorId }) => {
 
       {selectedRequest && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full relative">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-2xl w-full relative">
             <button
               onClick={handleCloseRequest}
               className="absolute top-2 right-2 text-gray-600 text-2xl"
@@ -174,7 +174,7 @@ const Requests = ({ mentorId }) => {
                 <p><strong>Proof:</strong> <img src={selectedRequest.achievement.proof} alt='proof' className='h-40 aspect-auto' /></p>
               )}
             </div>
-            <div className="flex justify-end space-x-2">
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-4 justify-end">
               <button
                 onClick={handleAcceptRequest}
                 className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors duration-300"
