@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import PersonIcon from '@mui/icons-material/Person';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const SideBar = ({ onStudentSelect }) => {
   const [students, setStudents] = useState([]);
@@ -37,12 +38,16 @@ const SideBar = ({ onStudentSelect }) => {
   return (
     <div className="relative w-full h-full md:w-1/4 md:min-w-[230px]">
       {/* Mobile Menu Button */}
-      <div className={`ml-4 md:hidden ${isSidebarOpen ? 'hidden' : ''}`}>
-        <button onClick={() => setIsSidebarOpen(true)} className="flex items-center">
-          <FontAwesomeIcon icon={faBars} className="text-black mt-5" />
-          {!isSidebarOpen && <span className="ml-2 text-black mt-4 text-xl">Students</span>}
-        </button>
-      </div>
+      {/* Mobile Menu Button */}
+<div className={`fixed top-1/4 left-0 transform -translate-y-1/4 md:hidden ${isSidebarOpen ? 'hidden' : ''}`}>
+  <button 
+    onClick={() => setIsSidebarOpen(true)} 
+    className="w-12 h-12 bg-pink-500 text-white rounded-r-lg flex items-center justify-center mb-8 transition-transform duration-300 ease-in-out"
+  >
+    <PersonIcon className="text-xl" />
+  </button>
+</div>
+
 
       {/* Sidebar */}
       <div
@@ -52,10 +57,13 @@ const SideBar = ({ onStudentSelect }) => {
       >
         <div className="flex justify-between items-center mb-4 md:hidden">
           <h2 className="text-2xl font-semibold text-gray-900 hidden md:block mt-6">Students</h2>
-          <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="md:hidden flex items-center">
-            <FontAwesomeIcon icon={faBars} className="text-black h-22 w-22 " />
-            {isSidebarOpen && <span className="ml-2 text-black text-xl">Students</span>}
-          </button>
+          <button 
+            onClick={() => setIsSidebarOpen(false)} 
+            className="md:hidden w-8 h-8 bg-blue-500 text-white rounded-l-lg flex items-center justify-center transition-transform duration-300 ease-in-out"
+          >
+            <FontAwesomeIcon icon={faArrowLeft} className="text-xl" />
+            
+          </button><span className="text-2xl mr-8">Students</span>
         </div>
         <div className="relative mb-4">
           <input
