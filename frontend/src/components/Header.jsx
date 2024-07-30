@@ -148,13 +148,23 @@ const Header = () => {
             </NavLink>
             <NavLink
               to="/add"
-              className={`block text-white text-lg py-3 px-4 rounded-md bg-indigo-600 w-full text-center ${isMenuOpen ? 'animate-slideInFromTopRight' : ''}`}
+              className={`block text-white text-lg py-3 px-4 rounded-md bg-indigo-600 w-full text-center mb-4 ${isMenuOpen ? 'animate-slideInFromTopRight' : ''}`}
               onClick={() => {
                 handleClick(1);
                 toggleMenu();
               }}
             >
               <FaCheckSquare className="inline mr-2" /> Add Event
+            </NavLink>
+            <NavLink
+              to="/notifications"
+              className={`block text-white text-lg py-3 px-4 rounded-md bg-blue-800 w-full text-center ${isMenuOpen ? 'animate-slideInFromTopRight' : ''}`}
+              onClick={() => {
+                handleClick(2);
+                toggleMenu();
+              }}
+            >
+              <NotificationsIcon className="inline mr-2 " /> Notifications
             </NavLink>
           </div>
         </div>
@@ -170,5 +180,6 @@ const Header = () => {
 };
 
 export default Header;
+
 
 
