@@ -80,6 +80,6 @@ router.get(
 router.use("/announcements", announcementRouter);
 // router.use('/s3', s3Router);
 
-router.post('/upload-file', upload.single('file'), achievementController.addProof);
+router.post('/upload-files', upload.array('files'), achievementController.addProofs);
 
 module.exports = router;

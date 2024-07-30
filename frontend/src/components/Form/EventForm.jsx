@@ -12,8 +12,7 @@ import Form1 from './Form1';
 import Form2 from './Form2';
 import Review from './Review';
 import axios from 'axios';
-
-import Loader from '../Loader'
+import Loader from '../Loader';
 
 const steps = ['Add Details', 'Add Proof'];
 
@@ -29,15 +28,14 @@ export default function EventForm() {
     mode: '',
     result: '',
     location: '',
-    proof: '',
-    proofUrl: ''
+    proofs: []  // Initialize proofs as an array
   });
-  const [content,setContent] = useState('')
+  const [content, setContent] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
-  const [loading,setLoading] = useState(false)
-  const navigate = useNavigate()
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const isDisabled = () => {
     const { name, date, type, description, mode, result, location } = details;
@@ -89,8 +87,8 @@ export default function EventForm() {
   };
 
   const handleSubmit = async () => {
-    setContent('Adding achivement...')
-    setLoading(true)
+    setContent('Adding achievement...');
+    setLoading(true);
     try {
       const userId = '6692353576002fc8b2ab2b37';
       const name = details.name;
@@ -99,7 +97,7 @@ export default function EventForm() {
       const location = details.location;
       const mode = details.mode;
       const result = details.result;
-
+  
       const response = await axios.post('/add-achievement', {
         userId,
         name,
@@ -110,37 +108,31 @@ export default function EventForm() {
         location,
         result
       });
-      const mentorId = '6692351e76002fc8b2ab2b35'
-      console.log(details.proofUrl)
-      if(details.proof) {
-        const formData = new FormData()
-        formData.append('file', details.proof);
+      
+      const mentorId = '6692351e76002fc8b2ab2b35';
+      
+      if(details.proofs && details.proofs.length > 0) {
+        const formData = new FormData();
+        details.proofs.forEach((proof, index) => {
+          formData.append('files', proof.file);
+        });
         formData.append('userId', userId);
         formData.append('mentorId', mentorId);
-        formData.append('achievementId', response.data.achievement._id)
-        try {
-          setContent('Uploading Proof...')
-          const proofResponse = await axios.post('/upload-file',formData)
-          console.log(proofResponse)
-        } catch (error) {
-          console.log(error)
-        }
+        formData.append('achievementId', response.data.achievement._id);
+        console.log(formData)
+        setContent('Uploading Proof...');
+        await axios.post('/upload-files', formData); // Endpoint to handle multiple files
       }
-
-      console.log(response.data);
-
+  
       const achievement = response.data.achievement._id;
       const mentor = '6692351e76002fc8b2ab2b35';
-      console.log(userId, achievement, mentor)
-      setContent('Sending Request to Mentor....')
+      setContent('Sending Request to Mentor...');
       const request = await axios.post('/add-request', {
         user: userId,
         achievement,
         mentor
       });
-
-      console.log(request);
-
+  
       setSnackbarMessage('Submission successful!');
       setSnackbarSeverity('success');
       setTimeout(() => {
@@ -153,7 +145,7 @@ export default function EventForm() {
       setSnackbarSeverity('error');
     } finally {
       setSnackbarOpen(true);
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -161,10 +153,10 @@ export default function EventForm() {
     setSnackbarOpen(false);
   };
 
-  if(loading) {
+  if (loading) {
     return (
       <Loader content={content} />
-    )
+    );
   }
 
   return (

@@ -70,7 +70,7 @@ const StudentOverview = ({ student, setSelectedStudent }) => {
             <h4 className='text-lg font-semibold text-gray-800'>{achievement.name}</h4>
             <p className='text-gray-600 mt-1'>{achievement.description}</p>
             <div className='text-gray-600 mt-2'>
-              <p><span className='font-semibold'>Location:</span> {achievement.location}</p>
+              <p><span className='font-semibold'>Organised by:</span> {achievement.location}</p>
               <p><span className='font-semibold'>Date:</span> {new Date(achievement.date).toLocaleDateString()}</p>
               <p><span className='font-semibold'>Mode:</span> {achievement.mode}</p>
               <p><span className='font-semibold'>Result:</span> {achievement.result}</p>

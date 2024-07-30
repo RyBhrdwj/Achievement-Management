@@ -20,23 +20,33 @@ class AchievementController {
   }
 
   // to handle achievement creation and file url saving in proof from s3
-  addProof = async (req, res) => {
+  addProofs = async (req, res) => {
     const { mentorId, userId, achievementId } = req.body;
-    const file = req.file;
-
-    if (!file) {
-      return res.json(400).json({ error: "error 1" });
+    const files = req.files; // `req.files` will be an array of files
+  
+    if (!files || files.length === 0) {
+      return res.status(400).json({ error: "No files uploaded" });
     }
-
-    const key = `${mentorId}/${userId}/${achievementId}.png`;
+  
     try {
-      const fileURL = await uploadToS3(file.buffer, "bucket-private-site", key);
       const achievement = await this.achievement.getOne(achievementId);
-      achievement.proof = fileURL;
-      const savedAchievement = await achievement.save()
-      console.log(fileURL);
-      res.status(200).json({ message: "file success", savedAchievement });
+      if (!achievement) {
+        return res.status(404).json({ error: "Achievement not found" });
+      }
+  
+      // Upload each file to S3 and get the URLs
+      const fileURLs = await Promise.all(files.map(async (file, index) => {
+        const key = `${mentorId}/${userId}/${achievementId}/file_${index + 1}.png`;
+        return await uploadToS3(file.buffer, "bucket-private-site", key);
+      }));
+  
+      // Update the achievement with file URLs
+      achievement.proof = fileURLs;
+      const savedAchievement = await achievement.save();
+  
+      res.status(200).json({ message: "Files uploaded successfully", savedAchievement });
     } catch (err) {
+      console.error('Error uploading files:', err);
       res.status(500).json({ error: err.message });
     }
   };

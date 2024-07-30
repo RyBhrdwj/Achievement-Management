@@ -39,10 +39,10 @@ const achievementSchema = new mongoose.Schema({
     enum: ["participant", "winner", "runner up"],
     required: true,
   },
-  proof: {
+  proof: [{
     type: String,
     default: null,
-  },
+  }],
   verificationStatus: {
     type: String,
     enum: ["pending", "accepted", "rejected"],

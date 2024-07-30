@@ -12,11 +12,10 @@ import {
 } from "@mui/material";
 
 const Review = ({ details }) => {
-  const [showProof, setShowProof] = useState(false);
-  const handleShowProof = () => {
-    setShowProof(!showProof);
+  const [showProofs, setShowProofs] = useState(false);
+  const handleShowProofs = () => {
+    setShowProofs(!showProofs);
   };
-
   return (
     <Box sx={{ mt: 4 }}>
       <Typography variant="h5" gutterBottom align="center">
@@ -65,40 +64,51 @@ const Review = ({ details }) => {
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row" sx={{ fontWeight: "bold" }}>
-                Proof:
+                Proofs:
               </TableCell>
               <TableCell>
-                {details.proofUrl ? (
+                {details.proofs && details.proofs.length > 0 ? (
                   <>
                     <Typography component="span">Submitted</Typography>
                     <Button
-                      onClick={handleShowProof}
+                      onClick={handleShowProofs}
                       variant="text"
                       color="primary"
                       size="small"
                       sx={{ ml: 2 }}
                     >
-                      {showProof ? "Hide Proof" : "Show Proof"}
+                      {showProofs ? "Hide Proofs" : "Show Proofs"}
                     </Button>
-                    {showProof && (
+                    {showProofs && (
                       <Box
                         sx={{
                           mt: 2,
-                          maxWidth: 300,
-                          maxHeight: 300,
-                          overflow: "hidden",
+                          display: "flex",
+                          flexWrap: "wrap",
+                          gap: 2,
                         }}
                       >
-                        <img
-                          src={details.proofUrl}
-                          alt="Proof"
-                          style={{
-                            width: "100%",
-                            height: "auto",
-                            maxWidth: "100%",
-                            maxHeight: "100%",
-                          }}
-                        />
+                        {details.proofs.map((proof, index) => (
+                          <Box
+                            key={index}
+                            sx={{
+                              maxWidth: 300,
+                              maxHeight: 300,
+                              overflow: "hidden",
+                            }}
+                          >
+                            <img
+                              src={proof.url}
+                              alt={`Proof ${index + 1}`}
+                              style={{
+                                width: "100%",
+                                height: "auto",
+                                maxWidth: "100%",
+                                maxHeight: "100%",
+                              }}
+                            />
+                          </Box>
+                        ))}
                       </Box>
                     )}
                   </>

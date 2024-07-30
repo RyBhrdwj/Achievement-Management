@@ -11,21 +11,4 @@ const redisClient = new Redis({
   tls: {} // Use TLS if required by your Redis setup
 });
 
-redisClient.on('error', (err) => {
-  console.error('Redis error:', err);
-});
-
-redisClient.on('connect', () => {
-  console.log('Connected to Redis');
-});
-
-// Test connection with a simple command
-redisClient.ping((err, result) => {
-  if (err) {
-    console.error('Ping error:', err);
-  } else {
-    console.log('Ping result:', result); // Should return 'PONG'
-  }
-});
-
 module.exports = redisClient;
