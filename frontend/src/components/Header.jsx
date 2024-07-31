@@ -3,7 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { FaTh, FaCheckSquare, FaBars, FaTimes } from 'react-icons/fa';
 
-const Header = () => {
+const Header = ({userRole}) => {
   const location = useLocation();
   const [hovered, setHovered] = useState(null);
   const [clickedIndex, setClickedIndex] = useState(null);
@@ -69,7 +69,7 @@ const Header = () => {
         <div className='flex items-center mb-4 sm:mb-0'>
           <h1 className='text-md sm:text-2xl font-bold text-white'>Event Management</h1>
         </div>
-        <nav className='hidden sm:flex flex-col sm:flex-row items-center gap-4'>
+        {userRole === 'student' && (<><nav className='hidden sm:flex flex-col sm:flex-row items-center gap-4'>
           <NavLink
             to="/"
             className={getLinkClassNames(0)}
@@ -115,7 +115,7 @@ const Header = () => {
           onClick={toggleMenu}
         >
           {isMenuOpen ? <FaTimes /> : <FaBars />}
-        </button>
+        </button></>)}
       </header>
 
       {/* Mobile Menu Overlay */}
