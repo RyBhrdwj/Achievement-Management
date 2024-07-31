@@ -59,7 +59,7 @@ const SideBar = ({ onStudentSelect }) => {
           <h2 className="text-2xl font-semibold text-gray-900 hidden md:block mt-6">Students</h2>
           <button 
             onClick={() => setIsSidebarOpen(false)} 
-            className="md:hidden w-8 h-8 bg-blue-500 text-white rounded-l-lg flex items-center justify-center transition-transform duration-300 ease-in-out"
+            className="md:hidden w-8 h-8 bg-red-500 text-white rounded-l-lg flex items-center justify-center transition-transform duration-300 ease-in-out"
           >
             <FontAwesomeIcon icon={faArrowLeft} className="text-xl" />
             
