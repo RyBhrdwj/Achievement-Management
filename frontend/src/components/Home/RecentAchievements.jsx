@@ -179,31 +179,34 @@ const RecentAchievements = ({ events = [], setEvents }) => {
           : "bg-white"
       }`}
     >
-      <div className="flex justify-between items-center flex-col md:flex-row mb-6">
-        <h1 className="text-4xl font-bold text-gray-800 py-6">
-          Recent Achievements
-        </h1>
-        <div className="flex justify-center items-center gap-4">
-          <input
-            type="text"
-            placeholder="Search Event..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="outline-none p-2 border-b-2 border-indigo-600 bg-white text-indigo-600 rounded-md mt-4 md:mt-0"
-          />
-          <DownloadButton mentor={false} />
-          <select
-            value={sortCriteria}
-            onChange={handleSortChange}
-            className="outline-none p-2 border-b-2 border-indigo-600 bg-white text-indigo-600 rounded-md mt-4 md:mt-0"
-          >
-            <option value="A-Z">A-Z</option>
-            <option value="Z-A">Z-A</option>
-            <option value="Newest">Newest</option>
-            <option value="Oldest">Oldest</option>
-          </select>
-        </div>
-      </div>
+      <div className="flex justify-between items-center flex-col md:flex-row mb-6 gap-4">
+  <h1 className="text-4xl font-bold text-gray-800 py-6">
+    Recent Achievements
+  </h1>
+  <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full md:w-auto">
+    <input
+      type="text"
+      placeholder="Search Event..."
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      className="outline-none p-3 w-full sm:w-auto border-2 border-indigo-600 bg-white text-indigo-600 rounded-lg text-base sm:text-sm"
+    />
+    <div className="flex gap-4 w-full sm:w-auto">
+      <DownloadButton mentor={false} />
+      <select
+        value={sortCriteria}
+        onChange={handleSortChange}
+        className="outline-none p-2 w-full h-12 mt-7 border-2 border-indigo-600 bg-white text-indigo-600 rounded-lg text-sm"
+      >
+        <option value="A-Z">A-Z</option>
+        <option value="Z-A">Z-A</option>
+        <option value="Newest">Newest</option>
+        <option value="Oldest">Oldest</option>
+      </select>
+    </div>
+  </div>
+</div>
+
       <div className="flex flex-col gap-6">
         {loading ? (
           <Loader content={"Fetching Achievements..."} />
