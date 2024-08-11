@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 import Header from './components/Header';
+import UserProvider from './context/UserContext';
 // import axios from 'axios';
 
 function App() {
-  const [userRole, setUserRole] = useState('admin');
-  const navigate = useNavigate();
+  
+  
 
   // useEffect(() => {
   //   const fetchUserRole = async () => {
@@ -20,23 +21,11 @@ function App() {
   //   fetchUserRole();
   // }, []);
 
-  useEffect(() => {
-    if (userRole) {
-      if (userRole === 'student') {
-        navigate('/');
-      } else if (userRole === 'mentor') {
-        navigate('/mentor');
-      } else if (userRole === 'admin') {
-        navigate('/admin');
-      }
-    }
-  }, [userRole, navigate]);
-
   return (
-    <div>
-      <Header userRole={userRole} />
-      {userRole ? <Outlet /> : <div>Loading...</div>}
-    </div>
+    <UserProvider>
+      <Header />
+      <Outlet />
+    </UserProvider>
   );
 }
 

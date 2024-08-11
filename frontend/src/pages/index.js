@@ -3,6 +3,7 @@ import AddDetails from "./AddDetails";
 import Mentor from "./Mentor";
 import AdminPortal from "./Admin";
 import StudentDetailsPage from "./StudentDetailsPage";
+import Login from "./Login";
 
 
 export {
@@ -10,5 +11,6 @@ export {
     AddDetails,
     Mentor,
     AdminPortal,
-    StudentDetailsPage
+    StudentDetailsPage,
+    Login
 }

@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { FaTh, FaCheckSquare, FaBars, FaTimes } from 'react-icons/fa';
+import { useUser } from '../context/UserContext';
 
-const Header = ({userRole}) => {
+const Header = () => {
+  const {userRole} = useUser()
   const location = useLocation();
   const [hovered, setHovered] = useState(null);
   const [clickedIndex, setClickedIndex] = useState(null);
